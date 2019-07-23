@@ -28,7 +28,7 @@
         </div>
     </section>
 
-    <section class="mb-5" id="add_client_section" style="min-height: 100vh">
+    <section class="mb-5" id="add_client_section">
         <div class="d-sm-flex mb-4">
             <h1 class="h3 mb-0 text-gray-800 text-uppercase">Shto klient te ri</h1>
         </div>
@@ -36,7 +36,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="card border-left-primary shadow-sm mb-4 w-100 ">
-                    <div class="card-body">
+                    <div class="card-body py-5">
+
                         <form method="post" action="{{route('client.store')}}">
                             @csrf
                             <div class="form-row">
@@ -123,7 +124,7 @@
 
         <div class="row">
 
-            <div class="card shadow mb-4 w-100">
+            <div class="card shadow-sm mb-4 w-100"  style="min-height: 90vh;">
                 {{--            <div class="card-header py-3">--}}
                 {{--                <h6 class="m-0 font-weight-bold text-primary">Klientet</h6>--}}
                 {{--            </div>--}}

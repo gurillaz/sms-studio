@@ -101,28 +101,18 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
+        if(\request()->ajax()){
+
+            $note->delete();
+            $note->save();
+
+            return ['status' => 'success', 'message' => '$Note deleted'];
+
+        }
         $note->delete();
         $note->save();
 
-        return redirect('/note')->with('success','Note deleted');
+        return redirect('/')->with('success','Note deleted');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Note  $note
-     * @return \Illuminate\Http\Response
-     */
-    public function destroyAjax($noteid)
-    {
-
-        $note = Note::findOrFail($noteid);
-
-        $note->delete();
-        $note->save();
-
-        return ['status'=>'success','message'=>'Note deleted'];
-
-
-    }
 }

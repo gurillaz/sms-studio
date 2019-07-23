@@ -139,23 +139,20 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        if(\request()->ajax()){
+
+            $employee->delete();
+            $employee->save();
+
+            return ['status' => 'success', 'message' => 'Employee deleted'];
+
+        }
 
         $employee->delete();
         $employee->save();
 
-        return redirect('/employee')->with('success', 'Employee deleted');
+        return redirect('/client')->with('success', 'Employee deleted');
     }
 
-    public function destroyAjax($employeeId)
-    {
 
-        $employee = Employee::findOrFail($employeeId);
-
-        $employee->delete();
-        $employee->save();
-
-        return ['status' => 'success', 'message' => '$Employee deleted'];
-
-
-    }
 }

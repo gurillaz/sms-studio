@@ -112,28 +112,21 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        $file->delete();
-        $file->save();
 
-        return redirect('/file')->with('success','File deleted');
-    }
+        if(\request()->ajax()){
 
+            $file->delete();
+            $file->save();
 
-    public function destroyAjax($fileId)
-    {
+            return ['status' => 'success', 'message' => '$Note deleted'];
 
-        $file= File::findOrFail($fileId);
+        }
 
         $file->delete();
         $file->save();
 
-        return ['status'=>'success','message'=>'File deleted'];
-
-
+        return redirect('/')->with('success','File deleted');
     }
-
-
-
 
 
     public function download($filename){

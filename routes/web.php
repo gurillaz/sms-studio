@@ -17,20 +17,17 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('client','ClientController');
-    Route::get('client#deleted_clients_section', "ClientController@deletedSection")->name('client.deleted');
+//    Route::delete('client/ajax/{clientId}','ClientController@destroyAjax');
 
-//        'clientController@indexDeleted')->name('clientIndexDeletedSection');
 
 
 
 
     Route::resource('employee','EmployeeController');
-    Route::delete('employee/ajax/{employeeId}','EmployeeController@destroyAjax');
 
 
 
     Route::resource('note','NoteController');
-    Route::delete('note/ajax/{noteid}','NoteController@destroyAjax');
 
 
 

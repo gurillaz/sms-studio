@@ -17,12 +17,12 @@ Gets $employee variable
         <div class="card-body text-center">
 
 
-
-
             <div class="row text-center">
                 <div class="col">
-                    <h5 class="card-title py-0 mb-2" style="height: 2rem; line-height: 1.1rem">{{mb_strimwidth($employee->name, 0, 45, '...')}}</h5>
-                    <p class="card-text py-0" style="height: 2.2rem; line-height: 1.1rem">{{mb_strimwidth($employee->position, 0, 45, '...')}}</p>
+                    <h5 class="card-title py-0 mb-2"
+                        style="height: 2rem; line-height: 1.1rem">{{mb_strimwidth($employee->name, 0, 45, '...')}}</h5>
+                    <p class="card-text py-0"
+                       style="height: 2.2rem; line-height: 1.1rem">{{mb_strimwidth($employee->position, 0, 45, '...')}}</p>
 
                 </div>
             </div>
@@ -33,7 +33,8 @@ Gets $employee variable
 
                 </div>
                 <div class="col-6">
-                    <a href="#" class="btn btn-sm btn-outline-danger w-100" onclick="delete_employee_card({{$employee->id}})">Fshij</a>
+                    <a href="#" class="btn btn-sm btn-outline-danger w-100"
+                       onclick="delete_employee_card({{$employee->id}})">Fshij</a>
 
                 </div>
             </div>

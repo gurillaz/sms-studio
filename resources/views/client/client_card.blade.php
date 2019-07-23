@@ -17,23 +17,25 @@ Gets $client variable
         <div class="card-body text-center">
 
 
-
-
             <div class="row text-center">
                 <div class="col">
-                    <h5 class="card-title py-0">{{$client->name}}</h5>
-                    <p class="card-text py-0">{{$client->city}}</p>
+                    <h5 class="card-title py-0 mb-2"
+                        style="height: 2rem; line-height: 1.1rem">{{mb_strimwidth($client->name, 0, 45, '...')}}</h5>
+                    <p class="card-text py-0"
+                       style="height: 2.2rem; line-height: 1.1rem">{{mb_strimwidth($client->city, 0, 45, '...')}}</p>
 
                 </div>
             </div>
             <div class="row text-center mt-3">
                 <div class="col-6">
-                    <a href="/client/{{$client->id}}" class="btn btn-sm btn-outline-primary w-100">Shiqo</a>
+                    <a href="{{route('client.show',$client->id)}}"
+                       class="btn btn-sm btn-outline-primary w-100">Shiqo</a>
 
 
                 </div>
                 <div class="col-6">
-                    <a href="#" class="btn btn-sm btn-outline-danger w-100">Fshij</a>
+                    <a href="#" class="btn btn-sm btn-outline-danger w-100"
+                       onclick="delete_client_card({{$client->id}})">Fshij</a>
 
                 </div>
             </div>

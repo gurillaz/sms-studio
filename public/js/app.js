@@ -66957,9 +66957,33 @@ var app = new Vue({
 
 
 jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).ready(function () {
-  window.clientsTable = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#clientsTable').DataTable();
-  window.deleted_clientsTable = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#deleted_clientsTable').DataTable();
-  window.client_events_table = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#client_events_table').DataTable(); // window.client_payments_table = $('#client_payments_table').DataTable();
+  window.clientsTable = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#clientsTable').DataTable({
+    "language": {
+      "lengthMenu": "Shfaq _MENU_ rekorde per faqe",
+      "zeroRecords": "Nuk u gjet azgje!",
+      "info": "Faqja _PAGE_ nga _PAGES_",
+      "infoEmpty": "Nuk ka te dhena!",
+      "infoFiltered": "(Filtruar  nga _MAX_ gjithsej te dhena)"
+    }
+  });
+  window.deleted_clientsTable = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#deleted_clientsTable').DataTable({
+    "language": {
+      "lengthMenu": "Shfaq _MENU_ rekorde per faqe",
+      "zeroRecords": "Nuk u gjet azgje!",
+      "info": "Faqja _PAGE_ nga _PAGES_",
+      "infoEmpty": "Nuk ka te dhena!",
+      "infoFiltered": "(Filtruar  nga _MAX_ gjithsej te dhena)"
+    }
+  });
+  window.client_events_table = jquery__WEBPACK_IMPORTED_MODULE_0___default()('#client_events_table').DataTable({
+    "language": {
+      "lengthMenu": "Shfaq _MENU_ rekorde per faqe",
+      "zeroRecords": "Nuk u gjet azgje!",
+      "info": "Faqja _PAGE_ nga _PAGES_",
+      "infoEmpty": "Nuk ka te dhena!",
+      "infoFiltered": "(Filtruar  nga _MAX_ gjithsej te dhena)"
+    }
+  }); // window.client_payments_table = $('#client_payments_table').DataTable();
 }); //Importing axios
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"); //setting csfr token to axios request headers
@@ -66972,7 +66996,7 @@ window.axios.defaults.headers.common = {
 
 window.delete_note_card = function delete_note_card(note_card_id) {
   if (confirm('Konfirmo fshirjen e shenimit')) {
-    axios.post('/note/ajax/' + note_card_id, {
+    axios.post('/note/' + note_card_id, {
       _method: 'DELETE'
     }).then(function (response) {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('#note_card_' + note_card_id).fadeOut(300, function () {
@@ -67002,10 +67026,25 @@ window.delete_file_card = function delete_note_card(file_card_id) {
 
 window.delete_employee_card = function delete_employee_card(employee_card_id) {
   if (confirm('Konfirmo fshirjen e puntorit')) {
-    axios.post('/employee/ajax/' + employee_card_id, {
+    axios.post('/employee/' + employee_card_id, {
       _method: 'DELETE'
     }).then(function (response) {
       jquery__WEBPACK_IMPORTED_MODULE_0___default()('#employee_card_' + employee_card_id).fadeOut(300, function () {
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).remove();
+      });
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  }
+}; //Delete Employee card
+
+
+window.delete_client_card = function delete_client_card(client_card_id) {
+  if (confirm('Konfirmo fshirjen e klientit')) {
+    axios.post('/client/' + client_card_id, {
+      _method: 'DELETE'
+    }).then(function (response) {
+      jquery__WEBPACK_IMPORTED_MODULE_0___default()('#client_card_' + client_card_id).fadeOut(300, function () {
         jquery__WEBPACK_IMPORTED_MODULE_0___default()(this).remove();
       });
     })["catch"](function (error) {

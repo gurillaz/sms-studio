@@ -133,24 +133,19 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
+        if(\request()->ajax()){
 
+
+            $client->delete();
+            $client->save();
+
+            return ['status'=>'success','message'=>'Client deleted'];
+
+        }
         $client->delete();
         $client->save();
 
         return redirect('/client')->with('success','Client deleted');
-    }
-
-    public function destroyAjax($clientId)
-    {
-
-        $client= Client::findOrFail($clientId);
-
-        $client->delete();
-        $client->save();
-
-        return ['status'=>'success','message'=>'Client deleted'];
-
-
     }
 
 }

@@ -95,9 +95,33 @@ const app = new Vue({
 
 
 $(document).ready(function () {
-    window.clientsTable = $('#clientsTable').DataTable();
-    window.deleted_clientsTable = $('#deleted_clientsTable').DataTable();
-    window.client_events_table = $('#client_events_table').DataTable();
+    window.clientsTable = $('#clientsTable').DataTable({
+        "language": {
+            "lengthMenu": "Shfaq _MENU_ rekorde per faqe",
+            "zeroRecords": "Nuk u gjet azgje!",
+            "info": "Faqja _PAGE_ nga _PAGES_",
+            "infoEmpty": "Nuk ka te dhena!",
+            "infoFiltered": "(Filtruar  nga _MAX_ gjithsej te dhena)"
+            }
+        });
+    window.deleted_clientsTable = $('#deleted_clientsTable').DataTable({
+        "language": {
+            "lengthMenu": "Shfaq _MENU_ rekorde per faqe",
+            "zeroRecords": "Nuk u gjet azgje!",
+            "info": "Faqja _PAGE_ nga _PAGES_",
+            "infoEmpty": "Nuk ka te dhena!",
+            "infoFiltered": "(Filtruar  nga _MAX_ gjithsej te dhena)"
+        }
+    });
+    window.client_events_table = $('#client_events_table').DataTable({
+        "language": {
+            "lengthMenu": "Shfaq _MENU_ rekorde per faqe",
+            "zeroRecords": "Nuk u gjet azgje!",
+            "info": "Faqja _PAGE_ nga _PAGES_",
+            "infoEmpty": "Nuk ka te dhena!",
+            "infoFiltered": "(Filtruar  nga _MAX_ gjithsej te dhena)"
+        }
+    });
     // window.client_payments_table = $('#client_payments_table').DataTable();
 });
 
@@ -116,7 +140,7 @@ window.delete_note_card = function delete_note_card(note_card_id) {
 
     if (confirm('Konfirmo fshirjen e shenimit')) {
 
-        axios.post('/note/ajax/' + note_card_id, {
+        axios.post('/note/' + note_card_id, {
 
             _method: 'DELETE'
 
@@ -167,7 +191,7 @@ window.delete_employee_card = function delete_employee_card(employee_card_id) {
 
     if (confirm('Konfirmo fshirjen e puntorit')) {
 
-        axios.post('/employee/ajax/' + employee_card_id, {
+        axios.post('/employee/' + employee_card_id, {
 
             _method: 'DELETE'
 
@@ -175,6 +199,31 @@ window.delete_employee_card = function delete_employee_card(employee_card_id) {
             .then(function (response) {
 
                 $('#employee_card_' + employee_card_id).fadeOut(300, function () {
+                    $(this).remove();
+                });
+
+            })
+            .catch(function (error) {
+                console.log(error);
+
+            });
+    }
+
+}
+
+//Delete Employee card
+window.delete_client_card = function delete_client_card(client_card_id) {
+
+    if (confirm('Konfirmo fshirjen e klientit')) {
+
+        axios.post('/client/' + client_card_id, {
+
+            _method: 'DELETE'
+
+        })
+            .then(function (response) {
+
+                $('#client_card_' + client_card_id).fadeOut(300, function () {
                     $(this).remove();
                 });
 
