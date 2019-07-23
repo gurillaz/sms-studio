@@ -84,6 +84,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
+
         if($client->deleted_at != null){
             return abort(404);
         }

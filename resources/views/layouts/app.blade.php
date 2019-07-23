@@ -11,14 +11,15 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Custom fonts for this template-->
-{{--    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">--}}
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    {{--    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">--}}
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+          rel="stylesheet">
 
     <!-- Style-->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     {{--    Template Style--}}
-{{--    <link href="css/sb-admin-2.min.css" rel="stylesheet">--}}
+    {{--    <link href="css/sb-admin-2.min.css" rel="stylesheet">--}}
 </head>
 
 <body id="page-top">
@@ -26,13 +27,13 @@
 <!-- Page Wrapper -->
 <div id="wrapper">
 
-    @include('layouts.sidebar')
+@include('layouts.sidebar')
 
 
 
 
 
-    <!-- Content Wrapper -->
+<!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
         <!-- Main Content -->
@@ -47,10 +48,28 @@
                 </button>
 
 
-
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
 
+                    <li class="nav-item my-auto mr-2">
+                        <a href="#" class="btn btn-warning btn-icon-split">
+                            <span class="icon text-warning bg-white">
+                                <i class="fas fa-user-plus"></i>
+                            </span>
+                            <span class="text d-none d-sm-inline">Shto klient</span>
+                        </a>
+                    </li>
+
+
+
+                    <li class="nav-item my-auto">
+                        <a href="#" class="btn btn-primary btn-icon-split">
+                            <span class="icon text-primary bg-white">
+                                <i class="fas fa-calendar-plus"></i>
+                            </span>
+                            <span class="text d-none d-sm-inline">Shto rezervim</span>
+                        </a>
+                    </li>
 
 
                     <div class="topbar-divider d-none d-sm-block"></div>
@@ -67,15 +86,17 @@
 
                     @else
 
-                        <!-- Nav Item - User Information -->
+                    <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                    <i class="fas fa-user-circle fa-2x text-success"></i>
+                                <i class="fas fa-user-circle fa-2x text-success"></i>
 
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profili
@@ -106,7 +127,7 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                     @yield('content')
+                @yield('content')
 
             </div>
             <!-- /.container-fluid -->
@@ -136,12 +157,7 @@
 </a>
 
 
-
-
-
 <script src="{{ asset('js/app.js') }}"></script>
-
-
 
 
 </body>
