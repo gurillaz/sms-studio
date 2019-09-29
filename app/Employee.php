@@ -3,11 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Employee extends Model
+class Employee extends User
 {
-    use SoftDeletes;
+    protected $table = 'users';
 
 
     public function notes(){
@@ -23,21 +22,26 @@ class Employee extends Model
     }
 
 
-
-
+//    public function all_files(){
+//
+//        return $this->morphMany('App\File','fileable');
+//    }
 
     public function files(){
 
+        return $this->morphMany('App\File','fileable')->whereNull('meta_name');
+//        return $this->all_files()->where('meta_name','==',null);
+    }
+
+    public function all_files(){
 
         return $this->morphMany('App\File','fileable');
     }
 
 
+    public function tasks(){
 
-
-    public function events(){
-
-        return $this->belongsToMany('App\Event');
+        return $this->hasMany('App\Task','employee_id');
 
 
     }
@@ -54,9 +58,9 @@ class Employee extends Model
      * @return Integer
      *
      * */
-    public function no_events(){
+    public function no_tasks(){
 
-        return $this->events()->count();
+        return $this->tasks()->count();
     }
 
     /*
@@ -82,5 +86,20 @@ class Employee extends Model
     public function payments_sum(){
 
         return $this->payments()->where('type','==','in')->sum('amount');
+    }
+
+
+    /*
+   * Get profile photo/ File name
+   *
+   *
+   * @return String
+   *
+   * */
+
+    public function profile_photo(){
+
+        return $this->all_files->where('meta_name','===','profile_photo')->first()->file;
+
     }
 }

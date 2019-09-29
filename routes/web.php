@@ -11,7 +11,20 @@
 |
 */
 
-Route::get('/', function () {
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('download/{filename}','FileController@downloadFile')
+    ->where('filename', '[A-Za-z0-9\-\_\.]+')
+    ->name('file.download');
+
+
+// Route everything else to Vue
+Route::get('/{any}',function (){
+    return view('app');
+})->where('any', '.*');
+
+
+
+/*Route::get('/', function () {
     return view('home');
 });
 
@@ -26,9 +39,37 @@ Route::middleware('auth')->group(function () {
     Route::resource('employee','EmployeeController');
 
 
+    Route::resource('job','JobController');
+(
+    Route::get('job/create/{part_no}','JobController@CreatePart');
+
+
+    Route::post('job/create/1','JobController@PostCreatePart1');
+    Route::post('job/create/2/new','JobController@PostCreatePart2NewClient');
+    Route::post('job/create/2/existing','JobController@PostCreatePart2ExistingClient');
+    Route::post('job/create/3','JobController@PostCreatePart3');
+    Route::post('job/addEvent','JobController@addEventAjax');
+    Route::post('job/create/4','JobController@PostCreatePart4');
+
+
+
+
+    Route::get('job/event/part/{event_no}','JobController@addFormEventPart');
+
+
+
+
+
+
+    Route::resource('event','EventController');
+
+
 
     Route::resource('note','NoteController');
 
+    Route::resource('offer','OfferController');
+    Route::resource('service','ServiceController');
+    Route::resource('inventory','InventoryController');
 
 
     Route::resource('file','FileController');
@@ -46,6 +87,6 @@ Route::middleware('auth')->group(function () {
 
 
 
-Auth::routes();
+Auth::routes();*/
 
 

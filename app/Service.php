@@ -19,4 +19,11 @@ class Service extends Model
 
 
     }
+
+    public function tasks(){
+
+        return $this->belongsToMany('App\Task');
+
+
+    }
 }

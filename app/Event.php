@@ -4,28 +4,43 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
 {
-    public function notes(){
+    use SoftDeletes;
 
 
-        return $this->morphMany('App\Note','noteable');
+    public function files()
+    {
+
+
+        return $this->morphMany('App\File', 'fileable');
     }
 
-    public function payments(){
+    public function notes()
+    {
 
 
-        return $this->morphMany('App\Payment','paymentable');
+        return $this->morphMany('App\Note', 'noteable');
     }
 
-    public function contract(){
+    public function payments()
+    {
 
-        return $this->morphOne('App\File','fileable');
+
+        return $this->morphMany('App\Payment', 'paymentable');
+    }
+
+    public function contract()
+    {
+
+        return $this->morphOne('App\File', 'fileable');
 
     }
 
-    public function inventory(){
+    public function inventory()
+    {
 
         return $this->belongsToMany('App\Inventory');
 
@@ -34,23 +49,30 @@ class Event extends Model
 
 
 
-    public function offers(){
 
-        return $this->belongsToMany('App\Offer');
-
-
-    }
-
-
-    public function employees(){
+    public function employees()
+    {
 
         return $this->belongsToMany('App\Employee');
 
 
     }
 
+    public function user(){
 
-    public function duration_hours(){
+        return $this->belongsTo('App\User','created_by');
+    }
+
+
+    public function job(){
+
+        return $this->belongsTo('App\Job','job_id');
+    }
+
+
+
+    public function duration_hours()
+    {
 
 
         $start = Carbon::parse($this->date_start);

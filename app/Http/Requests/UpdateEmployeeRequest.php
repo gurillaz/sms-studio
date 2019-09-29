@@ -39,6 +39,7 @@ class UpdateEmployeeRequest extends FormRequest
 
             'salary_type' => 'required',
             'salary_amount' => 'required',
+            'profile_photo' => 'image',
         ];
     }
 

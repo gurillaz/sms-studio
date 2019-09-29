@@ -17,7 +17,7 @@ $factory->define(Inventory::class, function (Faker $faker) {
         'serial'=>$faker->creditCardNumber,
         'description'=>$faker->realText(100),
         'status'=>$faker->randomElement(['active','pasive']),
-        'created_by'=>$faker->creditCardNumber
+        'created_by'=>1
 
     ];
 });

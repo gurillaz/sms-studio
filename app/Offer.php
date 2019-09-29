@@ -20,11 +20,14 @@ class Offer extends Model
     }
 
 
-    public function events(){
+    public function jobs(){
 
 
-        return $this->belongsToMany('App\Event');
+        return $this->hasMany('App\Event');
 
 
+    }
+    public function user(){
+        return $this->belongsTo('App\User','created_by');
     }
 }

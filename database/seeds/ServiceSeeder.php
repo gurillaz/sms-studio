@@ -11,6 +11,13 @@ class ServiceSeeder extends Seeder
      */
     public function run()
     {
-        //
+        $names = ['Inqizim','Shatorr','Fotografi','Printim i fotove','Inqizim me kran'];
+
+        foreach ($names as $name){
+            factory('App\Service')->create([
+                'name'=> $name
+            ]);
+        }
+
     }
 }

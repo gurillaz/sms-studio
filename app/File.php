@@ -19,19 +19,6 @@ class File extends Model
     }
 
 
-    public function belongs_to_model(){
-
-        $belongsTo = explode('\\',trim($this->fileable_type))[1];
-        if($belongsTo === ''){
-            return "NA";
-        }
-
-        return $belongsTo;
-
-    }
-
-
-
 
     public function user(){
 
@@ -40,9 +27,10 @@ class File extends Model
 
 
     public function file_extension(){
+        // return storage_path();
 
-        $file_path = storage_path("app\\uploads\\").$this->file;
-
+        $file_path = storage_path("app\\public\\uploads\\").$this->file;
+        // return $file_path;
 
 
         if (file_exists($file_path))
@@ -62,13 +50,13 @@ class File extends Model
 
     public function file_type(){
 
-        $file_path = storage_path("app\\uploads\\").$this->file;
+        $file_path = storage_path("app\\public\\uploads\\").$this->file;
 
 
 
         if (file_exists($file_path))
         {
-            return Storage::mimeType('uploads\\'.$this->file);
+            return Storage::mimeType('public\\uploads\\'.$this->file);
 
         }
         else
@@ -82,14 +70,14 @@ class File extends Model
 
     public function file_size(){
 
-        $file_path = storage_path("app\\uploads\\").$this->file;
+        $file_path = storage_path("app\\public\\uploads\\").$this->file;
 
 
 
         if (file_exists($file_path))
         {
 
-            return number_format(Storage::size('uploads\\'.$this->file)/1000000,2);
+            return number_format(Storage::size('public\\uploads\\'.$this->file)/1000000,2);
         }
         else
         {
@@ -102,14 +90,14 @@ class File extends Model
 
     public function file_name(){
 
-        $file_path = storage_path("app\\uploads\\").$this->file;
+        $file_path = storage_path("app\\public\\uploads\\").$this->file;
 
 
 
         if (file_exists($file_path))
         {
 
-            return basename('uploads\\'.$this->file);
+            return basename('public\\uploads\\'.$this->file);
         }
         else
         {

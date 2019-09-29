@@ -19,9 +19,9 @@ class Inventory extends Model
 
 
 
-    public function events(){
+    public function tasks(){
 
-        return $this->belongsToMany('App\Event');
+        return $this->belongsToMany('App\Task');
 
 
     }

@@ -3,11 +3,12 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CreateFileRequest extends FormRequest
 {
-    //named errors multiple forms one page
-    protected $errorBag = 'createFile';
+    // //named errors multiple forms one page
+    // protected $errorBag = 'createFile';
 
 
 
@@ -19,7 +20,7 @@ class CreateFileRequest extends FormRequest
 
     public function authorize()
     {
-        return \Auth::check();
+        return Auth::check();
     }
 
     /**
@@ -39,7 +40,7 @@ class CreateFileRequest extends FormRequest
             'fileable_id' => 'required',
             'fileable_type' => 'required',
             'description' => 'max:1000',
-            'file'=>'required|file|max:50000'
+            'file'=>'required|file|max:100000'
 
 
 

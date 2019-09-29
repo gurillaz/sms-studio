@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Client;
 use App\Http\Requests\CreateClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Http\Resources\ClientCollection;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class ClientController extends Controller
 {
@@ -17,17 +19,16 @@ class ClientController extends Controller
      */
     public function index()
     {
+
         $clients = Client::all();
         $deleted_clients = Client::onlyTrashed()->get();
 
-        return view('client.clients',[
-            'clients'=>$clients,
-            'deleted_clients'=>$deleted_clients
-            ]);
-        \Session::push('page','client');
+
+        return Response::json([
+            'clients' => $clients
+        ], 200);
 
     }
-
 
 
     /**
@@ -37,17 +38,37 @@ class ClientController extends Controller
      */
     public function create()
     {
-//        \Session::push('page','client');
-        \Session::push('section','add_client_section');
 
-        return redirect()->to('client'.'#add_client_section');
+
+        return redirect()->to('client' . '#add_client_section');
     }
+
+    /**
+     * Validate CreateClient request
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function checkCreateClientValidation(CreateClientRequest $request){
+
+
+         $request->validated();
+
+
+         return Response::json([
+            'message' => "Validated!",
+            'data' => "",
+        ], 200);
+    }
+
+
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateClientRequest $request)
     {
@@ -57,21 +78,19 @@ class ClientController extends Controller
         $client = new Client();
 
         $client->name = $validated['name'];
-        $client->city= $validated['city'];
-        $client->address= $validated['address'];
-        $client->phone= $validated['phone'];
-        $client->email= $validated['email'];
-        $client->created_by= \Auth::id();
+        $client->city = $validated['city'];
+        $client->address = $validated['address'];
+        $client->phone = $validated['phone'];
+        $client->email = $validated['email'];
+        $client->created_by = \Auth::id();
 
         $client->save();
 
 
-        return view('client.client', compact('client',$client));
-
-
-
-
-
+        return Response::json([
+            'message' => "Client created!",
+            'client' => ['id'=>$client->id,'name'=>$client->name,'city'=>$client->city],
+        ], 200);
 
 
     }
@@ -79,24 +98,26 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
+     * @param \App\Client $client
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Client $client)
     {
 
-        if($client->deleted_at != null){
-            return abort(404);
-        }
-
-        return view('client.client',compact('client',$client));
+        return Response::json([
+            'client' => $client,
+            'files' => $client->files,
+            'payments' => $client->payments,
+            'notes' => $client->notes,
+            'class_name' => $client->getMorphClass()
+        ], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
+     * @param \App\Client $client
+     * @return \Illuminate\Http\JsonResponse
      */
     public function edit(Client $client)
     {
@@ -106,9 +127,9 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Client $client
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
@@ -116,37 +137,40 @@ class ClientController extends Controller
         $validated = $request->validated();
 
         $client->name = $validated['name'];
-        $client->city= $validated['city'];
-        $client->address= $validated['address'];
-        $client->phone= $validated['phone'];
-        $client->email= $validated['email'];
+        $client->city = $validated['city'];
+        $client->address = $validated['address'];
+        $client->phone = $validated['phone'];
+        $client->email = $validated['email'];
 
         $client->save();
 
-        return view('client.client', compact('client',$client));
+        return Response::json([
+            'client' => $client,
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
+     * @param \App\Client $client
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Client $client)
     {
-        if(\request()->ajax()){
+
+        if (\request()->ajax()) {
 
 
             $client->delete();
             $client->save();
 
-            return ['status'=>'success','message'=>'Client deleted'];
+            return ['status' => 'success', 'message' => 'Client deleted'];
 
         }
         $client->delete();
         $client->save();
 
-        return redirect('/client')->with('success','Client deleted');
+        return redirect('/client')->with('success', 'Client deleted');
     }
 
 }

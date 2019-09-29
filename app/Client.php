@@ -39,9 +39,9 @@ class Client extends Model
     }
 
 
-    public function events(){
+    public function jobs(){
 
-        return $this->hasMany('App\Event');
+        return $this->hasMany('App\Jobs');
     }
 
 
@@ -57,9 +57,9 @@ class Client extends Model
      * @return Integer
      *
      * */
-    public function no_events(){
+    public function no_jobs(){
 
-        return $this->events()->count();
+        return $this->jobs()->count();
     }
 
     /*

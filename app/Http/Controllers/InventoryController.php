@@ -14,7 +14,7 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('inventory.inventories',['inventories'=>Inventory::all()]);
     }
 
     /**
@@ -46,7 +46,7 @@ class InventoryController extends Controller
      */
     public function show(Inventory $inventory)
     {
-        //
+        return view('inventory.inventory',['inventory'=>$inventory]);
     }
 
     /**

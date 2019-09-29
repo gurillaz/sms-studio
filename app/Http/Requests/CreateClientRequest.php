@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class CreateClientRequest extends FormRequest
 {
     //named errors multiple forms one page
-    protected $errorBag = 'createClient';
+//    protected $errorBag = 'createClient';
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -37,7 +37,7 @@ class CreateClientRequest extends FormRequest
             'address'=>'required|max:255',
             'phone'=>'required|unique:clients|max:255',
 
-            'email' => 'unique:clients',
+            'email' => 'required|unique:clients',
         ];
     }
 

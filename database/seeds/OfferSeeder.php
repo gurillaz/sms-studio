@@ -11,13 +11,13 @@ class OfferSeeder extends Seeder
      */
     public function run()
     {
-        factory('App\Offer',5)->create()->each(function ($offer){
+        $names = ['Oferta 1','Oferta 2','Offerta 3','Offerta 4'];
 
-            $offer->services()->save(factory('App\Service')->make());
-            $offer->services()->save(factory('App\Service')->make());
+        foreach ($names as $name){
+            factory('App\Offer')->create([
+                'name'=> $name
+            ]);
+        }
 
-
-            return $offer;
-        });
     }
 }

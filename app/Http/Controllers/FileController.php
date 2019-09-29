@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\file;
+use App\File;
 use App\Http\Requests\CreateFileRequest;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+use App\Http\Requests\UpdateFileRequest;
+
+//use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Response;
 use Storage as Storage;
 
 class FileController extends Controller
@@ -17,8 +19,29 @@ class FileController extends Controller
      */
     public function index()
     {
-        //
+
+        $files = File::all();
+
+        $files_map = $files->map(function ($file) {
+
+            $data = $file->only(['id', 'name', 'created_at', 'updated_at']);
+            $data['created_by'] = $file->user->only('name');
+            $data['file_extension'] = $file->file_extension();
+            $data['file_type'] = $file->file_type();
+            $data['file_type'] = $file->file_type();
+            $data['file_size'] = $file->file_size();
+            $data['file_name'] = $file->file_name();
+            $data['belongs_to'] = $file->fileable->only(['id', 'name']);
+            $data['model'] = explode('\\', trim($file->fileable_type))[1];
+            return $data;
+        });
+
+
+        return Response::json([
+            'files' => $files_map
+        ], 200);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -43,29 +66,30 @@ class FileController extends Controller
         $file = new File();
 
         $file->name = $validated['name'];
-        $file->description= $validated['description'];
+        $file->description = $validated['description'];
 
 
-        $file->fileable_id= $validated['fileable_id'];
-        $file->fileable_type= $validated['fileable_type'];
+        $file->fileable_id = $validated['fileable_id'];
+        $file->fileable_type = $validated['fileable_type'];
 
 
-        $file ->created_by= \Auth::id();
+        $file->created_by = \Auth::id();
+
+        $fileName = strtoupper(str_replace(' ', '_', $validated['name'])) . '-' . str_replace(' ', '_', $request->file('file')->getClientOriginalName());
 
 
-
-        $path = $request->file('file')
-            ->storeAs(
-                'uploads',
-                strtoupper(str_replace(' ','_',$validated['name'])).'-'.str_replace(' ','_',$request->file('file')->getClientOriginalName()));
-
-        $file->file = basename($path);
+        Storage::putFileAs('public/uploads', $request->file('file'), $fileName);
 
 
-        $file ->save();
+        $file->file = basename($fileName);
 
 
-        return back();
+        $file->save();
+
+        return Response::json([
+            'file' => $file,
+            'message' => "File saved!"
+        ], 200);
     }
 
     /**
@@ -77,8 +101,23 @@ class FileController extends Controller
     public function show(File $file)
     {
 
-        return view('file.file',compact('file',$file));
 
+
+        $data = [];
+
+        $data = $file->only(['id', 'name', 'description', 'created_at', 'updated_at']);
+        $data['created_by'] = $file->user->only('name');
+        $data['file_extension'] = $file->file_extension();
+        $data['file_type'] = $file->file_type();
+        $data['file_type'] = $file->file_type();
+        $data['file_size'] = $file->file_size();
+        $data['file_name'] = $file->file_name();
+        $data['belongs_to'] = $file->fileable->only(['id', 'name']);
+        $data['model'] = explode('\\', trim($file->fileable_type))[1];
+
+        return Response::json([
+            'file' => $data,
+        ], 200);
     }
 
     /**
@@ -99,9 +138,51 @@ class FileController extends Controller
      * @param  \App\file  $file
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, file $file)
+    public function update(UpdateFileRequest $request, File $file)
     {
-        //
+        // return $request->all();
+        $validated = $request->validated();
+
+        $file->name = $validated['name'];
+        $file->description = $validated['description'];
+
+
+        /* TODO Delete previous File */
+
+
+        $file->created_by = \Auth::id();
+
+
+        //If new file exists in request
+        if ($request->file('file')!=null) {
+
+            $fileName = strtoupper(str_replace(' ', '_', $validated['name'])) . '-' . str_replace(' ', '_', $request->file('file')->getClientOriginalName());
+
+
+            Storage::putFileAs('public/uploads', $request->file('file'), $fileName);
+
+
+            $file->file = basename($fileName);
+        }
+
+        $file->save();
+
+        $data = [];
+
+        $data = $file->only(['id', 'name', 'description', 'created_at', 'updated_at']);
+        $data['created_by'] = $file->user->only('name');
+        $data['file_extension'] = $file->file_extension();
+        $data['file_type'] = $file->file_type();
+        $data['file_type'] = $file->file_type();
+        $data['file_size'] = $file->file_size();
+        $data['file_name'] = $file->file_name();
+        $data['belongs_to'] = $file->fileable->only(['id', 'name']);
+        $data['model'] = explode('\\', trim($file->fileable_type))[1];
+
+        return Response::json([
+            'file' => $data,
+            'message' => 'File updated!'
+        ], 200);
     }
 
     /**
@@ -113,42 +194,51 @@ class FileController extends Controller
     public function destroy(File $file)
     {
 
-        if(\request()->ajax()){
-
-            $file->delete();
-            $file->save();
-
-            return ['status' => 'success', 'message' => '$Note deleted'];
-
-        }
-
         $file->delete();
         $file->save();
 
-        return redirect('/')->with('success','File deleted');
+        return Response::json([
+            'message' => 'File deleted!'
+        ], 200);
     }
 
 
-    public function download($filename){
+    public function checkIfFileExists($filename)
+    {
+
+        // this might throw errors in future, check if filee should be saved in app/storage or in public folder
+        $file_path = storage_path("app\\public\\uploads\\") . $filename;
 
 
-        $file_path = storage_path("app\\uploads\\").$filename;
+        if (file_exists($file_path)) {
 
-        if (file_exists($file_path))
-        {
-            // Send Download
+
+            return Response::json([
+                'message' => 'File found!',
+                'path' => "/download/" . $filename
+            ], 200);
+        } else {
+            return Response::json([
+                'message' => 'File not found',
+                'errors' => "File not found",
+                'errors' => $file_path
+            ], 404);
+        }
+    }
+
+    public function downloadFile($filename)
+    {
+
+
+        $file_path = storage_path("app\\public\\uploads\\") . $filename;
+
+        if (file_exists($file_path)) {
+            // Send Download Response
             return \Response::download($file_path, $filename, [
-                'Content-Length: '. filesize($file_path)
+                'Content-Length: ' . filesize($file_path)
             ]);
         }
-        else
-        {
-            // Error
-            return 'File not found';
-        }
+
+        return "asddas";
     }
-
-
-
-
 }

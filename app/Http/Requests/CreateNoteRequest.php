@@ -3,11 +3,12 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CreateNoteRequest extends FormRequest
 {
     //named errors multiple forms one page
-    protected $errorBag = 'createNote';
+//    protected $errorBag = 'createNote';
 
 
 
@@ -19,7 +20,8 @@ class CreateNoteRequest extends FormRequest
 
     public function authorize()
     {
-        return \Auth::check();
+
+        return Auth::check();
     }
 
     /**
@@ -36,7 +38,7 @@ class CreateNoteRequest extends FormRequest
 
 
             'name' => 'required|string|max:100',
-            'body'=>'max:1000',
+            'body'=>'required|max:5000',
             'noteable_id'=>'required',
             'noteable_type'=>'required',
 

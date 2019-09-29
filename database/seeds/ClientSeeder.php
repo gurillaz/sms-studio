@@ -24,15 +24,6 @@ class ClientSeeder extends Seeder
             $client->notes()->save(factory('App\Note')->make());
 
 
-            $client->events()->save(factory('App\Event')->make());
-            $client->events()->save(factory('App\Event')->make());
-            $client->events()->save(factory('App\Event')->make());
-            $client->events()->save(factory('App\Event')->make());
-            $client->events()->save(factory('App\Event')->make());
-            $client->events()->save(factory('App\Event')->make());
-            $client->events()->save(factory('App\Event')->make());
-
-
             return $client;
         });
     }
