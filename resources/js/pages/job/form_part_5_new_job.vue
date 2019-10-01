@@ -147,7 +147,7 @@ export default {
                 status: "paid",
                 description: "",
                 type: "in",
-                paymentable_type: "App/Job",
+                paymentable_type: "App\\Job",
                 paymentable_id: ""
             }
         };

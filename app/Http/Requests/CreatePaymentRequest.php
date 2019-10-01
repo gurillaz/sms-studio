@@ -64,6 +64,7 @@ class CreatePaymentRequest extends FormRequest
             'to' => 'Marresi',
             'description' => 'Detajet',
             'amount' => 'Shuma',
+            'category' => 'Kategoria',
         ];
     }
 }

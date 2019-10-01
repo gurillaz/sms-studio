@@ -43,16 +43,18 @@
                                 </v-col>
                                 <v-col cols="3">
                                     <v-text-field
-                                        :value="`${payment.belongs_to.name} (${belongs_to_readable(payment.model)})`"
+                                        :value="payment.model != '' ? `${payment.belongs_to.name} (${belongs_to_readable(payment.model)})` : '' "
                                         label="I takon::"
                                         readonly
+                                                :disabled="payment.model == ''"
                                     ></v-text-field>
                                 </v-col>
                                 <v-col class="pt-6" cols="2">
                                     <v-btn
-                                        :to="`/${payment.model}/${payment.belongs_to.id}`"
+                                        :to="payment.model != ''?`/${payment.model}/${payment.belongs_to.id}`:''"
                                         block
                                         text
+                                        :disabled="payment.model == ''"
                                     >Shiko burimin
                                     </v-btn>
                                 </v-col>
@@ -266,7 +268,7 @@
                 if (belongs_to === "File") {
                     return "Fajll";
                 }
-                if (belongs_to === "Inevntory") {
+                if (belongs_to === "Inventory") {
                     return "Pajisje";
                 }
                 if (belongs_to === "Note") {
@@ -302,7 +304,7 @@
                         currentObj.updating_errors = [];
                         currentObj.edit_dialog = false;
 
-                        currentObj.file = resp.data.file;
+                        currentObj.payment = resp.data.payment;
 
                         /* Using JSON.parse to copy object, since just asignin resp.data.note only references data
                     note end edit_note keep changing when used as vue v-model

@@ -67,6 +67,9 @@
             <!--            <v-toolbar-title>Application</v-toolbar-title>-->
 
             <div class="ml-auto">
+                <v-btn text to="/payment/new">
+                    <v-icon left>mdi-cash</v-icon>Pagese e re
+                </v-btn>
                 <v-btn text to="/client/new">
                     <v-icon left>mdi-account-plus-outline</v-icon>Klient i ri
                 </v-btn>

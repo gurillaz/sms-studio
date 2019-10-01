@@ -30,6 +30,7 @@ Route::resource('event', 'EventController');
 Route::resource('job', 'JobController');
 Route::post('job/addEvents', 'JobController@addEvents');
 
+Route::resource('inventory', 'InventoryController');
 Route::resource('note', 'NoteController');
 Route::resource('file', 'FileController');
 Route::resource('payment', 'PaymentController');

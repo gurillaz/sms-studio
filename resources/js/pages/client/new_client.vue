@@ -7,7 +7,8 @@
 
                 <v-card>
                     <v-card-title>
-                        <span class="headline">Te dhenat per klientin</span>
+                        <v-icon left>mdi-account-plus-outline</v-icon>
+                        <span class="headline">Shto klient te ri</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>

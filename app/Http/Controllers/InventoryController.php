@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Inventory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class InventoryController extends Controller
 {
@@ -14,7 +15,12 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        return view('inventory.inventories',['inventories'=>Inventory::all()]);
+        $inventories = Inventory::all();
+
+        return Response::json([
+            'data' => $inventories
+        ], 200);
+    
     }
 
     /**

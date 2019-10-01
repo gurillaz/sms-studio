@@ -32,6 +32,10 @@ import Payment from '@/js/pages/payment/payment'
 import Payments from '@/js/pages/payment/payment_all'
 import NewPayment from '@/js/pages/payment/payment_new'
 
+import Inventory from '@/js/pages/inventory/inventory'
+import InventoryAll from '@/js/pages/inventory/inventory_all'
+import NewInventory from '@/js/pages/inventory/inventory_new'
+
 import Login from '@/js/pages/auth/login'
 
 
@@ -181,7 +185,7 @@ const router = new VueRouter({
                 }, {
                     path: 'all',
                     name: 'job.all',
-                    component: Notes,
+                    component: Jobs,
                     // beforeEnter: requireAuth
                 },
                 {
@@ -250,6 +254,37 @@ const router = new VueRouter({
                     path: ':id',
                     name: 'payment.payment',
                     component: Payment,
+
+                    props: true
+                },
+            ]
+        },
+        {
+            path: '/inventory', component: MainLayout,
+            children: [
+                {
+                    path: '/',
+                    name: 'inventory.base',
+
+                    beforeEnter: (to, from, next) => {
+                        next('/inventory/all')
+                    }
+                }, {
+                    path: 'all',
+                    name: 'inventory.all',
+                    component: InventoryAll,
+                    // beforeEnter: requireAuth
+                },
+                {
+                    path: 'new',
+                    name: 'inventory.new',
+
+                    component: NewInventory
+                },
+                {
+                    path: ':id',
+                    name: 'inventory.inventory',
+                    component: Inventory,
 
                     props: true
                 },

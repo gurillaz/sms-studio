@@ -2,18 +2,21 @@
     <div class="mx-3">
         <v-card>
             <v-card-title>
-                <v-icon left>mdi-account-plus</v-icon>Shto puntor te ri
+                <v-icon left>mdi-account-plus</v-icon>Shto pajisje te re
                 <div class="flex-grow-1"></div>
             </v-card-title>
             <v-container>
                 <v-row class="mx-5">
                     <v-container class="pa-1">
-                        <v-card outlined tile class="py-5 px-8">
+                        <v-card outlined  tile class="py-5 px-8">
                             <!-- titulli -->
-                            <v-card-title>
-                                <v-icon left>mdi-account-group</v-icon>Te gjithe puntoret
+                            <v-row class="px-2 mb-3">
+                                <div>
+                                    <v-icon left>mdi-account-plus</v-icon>
+                                    <span class="text-uppercase font-weight-bold">Pajisje e re</span>
+                                </div>
                                 <div class="flex-grow-1"></div>
-                            </v-card-title>
+                            </v-row>
 
                             <v-row class="py-0">
                                 <v-col class="py-1" cols="5">
@@ -84,7 +87,7 @@
 
                 <v-row class="mx-5 mt-4">
                     <v-container class="pa-1">
-                        <v-card outlined tile class="py-5 px-8">
+                        <v-card outlined tile class="py-5 px-8" >
                             <!-- titulli -->
                             <v-row class="px-2 mb-3">
                                 <div>
@@ -154,7 +157,7 @@
 
                 <v-row class="mx-5 mt-4">
                     <v-container class="pa-1">
-                        <v-card outlined tile class="py-5 px-8">
+                        <v-card outlined tile class="py-5 px-8" >
                             <!-- titulli -->
                             <v-row class="px-2 mb-3">
                                 <div>
@@ -178,7 +181,7 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row>
+                            <v-row >
                                 <v-col cols="4">
                                     <v-select
                                         :error-messages="saving_errors.role"
@@ -192,8 +195,8 @@
                                     ></v-select>
                                 </v-col>
                             </v-row>
-                            <v-row>
-                                <v-col cols="4">
+                            <v-row >
+                                <v-col  cols="4">
                                     <v-text-field
                                         :success="new_employee.password!='' && new_employee.password == confirm_password"
                                         :error-messages="saving_errors.password"
@@ -209,7 +212,7 @@
                                         name="new_employe_psw"
                                     ></v-text-field>
                                 </v-col>
-                                <v-col cols="4">
+                                <v-col  cols="4">
                                     <v-text-field
                                         :success="confirm_password!='' && new_employee.password == confirm_password"
                                         :error="confirm_password!='' && new_employee.password != confirm_password"
@@ -308,9 +311,7 @@ export default {
                         color: "success",
                         text: "Klienti u krijua!"
                     });
-                    currentObj.$router.push(
-                        `/employee/${resp.data.new_employee_id}`
-                    );
+                    currentObj.$router.push(`/employee/${resp.data.new_employee_id}`);
                 })
                 .catch(function(resp) {
                     console.log(resp.data);

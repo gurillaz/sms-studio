@@ -11,15 +11,13 @@
                 <v-tab-item>
                     <v-container>
                         <v-row class="mx-5 mt-5">
-                            {{new_in_payment}}
                             <v-col cols="12">
                                 <v-card outlined tile class="py-5 px-8">
                                     <v-row class="py-0">
                                         <v-col class="py-1" cols="3">
                                             <v-text-field
-                                                :error-messages="saving_errors.amount"
-                                                label="Shuma: "
-                                                prepend-icon="mdi-numeric"
+                                                :error-messages="saving_errors_in.amount"
+                                                label="Shuma: *"
                                                 v-model="new_in_payment.amount"
                                             ></v-text-field>
                                         </v-col>
@@ -28,60 +26,61 @@
                                         <div class="flex-grow-6"></div>
                                         <v-col class="py-1" cols="6">
                                             <v-autocomplete
-                                                :items="for_items"
-                                                autofocus
-                                                prepend-icon="mdi-numeric"
+                                                :items="for_in_items"
                                                 clear-icon="mdi-close"
                                                 clearable
                                                 item-text="name"
                                                 item-value="id"
-                                                label="I takon:"
+                                                label="I takon: *"
                                                 no-data-text="Nuk ka te dhena!"
                                                 return-object
-                                                v-model="for_select"
+                                                v-model="for_in_select"
+                                                hint="Nese eshte pagese per punen e meparashme."
+                                                persistent-hint
                                             >
                                                 <template
                                                     v-slot:selection="{attr,on,item,selected}"
                                                 >
-                                                <v-row class="pa-0 ma-0">
-                                                    <v-col cols='3' class="pa-0 ma-0">{{belongs_to_readable(item.model)}}</v-col>
-                                                    <v-col cols='9' class="pa-0 ma-0">{{item.name}}</v-col>
-                                                </v-row>
-                                   
+                                                    <v-row class="pa-0 ma-0">
+                                                        <v-col
+                                                            cols="9"
+                                                            class="pa-0 ma-0"
+                                                        >{{item.name}} {{belongs_to_readable(item.model)}}</v-col>
+                                                    </v-row>
                                                 </template>
                                                 <template v-slot:item="{ item }">
-                                                  <v-row>
-                                                    <v-col cols='9'>{{item.name}}</v-col>
-                                                    <v-col cols='3' class="text-right">{{belongs_to_readable(item.model)}}</v-col>
-                                                </v-row>
+                                                    <v-row>
+                                                        <v-col cols="9">{{item.name}}</v-col>
+                                                        <v-col
+                                                            cols="3"
+                                                            class="text-right"
+                                                        >{{belongs_to_readable(item.model)}}</v-col>
+                                                    </v-row>
                                                 </template>
                                             </v-autocomplete>
                                         </v-col>
                                         <v-col class="py-1" cols="6">
                                             <v-combobox
-                                                label="Kategoria:"
-                                                :error-messages="saving_errors.category"
+                                                label="Kategoria: *"
+                                                :error-messages="saving_errors_in.category"
                                                 v-model="new_in_payment.category"
                                                 :items="data.categories"
                                                 item-text="category"
-                                                prepend-icon="mdi-numeric"
                                                 clearable
                                             ></v-combobox>
                                         </v-col>
                                         <v-col class="py-1" cols="6">
                                             <v-text-field
-                                                :error-messages="saving_errors.from"
-                                                label="Nga: "
-                                                prepend-icon="mdi-numeric"
+                                                :error-messages="saving_errors_in.from"
+                                                label="Nga: *"
                                                 v-model="new_in_payment.from"
                                             ></v-text-field>
                                         </v-col>
 
                                         <v-col class="py-1" cols="6">
                                             <v-text-field
-                                                :error-messages="saving_errors.to"
+                                                :error-messages="saving_errors_in.to"
                                                 label="Per: "
-                                                prepend-icon="mdi-numeric"
                                                 v-model="new_in_payment.to"
                                                 disabled
                                             ></v-text-field>
@@ -90,17 +89,15 @@
                                     <v-row>
                                         <v-col class="py-1" cols="4">
                                             <v-text-field
-                                                :error-messages="saving_errors.name"
-                                                label="Emri: "
-                                                prepend-icon="mdi-numeric"
+                                                :error-messages="saving_errors_in.name"
+                                                label="Emri pershkrues: *"
                                                 v-model="new_in_payment.name"
                                             ></v-text-field>
                                         </v-col>
                                         <v-col class="py-1" cols="8">
                                             <v-text-field
-                                                :error-messages="saving_errors.description"
-                                                label="Pershkrimi: "
-                                                prepend-icon="mdi-numeric"
+                                                :error-messages="saving_errors_in.description"
+                                                label="Detaje: "
                                                 v-model="new_in_payment.description"
                                             ></v-text-field>
                                         </v-col>
@@ -128,7 +125,98 @@
                     <v-container>
                         <v-row class="mx-5 mt-5">
                             <v-col cols="12">
-                                <v-card outlined tile class="py-5 px-8"></v-card>
+                                <v-card outlined tile class="py-5 px-8">
+                                    <v-row class="py-0">
+                                        <v-col class="py-1" cols="3">
+                                            <v-text-field
+                                                :error-messages="saving_errors_out.amount"
+                                                label="Shuma: *"
+                                                v-model="new_out_payment.amount"
+                                            ></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                    <v-row class="py-0">
+                                        <div class="flex-grow-6"></div>
+                                        <v-col class="py-1" cols="6">
+                                            <v-autocomplete
+                                                :items="for_out_items"
+                                                clear-icon="mdi-close"
+                                                clearable
+                                                item-text="name"
+                                                item-value="id"
+                                                label="I takon: *"
+                                                no-data-text="Nuk ka te dhena!"
+                                                return-object
+                                                v-model="for_out_select"
+                                                hint="Nese eshte pagese per punen e meparashme."
+                                                persistent-hint
+                                            >
+                                                <template
+                                                    v-slot:selection="{attr,on,item,selected}"
+                                                >
+                                                    <v-row class="pa-0 ma-0">
+                                                        <v-col
+                                                            cols="9"
+                                                            class="pa-0 ma-0"
+                                                        >{{item.name}} {{belongs_to_readable(item.model)}}</v-col>
+                                                    </v-row>
+                                                </template>
+                                                <template v-slot:item="{ item }">
+                                                    <v-row>
+                                                        <v-col cols="9">{{item.name}}</v-col>
+                                                        <v-col
+                                                            cols="3"
+                                                            class="text-right"
+                                                        >{{belongs_to_readable(item.model)}}</v-col>
+                                                    </v-row>
+                                                </template>
+                                            </v-autocomplete>
+                                        </v-col>
+                                        <v-col class="py-1" cols="6">
+                                            <v-combobox
+                                                label="Kategoria: *"
+                                                :error-messages="saving_errors_out.category"
+                                                v-model="new_out_payment.category"
+                                                :items="data.categories"
+                                                item-text="category"
+                                                clearable
+                                            ></v-combobox>
+                                        </v-col>
+                                        <v-col class="py-1" cols="6">
+                                            <v-text-field
+                                                :error-messages="saving_errors_out.from"
+                                                label="Nga: *"
+                                                v-model="new_out_payment.from"
+                                                disabled
+                                            ></v-text-field>
+                                        </v-col>
+
+                                        <v-col class="py-1" cols="6">
+                                            <v-text-field
+                                                :error-messages="saving_errors_out.to"
+                                                label="Per: "
+                                                v-model="new_out_payment.to"
+                                                
+                                            ></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                    <v-row>
+                                        <v-col class="py-1" cols="4">
+                                            <v-text-field
+                                                :error-messages="saving_errors_out.name"
+                                                label="Emri pershkrues: *"
+                                                v-model="new_out_payment.name"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col class="py-1" cols="8">
+                                            <v-text-field
+                                                :error-messages="saving_errors_out.description"
+                                                label="Detaje: "
+                                                v-model="new_out_payment.description"
+                                            ></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-card>
                             </v-col>
                         </v-row>
 
@@ -147,6 +235,7 @@
                         </v-row>
                     </v-container>
                 </v-tab-item>
+
             </v-tabs-items>
         </v-card>
     </div>
@@ -160,18 +249,16 @@ export default {
     data() {
         return {
             tab: 0,
-            payment_type: [
-                { text: "Hyrje", value: "in" },
-                { text: "Dalje", value: "out" }
-            ],
-            selected_for_item: { name: "", model: "" },
+
+            selected_for_in_item: { name: "", model: "" },
+            selected_for_out_item: { name: "", model: "" },
             data: {
-                for: [],
-                categories:[]
+                for_in: [],
+                for_out: [],
+                categories: []
             },
 
             new_in_payment: {
-                id: "",
                 name: "",
                 from: "",
                 to: "Studio",
@@ -184,30 +271,27 @@ export default {
                 paymentable_id: ""
             },
             new_out_payment: {
-                id: "",
                 name: "",
                 from: "Studio",
                 to: "",
                 amount: "",
                 type: "out",
+                status: "paid",
+                category: "",
                 description: "",
-                created_at: "",
-                updated_at: "",
-                created_by: {},
-
-                belongs_to: {},
-                class_name: "",
-                model: ""
+                paymentable_type: "",
+                paymentable_id: ""
             },
 
-            saving_errors: {}
+            saving_errors_in: {},
+            saving_errors_out: {}
         };
     },
     computed: {
-        for_select: {
+        for_in_select: {
             set: function(item) {
                 let currentObj = this;
-                if (item != null) {
+                if (item != null && item.model != "") {
                     currentObj.new_in_payment.from = item.name;
 
                     if (item.model == "App\\Job") {
@@ -215,8 +299,9 @@ export default {
                             item.client + "(Klienti)";
                     }
                     currentObj.new_in_payment.name = item.name + "(Pagese)";
-
-                    currentObj.new_in_payment.paymentable_type = item.model;
+                    currentObj.selected_for_in_item = item;
+                    currentObj.new_in_payment.paymentable_type =
+                        "App\\" + item.model;
                     currentObj.new_in_payment.paymentable_id = item.id;
                     // currentObj.selected_for_item = item;
                 } else {
@@ -227,37 +312,50 @@ export default {
                     currentObj.new_in_payment.paymentable_id = "";
                 }
             },
-            get: function() {}
+            get: function() {
+                return this.selected_for_in_item;
+            }
         },
-        for_items: function() {
-            this.data.for.unshift({
+        for_out_select: {
+            set: function(item) {
+                let currentObj = this;
+                if (item != null && item.model != "") {
+                    currentObj.new_out_payment.to = item.name;
+
+
+                    currentObj.new_out_payment.name = item.name + "(Pagese)";
+                    currentObj.selected_for_out_item = item;
+                    currentObj.new_out_payment.paymentable_type =
+                        "App\\" + item.model;
+                    currentObj.new_out_payment.paymentable_id = item.id;
+                    // currentObj.selected_for_item = item;
+                } else {
+                    currentObj.new_out_payment.name = "";
+
+                    currentObj.new_out_payment.to = "";
+                    currentObj.new_out_payment.paymentable_type = "";
+                    currentObj.new_out_payment.paymentable_id = "";
+                }
+            },
+            get: function() {
+                return this.selected_for_out_item;
+            }
+        },
+        for_in_items: function() {
+            this.data.for_in.unshift({
                 name: "E paspecifikuar",
                 model: ""
             });
-            return this.data.for;
+            return this.data.for_in;
         },
-        clients: function() {
-            let clients_map = [];
-            clients_map = this.data.clients.map(function(client) {
-                return { text: client.name, value: client.id };
+        for_out_items: function() {
+            this.data.for_out.unshift({
+                name: "E paspecifikuar",
+                model: ""
             });
-            clients_map.unshift({ text: "E paspecifikuar", value: -1 });
-
-            return clients_map;
+            return this.data.for_out;
         },
-        client_jobs: function() {
-            let currentObj = this;
-            let clients_jobs_map = [];
-            clients_jobs_map = currentObj.data.jobs.filter(
-                job => job.client_id === currentObj.selected_client_id
-            );
-            clients_jobs_map = clients_jobs_map.map(function(job) {
-                return { text: job.name, value: job.id };
-            });
 
-            clients_jobs_map.unshift({ text: "E paspecifikuar", value: -1 });
-            return clients_jobs_map;
-        }
     },
     methods: {
         belongs_to_readable(belongs_to) {
@@ -276,7 +374,7 @@ export default {
             if (belongs_to === "File") {
                 return "Fajll";
             }
-            if (belongs_to === "Inevntory") {
+            if (belongs_to === "Inventory") {
                 return "Pajisje";
             }
             if (belongs_to === "Note") {
@@ -300,8 +398,7 @@ export default {
 
         submit_payment_in: function() {
             let currentObj = this;
-            if (currentObj.selected_client_id == -1) {
-                currentObj.new_in_payment.from = "E pacaktuar";
+            if (currentObj.new_in_payment.paymentable_type == "") {
                 delete currentObj.new_in_payment.paymentable_type;
                 delete currentObj.new_in_payment.paymentable_id;
             }
@@ -309,7 +406,7 @@ export default {
             axios
                 .post(`/payment`, currentObj.new_in_payment)
                 .then(function(resp) {
-                    currentObj.saving_errors = {};
+                    currentObj.saving_errors_in = {};
                     currentObj.new_in_payment = {
                         id: "",
                         name: "",
@@ -323,13 +420,14 @@ export default {
                         paymentable_type: "",
                         paymentable_id: ""
                     };
+                    currentObj.selected_for_in_item = { name: "", model: "" };
                     currentObj.$store.dispatch("showSnackbar", {
                         color: "success",
                         text: "Te dhenat per pagesen u ruajten!"
                     });
                 })
                 .catch(function(resp) {
-                    currentObj.saving_errors = resp.response.data.errors;
+                    currentObj.saving_errors_in = resp.response.data.errors;
                     currentObj.$store.dispatch("showSnackbar", {
                         color: "error",
                         text: "Te dhenat nuk u ruajten"
@@ -338,29 +436,43 @@ export default {
         },
         submit_payment_out: function() {
             let currentObj = this;
+            if (currentObj.new_out_payment.paymentable_type == "") {
+                delete currentObj.new_out_payment.paymentable_type;
+                delete currentObj.new_out_payment.paymentable_id;
+            }
 
             axios
-                .post(`/employee`, currentObj.new_employee)
+                .post(`/payment`, currentObj.new_out_payment)
                 .then(function(resp) {
-                    currentObj.saving_errors = [];
+                    currentObj.saving_errors_out = {};
+                    currentObj.new_out_payment = {
+                        id: "",
+                        name: "",
+                        from: "Studio",
+                        to: "",
+                        amount: "",
+                        type: "out",
+                        status: "paid",
+                        description: "",
+                        category: "",
+                        paymentable_type: "",
+                        paymentable_id: ""
+                    };
+                    currentObj.selected_for_out_item = { name: "", model: "" };
                     currentObj.$store.dispatch("showSnackbar", {
                         color: "success",
-                        text: "Klienti u krijua!"
+                        text: "Te dhenat per pagesen u ruajten!"
                     });
-                    currentObj.$router.push(
-                        `/employee/${resp.data.new_employee_id}`
-                    );
                 })
                 .catch(function(resp) {
-                    console.log(resp.data);
-
-                    currentObj.saving_errors = resp.response.data.errors;
+                    currentObj.saving_errors_out = resp.response.data.errors;
                     currentObj.$store.dispatch("showSnackbar", {
                         color: "error",
                         text: "Te dhenat nuk u ruajten"
                     });
                 });
-        }
+        },
+
     },
     beforeMount() {
         let currentObj = this;

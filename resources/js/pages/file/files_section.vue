@@ -105,7 +105,7 @@ export default {
                 method: "delete"
             })
                 .then(function(resp) {
-                    currentObj.$parent.files = currentObj.files.filter(
+                    currentObj.files = currentObj.files.filter(
                         file => file.id != id
                     );
 
@@ -138,7 +138,7 @@ export default {
                 })
                 .then(function(resp) {
                     // console.log(this.files)
-                    currentObj.$parent.files.push(resp.data.file);
+                    currentObj.files.push(resp.data.file);
                     currentObj.new_file_dialog = false;
                     currentObj.new_file_errors = false;
                     currentObj.new_file_name = "";

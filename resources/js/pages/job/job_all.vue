@@ -1,17 +1,17 @@
 <template>
 <v-card class="px-5 ma-5">
 
-        <v-card-title>
-            Te gjithe klientet
-            <div class="flex-grow-1"></div>
-            <v-text-field
+            <v-card-title>
+                <v-icon left>mdi-calendar-multiple</v-icon>Te gjitha punet
+                <div class="flex-grow-1"></div>
+                <v-text-field
                     v-model="search"
                     append-icon="mdi-account-search"
                     label="Kerko"
                     single-line
                     hide-details
-            ></v-text-field>
-        </v-card-title>
+                ></v-text-field>
+            </v-card-title>
         <v-data-table
                 :headers="headers"
                 :items="jobs"

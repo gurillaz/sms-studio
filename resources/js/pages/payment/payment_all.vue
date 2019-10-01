@@ -89,7 +89,7 @@ export default {
             if (belongs_to === "File") {
                 return "Fajll";
             }
-            if (belongs_to === "Inevntory") {
+            if (belongs_to === "Inventory") {
                 return "Pajisje";
             }
             if (belongs_to === "Note") {
@@ -119,10 +119,12 @@ export default {
                 // console.log(resp.data);
                 currentObj.payments = resp.data.payments;
                 currentObj.payments.forEach(payment => {
+
                     payment["updated_at_readable"] = currentObj.readable_date(
                         payment.created_at,
                         payment.updated_at
                     );
+                    if(payment.belongs_to != ''){
                     payment["readable_type"] = currentObj.readable_type(
                         payment.type                    );
                     payment["belongs_to_readable"] =
@@ -130,6 +132,7 @@ export default {
                         currentObj.belongs_to_readable(payment.model) +
                         ") " +
                         payment.belongs_to.name;
+                        }
                     return payment;
                 });
             })

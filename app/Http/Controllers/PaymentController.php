@@ -35,13 +35,17 @@ class PaymentController extends Controller
             $data['belongs_to'] = $payment->paymentable->only(['id', 'name']);
      
             $data['model'] = explode('\\', trim($payment->paymentable_type))[1];
+        }else{
+            $data['belongs_to'] = '';
+     
+            $data['model'] = '';
         }
             return $data;
         });
 
 
         return Response::json([
-            'payments' => $payments
+            'payments' => $payments_map
         ], 200);
     }
 
@@ -67,16 +71,31 @@ class PaymentController extends Controller
             $resource_data['model'] = explode('\\', trim($resource->getMorphClass()))[1];
             return $resource_data;
         });
+        $employess = Employee::all()->map(function($resource){
+            $resource_data = [];
+            $resource_data['id'] = $resource->id;
+            $resource_data['name'] = $resource->name;
+            $resource_data['model'] = explode('\\', trim($resource->getMorphClass()))[1];
+            return $resource_data;
+        });
+        $inventory = Inventory::all()->map(function($resource){
+            $resource_data = [];
+            $resource_data['id'] = $resource->id;
+            $resource_data['name'] = $resource->name;
+            $resource_data['model'] = explode('\\', trim($resource->getMorphClass()))[1];
+            return $resource_data;
+        });
 
-        $employess = Employee::all();
-        $inventory = Inventory::all();
-        $categories = Payment::all('category');
+
+
+        $categories = Payment::all()->pluck('category');
 
         $data = [];
 
 
         // $data['notes'] = $payment->notes;
-        $data['for'] = $clients->merge($jobs);
+        $data['for_in'] = $clients->merge($jobs);
+        $data['for_out'] = $employess->merge($inventory);
         $data['categories'] = $categories;
  
 
@@ -138,9 +157,14 @@ class PaymentController extends Controller
 
         $data = $payment->only('id', 'name', 'description', 'category', 'from', 'to', 'amount', 'type', 'created_at', 'updated_at');
         $data['created_by'] = $payment->user->only('name');
-
+        if($payment->paymentable != null){
         $data['belongs_to'] = $payment->paymentable->only(['id', 'name']);
         $data['model'] = explode('\\', trim($payment->paymentable_type))[1];
+    }
+    else{
+        $data['belongs_to'] = '';
+        $data['model'] = '';
+    }
         $data['class_name'] = $payment->getMorphClass();
         $data['notes'] = $payment->notes;
         $data['files'] = $payment->files;
@@ -190,8 +214,15 @@ class PaymentController extends Controller
         $data = $payment->only('id', 'name', 'description', 'from', 'to', 'amount', 'type', 'created_at', 'updated_at');
         $data['created_by'] = $payment->user->only('name');
 
-        $data['belongs_to'] = $payment->paymentable->only(['id', 'name']);
-        $data['model'] = explode('\\', trim($payment->paymentable_type))[1];
+        if($payment->paymentable != null){
+            $data['belongs_to'] = $payment->paymentable->only(['id', 'name']);
+            $data['model'] = explode('\\', trim($payment->paymentable_type))[1];
+        }
+        else{
+            $data['belongs_to'] = '';
+            $data['model'] = '';
+        }
+
         $data['class_name'] = $payment->getMorphClass();
         $data['notes'] = $payment->notes;
         $data['files'] = $payment->files;
@@ -213,6 +244,7 @@ class PaymentController extends Controller
     {
         $payment->delete();
         $payment->save();
+
         return Response::json([
             'message' => "Payment Deleted!"
         ], 200);

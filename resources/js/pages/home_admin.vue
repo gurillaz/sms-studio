@@ -1,6 +1,6 @@
 <template>
     <div class="mx-4 pt-0 mt-0">
-        <v-row class="mt-0 pt-0">
+    <!--    <v-row class="mt-0 pt-0">
             <v-col cols="3" class="pt-0">
                 <v-card >
                     <v-sheet color="red" height="5" tile></v-sheet>
@@ -67,11 +67,12 @@
             </v-col>
 
         </v-row>
+        -->
         <v-row>
             <v-col cols="12">
                 <v-card class="">
                     <v-col>
-                        <v-sheet height="64">
+                        <v-sheet>
                             <v-toolbar flat color="white">
                                 <v-btn outlined class="mr-10" @click="setToday">Sot</v-btn>
 
@@ -107,7 +108,7 @@
                                 </v-menu>
                             </v-toolbar>
                         </v-sheet>
-                        <v-card outlined tile height="60vh" class="mx-4 mb-4">
+                        <v-card outlined tile height="68vh" class="mx-4 mb-4">
                             <v-calendar
                                 ref="calendar"
                                 v-model="focus"
