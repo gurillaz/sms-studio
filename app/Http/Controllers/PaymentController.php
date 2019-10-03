@@ -31,15 +31,15 @@ class PaymentController extends Controller
             // $data = $payment->only(['id', 'name', 'created_at', 'updated_at']);
             $data = $payment;
             $data['created_by'] = $payment->user->only('name');
-            if(isset($payment->paymentable)){
-            $data['belongs_to'] = $payment->paymentable->only(['id', 'name']);
-     
-            $data['model'] = explode('\\', trim($payment->paymentable_type))[1];
-        }else{
-            $data['belongs_to'] = '';
-     
-            $data['model'] = '';
-        }
+            if (isset($payment->paymentable)) {
+                $data['belongs_to'] = $payment->paymentable->only(['id', 'name']);
+
+                $data['model'] = explode('\\', trim($payment->paymentable_type))[1];
+            } else {
+                $data['belongs_to'] = '';
+
+                $data['model'] = '';
+            }
             return $data;
         });
 
@@ -56,14 +56,14 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        $clients = Client::all()->map(function($resource){
+        $clients = Client::all()->map(function ($resource) {
             $resource_data = [];
             $resource_data['id'] = $resource->id;
             $resource_data['name'] = $resource->name;
             $resource_data['model'] = explode('\\', trim($resource->getMorphClass()))[1];
             return $resource_data;
         });
-        $jobs = Job::all()->map(function($resource){
+        $jobs = Job::all()->map(function ($resource) {
             $resource_data = [];
             $resource_data['id'] = $resource->id;
             $resource_data['name'] = $resource->name;
@@ -71,14 +71,14 @@ class PaymentController extends Controller
             $resource_data['model'] = explode('\\', trim($resource->getMorphClass()))[1];
             return $resource_data;
         });
-        $employess = Employee::all()->map(function($resource){
+        $employess = Employee::all()->map(function ($resource) {
             $resource_data = [];
             $resource_data['id'] = $resource->id;
             $resource_data['name'] = $resource->name;
             $resource_data['model'] = explode('\\', trim($resource->getMorphClass()))[1];
             return $resource_data;
         });
-        $inventory = Inventory::all()->map(function($resource){
+        $inventory = Inventory::all()->map(function ($resource) {
             $resource_data = [];
             $resource_data['id'] = $resource->id;
             $resource_data['name'] = $resource->name;
@@ -97,7 +97,7 @@ class PaymentController extends Controller
         $data['for_in'] = $clients->merge($jobs);
         $data['for_out'] = $employess->merge($inventory);
         $data['categories'] = $categories;
- 
+
 
         return Response::json([
             'data' => $data,
@@ -157,14 +157,13 @@ class PaymentController extends Controller
 
         $data = $payment->only('id', 'name', 'description', 'category', 'from', 'to', 'amount', 'type', 'created_at', 'updated_at');
         $data['created_by'] = $payment->user->only('name');
-        if($payment->paymentable != null){
-        $data['belongs_to'] = $payment->paymentable->only(['id', 'name']);
-        $data['model'] = explode('\\', trim($payment->paymentable_type))[1];
-    }
-    else{
-        $data['belongs_to'] = '';
-        $data['model'] = '';
-    }
+        if ($payment->paymentable != null) {
+            $data['belongs_to'] = $payment->paymentable->only(['id', 'name']);
+            $data['model'] = explode('\\', trim($payment->paymentable_type))[1];
+        } else {
+            $data['belongs_to'] = '';
+            $data['model'] = '';
+        }
         $data['class_name'] = $payment->getMorphClass();
         $data['notes'] = $payment->notes;
         $data['files'] = $payment->files;
@@ -172,6 +171,7 @@ class PaymentController extends Controller
         return Response::json([
             'payment' => $data,
         ], 200);
+        
     }
 
     /**
@@ -214,11 +214,10 @@ class PaymentController extends Controller
         $data = $payment->only('id', 'name', 'description', 'from', 'to', 'amount', 'type', 'created_at', 'updated_at');
         $data['created_by'] = $payment->user->only('name');
 
-        if($payment->paymentable != null){
+        if ($payment->paymentable != null) {
             $data['belongs_to'] = $payment->paymentable->only(['id', 'name']);
             $data['model'] = explode('\\', trim($payment->paymentable_type))[1];
-        }
-        else{
+        } else {
             $data['belongs_to'] = '';
             $data['model'] = '';
         }

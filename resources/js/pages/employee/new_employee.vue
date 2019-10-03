@@ -10,17 +10,13 @@
                     <v-container class="pa-1">
                         <v-card outlined tile class="py-5 px-8">
                             <!-- titulli -->
-                            <v-card-title>
-                                <v-icon left>mdi-account-group</v-icon>Te gjithe puntoret
-                                <div class="flex-grow-1"></div>
-                            </v-card-title>
+                                    <span class="text-uppercase">Te dhenat baze</span>
 
                             <v-row class="py-0">
                                 <v-col class="py-1" cols="5">
                                     <v-text-field
                                         :error-messages="saving_errors.name"
                                         label="Emri: *"
-                                        prepend-icon="mdi-account-card-details-outline"
                                         required
                                         v-model="new_employee.name"
                                     ></v-text-field>
@@ -31,7 +27,6 @@
                                         hint="Nr. i leternjoftimit"
                                         label="Numri personal: *"
                                         persistent-hint
-                                        prepend-icon="mdi-numeric"
                                         v-model="new_employee.personal_id"
                                         :disabled="new_employee.employee_type == 'contractor'"
                                     ></v-text-field>
@@ -44,7 +39,6 @@
                                         :error-messages="saving_errors.address"
                                         label="Adresa: *"
                                         hint="Vendbanimi (qyteti, fshati ose rruga)"
-                                        prepend-icon="mdi-map-marker-outline"
                                         v-model="new_employee.address"
                                     ></v-text-field>
                                 </v-col>
@@ -54,7 +48,6 @@
                                     <v-text-field
                                         :error-messages="saving_errors.email"
                                         label="Email adresa: *"
-                                        prepend-icon="mdi-email-variant"
                                         required
                                         v-model="new_employee.email"
                                         name="new_employe_email"
@@ -66,7 +59,6 @@
                                         hint="Nr. i leternjoftimit"
                                         label="Numri i telefonit: *"
                                         persistent-hint
-                                        prepend-icon="mdi-cellphone-text"
                                         v-model="new_employee.phone"
                                     ></v-text-field>
                                 </v-col>
@@ -87,10 +79,7 @@
                         <v-card outlined tile class="py-5 px-8">
                             <!-- titulli -->
                             <v-row class="px-2 mb-3">
-                                <div>
-                                    <v-icon left>mdi-account-plus</v-icon>
-                                    <span class="text-uppercase font-weight-bold">Te dhenat e punes</span>
-                                </div>
+                           <span class="text-uppercase">Te dhenat e punes</span>
                                 <div class="flex-grow-1"></div>
                             </v-row>
                             <!-- body -->
@@ -102,7 +91,6 @@
                                         hint="I rregullt, part-time"
                                         label="Lloji i puntorit: *"
                                         persistent-hint
-                                        prepend-icon="mdi-account-supervisor"
                                         v-model="new_employee.employee_type"
                                         :items="employee_types"
                                         :menu-props="{'offsetY':true}"
@@ -112,7 +100,6 @@
                                     <v-text-field
                                         :error-messages="saving_errors.position"
                                         label="Pozita: *"
-                                        prepend-icon="mdi-account-tie"
                                         required
                                         v-model="new_employee.position"
                                     ></v-text-field>
@@ -126,7 +113,6 @@
                                         hint="Sh. Pagesa 1 here ne muaj"
                                         label="Lloji i pageses: *"
                                         persistent-hint
-                                        prepend-icon="mdi-cash-usd"
                                         v-model="new_employee.salary_type"
                                         :items="salary_types"
                                         :menu-props="{'offsetY':true}"
@@ -136,7 +122,6 @@
                                     <v-text-field
                                         :error-messages="saving_errors.salary_amount"
                                         label="Shuma: "
-                                        prepend-icon="mdi-numeric"
                                         v-model="new_employee.salary_amount"
                                     ></v-text-field>
                                 </v-col>
@@ -158,9 +143,8 @@
                             <!-- titulli -->
                             <v-row class="px-2 mb-3">
                                 <div>
-                                    <v-icon left>mdi-account-plus</v-icon>
                                     <span
-                                        class="text-uppercase font-weight-bold red--text"
+                                        class="text-uppercase font-weight-bold"
                                     >Qasja ne aplikacion</span>
                                 </div>
                                 <div class="flex-grow-1"></div>
@@ -170,7 +154,6 @@
                                     <v-text-field
                                         :error-messages="saving_errors.email"
                                         label="Email adresa: *"
-                                        prepend-icon="mdi-email-variant"
                                         required
                                         v-model="new_employee.email"
                                         disabled
@@ -185,7 +168,6 @@
                                         hint="Sipas llojit, caktohet qasja ne te dhena"
                                         label="Lloji i perdoruesit: *"
                                         persistent-hint
-                                        prepend-icon="mdi-shield-account-outline"
                                         v-model="new_employee.role"
                                         :items="roles"
                                         :menu-props="{'offsetY':true}"
@@ -200,7 +182,6 @@
                                         label="Fjalkalimi: *"
                                         hint="Te pakten 6 karaktere"
                                         persistent-hint
-                                        prepend-icon="mdi-onepassword"
                                         v-model="new_employee.password"
                                         :append-icon="show_password_1 ? 'mdi-eye' : 'mdi-eye-off'"
                                         :type="show_password_1 ? 'text' : 'password'"
@@ -215,7 +196,6 @@
                                         :error="confirm_password!='' && new_employee.password != confirm_password"
                                         :error-messages="new_employee.password != confirm_password ? 'Fjalkalimi nuk perputhet': ''"
                                         label="Perserit fjalkallimin: *"
-                                        prepend-icon="mdi-onepassword"
                                         v-model="confirm_password"
                                         :append-icon="show_password_2 ? 'mdi-eye' : 'mdi-eye-off'"
                                         :type="show_password_2 ? 'text' : 'password'"

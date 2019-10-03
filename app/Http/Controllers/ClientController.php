@@ -38,9 +38,18 @@ class ClientController extends Controller
      */
     public function create()
     {
+        $cities = Client::all()->pluck('city');
+
+        $data = [];
 
 
-        return redirect()->to('client' . '#add_client_section');
+        $data['cities'] = $cities;
+
+
+        return Response::json([
+            'data' => $data,
+        ], 200);
+
     }
 
     /**

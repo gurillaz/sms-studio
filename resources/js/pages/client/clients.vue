@@ -48,7 +48,7 @@ export default {
                 { text: "Telefon", value: "phone" },
                 { text: "Email", value: "email" },
                 { text: "Qyteti", value: "city" },
-                { text: "Adresa", value: "address" },
+                // { text: "Adresa", value: "address" },
                 { text: "", value: "action", sortable: false, align: "right" }
             ],
             clients: []

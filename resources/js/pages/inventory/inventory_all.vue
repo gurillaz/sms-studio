@@ -52,6 +52,7 @@ import moment from 'moment';
                     { text: 'Lloji', value: 'type' },
                     { text: 'Cmimi i blerjes', value: 'price' },
                     { text: 'Data e blerjes', value: 'purchase_date' },
+                    { text: 'Furnitori: ', value: 'supplier' },
                     { text: 'Shtuar me date:', value: 'created_at' },
 
                     { text: 'Statusi:', value: 'status' },

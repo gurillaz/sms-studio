@@ -41,16 +41,17 @@
                                 </v-col>
                                 <v-col cols="3">
                                     <v-text-field
-                           
                                         label="I takon::"
                                         :value="`${belongs_to.name} (${belongsToReadable()})`"
                                         readonly
                                     ></v-text-field>
                                 </v-col>
                                 <v-col cols="2" class="pt-6">
-                                    <v-btn block text :to="`/${model}/${belongs_to.id}`">
-                                        Shiko burimin
-                                    </v-btn>
+                                    <v-btn
+                                        block
+                                        text
+                                        :to="`/${model}/${belongs_to.id}`"
+                                    >Shiko burimin</v-btn>
                                 </v-col>
                                 <v-col cols="12">
                                     <v-text-field label="Titulli:" :value="note.name" readonly></v-text-field>
@@ -69,69 +70,65 @@
                 </v-card>
             </v-col>
         </v-row>
-        <v-dialog v-model="edit_dialog" persistent max-width="75vw" >
-           
-                <v-card color="amber lighten-2">
-                    <v-card-title>
-                        <span class="headline pl-3">Ndrysho te dhenat</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-container fluid>
-                            <v-row>
-                                <v-col cols="4">
-                                    <v-text-field
-                                        label="Shtuar me date:"
-                                        :value="formatedDate()"
-                                        disabled
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="3">
-                                    <v-text-field
-                                        label="Shtuar nga:"
-                                        :value="created_by.name"
-                                        disabled
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="3">
-                                    <v-text-field
-                                        @click="redirectToBelonger()"
-                                        label="I takon::"
-                                        :value="`${belongs_to.name} (${belongsToReadable()})`"
-                                        disabled
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="2" class="pt-6">
-                                    <v-btn disabled block text :to="`/${model}/${belongs_to.id}`">
-                                        Shiko burimin
-                                    </v-btn>
-                                </v-col>
-                                <v-col cols="12">
-                                    <v-text-field label="Titulli:" v-model="edit_note.name" 
-                                        :error-messages="updating_errors.name"
-                                    
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="12">
-                                    <v-textarea
-                                        label="Shenimi:"
-                                        rows="10"
-                                        v-model="edit_note.body"
-                                        :error-messages="updating_errors.body"
-                                        
-                                    ></v-textarea>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </v-card-text>
-                    <v-card-actions>
+        <v-dialog v-model="edit_dialog" persistent max-width="75vw">
+            <v-card color="amber lighten-2">
+                <v-card-title>
+                    <span class="headline pl-3">Ndrysho te dhenat</span>
+                </v-card-title>
+                <v-card-text>
+                    <v-container fluid>
+                        <v-row>
+                            <v-col cols="4">
+                                <v-text-field
+                                    label="Shtuar me date:"
+                                    :value="formatedDate()"
+                                    disabled
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="3">
+                                <v-text-field label="Shtuar nga:" :value="created_by.name" disabled></v-text-field>
+                            </v-col>
+                            <v-col cols="3">
+                                <v-text-field
+                                    @click="redirectToBelonger()"
+                                    label="I takon::"
+                                    :value="`${belongs_to.name} (${belongsToReadable()})`"
+                                    disabled
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="2" class="pt-6">
+                                <v-btn
+                                    disabled
+                                    block
+                                    text
+                                    :to="`/${model}/${belongs_to.id}`"
+                                >Shiko burimin</v-btn>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-text-field
+                                    label="Titulli:"
+                                    v-model="edit_note.name"
+                                    :error-messages="updating_errors.name"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="12">
+                                <v-textarea
+                                    label="Shenimi:"
+                                    rows="10"
+                                    v-model="edit_note.body"
+                                    :error-messages="updating_errors.body"
+                                ></v-textarea>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-card-text>
+                <v-card-actions>
                     <div class="flex-grow-1"></div>
                     <v-btn color="warning" text @click="edit_dialog = false">Mbyll</v-btn>
                     <v-btn color="success" text @click="update()">Ruaj</v-btn>
                 </v-card-actions>
-                </v-card>
-         
+            </v-card>
         </v-dialog>
-
     </div>
 </template>
 
@@ -145,7 +142,7 @@ export default {
         return {
             edit_dialog: false,
             edit_note: {},
-            updating_errors:[],
+            updating_errors: [],
 
             note: {},
             belongs_to: {},
@@ -162,8 +159,9 @@ export default {
                 );
             } else {
                 return (
-                    moment(this.note.updated_at).format("D MMMM Y [ora] HH:mm") +
-                    "(E modifikuar )"
+                    moment(this.note.updated_at).format(
+                        "D MMMM Y [ora] HH:mm"
+                    ) + "(E modifikuar )"
                 );
             }
         },
@@ -204,36 +202,37 @@ export default {
                 return this.model;
             }
         },
-            update() {
-        let currentObj = this;
-        axios
-            .put(`/note/${currentObj.id}`,currentObj.edit_note)
-            .then(function(resp) {
-                currentObj.updating_errors=[];
+        update() {
+            let currentObj = this;
+            axios
+                .put(`/note/${currentObj.id}`, currentObj.edit_note)
+                .then(function(resp) {
+                    currentObj.updating_errors = [];
                     currentObj.edit_dialog = false;
-             
-                currentObj.note = resp.data.note;
 
-                /* Using JSON.parse to copy object, since just asignin resp.data.note only references data 
+                    currentObj.note = resp.data.note;
+
+                    /* Using JSON.parse to copy object, since just asignin resp.data.note only references data 
                 note end edit_note keep changing when used as vue v-model
                 Based on: https://scotch.io/bar-talk/copying-objects-in-javascript
                  */
-                currentObj.edit_note = JSON.parse(JSON.stringify(resp.data.note));
-                   currentObj.$store.dispatch("showSnackbar", {
-                    color: "success",
-                    text: "Te dhenat u ruajten."
+                    currentObj.edit_note = JSON.parse(
+                        JSON.stringify(resp.data.note)
+                    );
+                    currentObj.$store.dispatch("showSnackbar", {
+                        color: "success",
+                        text: "Te dhenat u ruajten."
+                    });
+                })
+                .catch(function(resp) {
+                    // console.log(resp);
+                    currentObj.updating_errors = resp.response.data.errors;
+                    currentObj.$store.dispatch("showSnackbar", {
+                        color: "error",
+                        text: "Te dhenat nuk u ruajten!"
+                    });
                 });
-
-            })
-            .catch(function(resp) {
-                // console.log(resp);
-                currentObj.updating_errors = resp.response.data.errors;
-                currentObj.$store.dispatch("showSnackbar", {
-                    color: "error",
-                    text: "Te dhenat nuk u ruajten!"
-                });
-            });
-    }
+        }
     },
     beforeMount() {
         let currentObj = this;
@@ -241,14 +240,16 @@ export default {
             .get(`/note/${currentObj.id}`)
             .then(function(resp) {
                 // console.log(resp.data);
-             
+
                 currentObj.note = resp.data.note;
-                
+
                 /* Using JSON.parse to copy object, since just asignin resp.data.note only references data 
                 note end edit_note keep changing when used as vue v-model
                 Based on: https://scotch.io/bar-talk/copying-objects-in-javascript
                  */
-                currentObj.edit_note = JSON.parse(JSON.stringify(resp.data.note));
+                currentObj.edit_note = JSON.parse(
+                    JSON.stringify(resp.data.note)
+                );
                 currentObj.belongs_to = resp.data.belongs_to;
                 currentObj.created_by = resp.data.created_by;
                 currentObj.model = resp.data.model;
@@ -260,7 +261,6 @@ export default {
                     text: "Serveri nuk dergoi te dhenat. Rifresko faqen!"
                 });
             });
-    },
-
+    }
 };
 </script>

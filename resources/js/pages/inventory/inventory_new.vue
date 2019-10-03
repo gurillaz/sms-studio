@@ -2,229 +2,62 @@
     <div class="mx-3">
         <v-card>
             <v-card-title>
-                <v-icon left>mdi-account-plus</v-icon>Shto pajisje te re
+                <v-icon left>mdi-camera-plus-outline</v-icon>Shto pajisje te re
                 <div class="flex-grow-1"></div>
             </v-card-title>
             <v-container>
                 <v-row class="mx-5">
                     <v-container class="pa-1">
-                        <v-card outlined  tile class="py-5 px-8">
+                        <v-card outlined tile class="py-5 px-8">
                             <!-- titulli -->
-                            <v-row class="px-2 mb-3">
-                                <div>
-                                    <v-icon left>mdi-account-plus</v-icon>
-                                    <span class="text-uppercase font-weight-bold">Pajisje e re</span>
-                                </div>
-                                <div class="flex-grow-1"></div>
-                            </v-row>
+                            <span class="text-uppercase">Te dhenat baze</span>
 
                             <v-row class="py-0">
-                                <v-col class="py-1" cols="5">
+                                <v-col class="py-1" cols="9">
                                     <v-text-field
                                         :error-messages="saving_errors.name"
                                         label="Emri: *"
-                                        prepend-icon="mdi-account-card-details-outline"
-                                        required
-                                        v-model="new_employee.name"
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col class="py-1" cols="4">
-                                    <v-text-field
-                                        :error-messages="saving_errors.personal_id"
-                                        hint="Nr. i leternjoftimit"
-                                        label="Numri personal: *"
-                                        persistent-hint
-                                        prepend-icon="mdi-numeric"
-                                        v-model="new_employee.personal_id"
-                                        :disabled="new_employee.employee_type == 'contractor'"
+                                        v-model="new_inventory.name"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
 
                             <v-row class="py-0">
-                                <v-col class="py-1" cols="12">
-                                    <v-text-field
-                                        :error-messages="saving_errors.address"
-                                        label="Adresa: *"
-                                        hint="Vendbanimi (qyteti, fshati ose rruga)"
-                                        prepend-icon="mdi-map-marker-outline"
-                                        v-model="new_employee.address"
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
-                            <v-row class="py-0">
-                                <v-col class="py-1" cols="4">
-                                    <v-text-field
-                                        :error-messages="saving_errors.email"
-                                        label="Email adresa: *"
-                                        prepend-icon="mdi-email-variant"
-                                        required
-                                        v-model="new_employee.email"
-                                        name="new_employe_email"
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col class="py-1" cols="4">
-                                    <v-text-field
-                                        :error-messages="saving_errors.phone"
-                                        hint="Nr. i leternjoftimit"
-                                        label="Numri i telefonit: *"
-                                        persistent-hint
-                                        prepend-icon="mdi-cellphone-text"
-                                        v-model="new_employee.phone"
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
-
-                            <v-row class="py-0">
-                                <v-col class="text-left" cols="2">
-                                    <small>*duhet te plotesohen</small>
-                                </v-col>
-                                <div class="flex-grow-1"></div>
-                            </v-row>
-                        </v-card>
-                    </v-container>
-                </v-row>
-
-                <v-row class="mx-5 mt-4">
-                    <v-container class="pa-1">
-                        <v-card outlined tile class="py-5 px-8" >
-                            <!-- titulli -->
-                            <v-row class="px-2 mb-3">
-                                <div>
-                                    <v-icon left>mdi-account-plus</v-icon>
-                                    <span class="text-uppercase font-weight-bold">Te dhenat e punes</span>
-                                </div>
-                                <div class="flex-grow-1"></div>
-                            </v-row>
-                            <!-- body -->
-                            <!-- body -->
-                            <v-row class="py-0">
-                                <v-col class="py-1" cols="4">
-                                    <v-select
-                                        :error-messages="saving_errors.employee_type"
-                                        hint="I rregullt, part-time"
-                                        label="Lloji i puntorit: *"
-                                        persistent-hint
-                                        prepend-icon="mdi-account-supervisor"
-                                        v-model="new_employee.employee_type"
-                                        :items="employee_types"
-                                        :menu-props="{'offsetY':true}"
-                                    ></v-select>
-                                </v-col>
                                 <v-col class="py-1" cols="5">
-                                    <v-text-field
-                                        :error-messages="saving_errors.position"
-                                        label="Pozita: *"
-                                        prepend-icon="mdi-account-tie"
-                                        required
-                                        v-model="new_employee.position"
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
-
-                            <v-row class="py-0">
-                                <v-col class="py-1" cols="4">
-                                    <v-select
-                                        :error-messages="saving_errors.salary_type"
-                                        hint="Sh. Pagesa 1 here ne muaj"
-                                        label="Lloji i pageses: *"
+                                    <v-combobox
+                                        :error-messages="saving_errors.type"
+                                        label="Lloji i pajisjes: *"
+                                        hint="Shtyp te re ose zgjedh nga lista"
                                         persistent-hint
-                                        prepend-icon="mdi-cash-usd"
-                                        v-model="new_employee.salary_type"
-                                        :items="salary_types"
-                                        :menu-props="{'offsetY':true}"
-                                    ></v-select>
+                                        v-model="new_inventory.type"
+                                        :items="data.types"
+                                        item-text="type"
+                                        clearable
+                                    ></v-combobox>
+                                </v-col>
+                                <v-col class="py-1" cols="4">
+                                    <v-text-field
+                                        :error-messages="saving_errors.serial"
+                                        label="Nr. serial:"
+                                        v-model="new_inventory.serial"
+                                    ></v-text-field>
                                 </v-col>
                                 <v-col class="py-1" cols="3">
                                     <v-text-field
-                                        :error-messages="saving_errors.salary_amount"
-                                        label="Shuma: "
-                                        prepend-icon="mdi-numeric"
-                                        v-model="new_employee.salary_amount"
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
-
-                            <v-row class="py-0">
-                                <v-col class="text-left" cols="2">
-                                    <small>*duhet te plotesohen</small>
-                                </v-col>
-                                <div class="flex-grow-1"></div>
-                            </v-row>
-                        </v-card>
-                    </v-container>
-                </v-row>
-
-                <v-row class="mx-5 mt-4">
-                    <v-container class="pa-1">
-                        <v-card outlined tile class="py-5 px-8" >
-                            <!-- titulli -->
-                            <v-row class="px-2 mb-3">
-                                <div>
-                                    <v-icon left>mdi-account-plus</v-icon>
-                                    <span
-                                        class="text-uppercase font-weight-bold red--text"
-                                    >Qasja ne aplikacion</span>
-                                </div>
-                                <div class="flex-grow-1"></div>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="4">
-                                    <v-text-field
-                                        :error-messages="saving_errors.email"
-                                        label="Email adresa: *"
-                                        prepend-icon="mdi-email-variant"
-                                        required
-                                        v-model="new_employee.email"
+                                        :error-messages="saving_errors.status"
+                                        label="Statusi: *"
+                                        v-model="new_inventory.status"
                                         disabled
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
-
-                            <v-row >
-                                <v-col cols="4">
-                                    <v-select
-                                        :error-messages="saving_errors.role"
-                                        hint="Sipas llojit, caktohet qasja ne te dhena"
-                                        label="Lloji i perdoruesit: *"
-                                        persistent-hint
-                                        prepend-icon="mdi-shield-account-outline"
-                                        v-model="new_employee.role"
-                                        :items="roles"
-                                        :menu-props="{'offsetY':true}"
-                                    ></v-select>
-                                </v-col>
-                            </v-row>
-                            <v-row >
-                                <v-col  cols="4">
+                            <v-row class="py-0">
+                                <v-col class="py-1" cols="12">
                                     <v-text-field
-                                        :success="new_employee.password!='' && new_employee.password == confirm_password"
-                                        :error-messages="saving_errors.password"
-                                        label="Fjalkalimi: *"
-                                        hint="Te pakten 6 karaktere"
-                                        persistent-hint
-                                        prepend-icon="mdi-onepassword"
-                                        v-model="new_employee.password"
-                                        :append-icon="show_password_1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                        :type="show_password_1 ? 'text' : 'password'"
-                                        counter
-                                        @click:append="show_password_1 = !show_password_1"
-                                        name="new_employe_psw"
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col  cols="4">
-                                    <v-text-field
-                                        :success="confirm_password!='' && new_employee.password == confirm_password"
-                                        :error="confirm_password!='' && new_employee.password != confirm_password"
-                                        :error-messages="new_employee.password != confirm_password ? 'Fjalkalimi nuk perputhet': ''"
-                                        label="Perserit fjalkallimin: *"
-                                        prepend-icon="mdi-onepassword"
-                                        v-model="confirm_password"
-                                        :append-icon="show_password_2 ? 'mdi-eye' : 'mdi-eye-off'"
-                                        :type="show_password_2 ? 'text' : 'password'"
-                                        counter
-                                        @click:append="show_password_2 = !show_password_2"
-                                        name="new_employe_psw"
+                                        :error-messages="saving_errors.description"
+                                        label="Te dhena shtese:"
+                                        hint="Shtype te dhena shtese per pajisjen"
+                                        v-model="new_inventory.description"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -238,6 +71,75 @@
                         </v-card>
                     </v-container>
                 </v-row>
+
+                <v-row class="mx-5 mt-4">
+                    <v-container class="pa-1">
+                        <v-card outlined tile class="py-5 px-8">
+                            <!-- titulli -->
+                            <v-row class="px-2 mb-3">
+                                <span class="text-uppercase">Te dhenat e furnizimit</span>
+                                <div class="flex-grow-1"></div>
+                            </v-row>
+                            <!-- body -->
+                            <!-- body -->
+                            <v-row class="py-0">
+                                <v-col class="py-1" cols="4">
+                                    <v-text-field
+                                        :error-messages="saving_errors.price"
+                                        label="Cmimi i furnizimit:"
+                                        v-model="new_inventory.price"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col class="py-1" cols="5">
+                                    <v-combobox
+                                        :error-messages="saving_errors.supplier"
+                                        label="Furnitori:"
+                                        hint="Shtyp te re ose zgjedh nga lista"
+                                        persistent-hint
+                                        v-model="new_inventory.supplier"
+                                        :items="data.suppliers"
+                                        item-text="type"
+                                        clearable
+                                    ></v-combobox>
+                                </v-col>
+                            </v-row>
+
+                            <v-row class="py-0">
+                                <v-col class="py-1" cols="4">
+                                    <v-menu
+                                        :close-on-content-click="false"
+                                        max-width="290"
+                                        v-model="date_picker"
+                                    >
+                                        <template v-slot:activator="{ on }">
+                                            <v-text-field
+                                                :value="readable_date"
+                                                :error-messages="saving_errors.purchase_date"
+                                                label="Data e blerjes:"
+                                                hint="Zgjidh daten ne kalendar"
+                                                persistent-hint
+                                                readonly
+                                                v-on="on"
+                                            ></v-text-field>
+                                        </template>
+                                        <v-date-picker
+                                            v-model="new_inventory.purchase_date"
+                                            @change="date_picker = false"
+                                        ></v-date-picker>
+                                    </v-menu>
+                                </v-col>
+                            </v-row>
+
+                            <v-row class="py-0">
+                                <v-col class="text-left" cols="2">
+                                    <small>*duhet te plotesohen</small>
+                                </v-col>
+                                <div class="flex-grow-1"></div>
+                            </v-row>
+                        </v-card>
+                    </v-container>
+                </v-row>
+
                 <v-row class="mx-1 mt-5">
                     <div class="flex-grow-1"></div>
 
@@ -258,60 +160,62 @@
 
 <script>
 import axios from "@/js/config/axios.js";
+import moment from "moment";
 
 export default {
     components: {},
     data() {
         return {
-            roles: [
-                { text: "Administrator", value: "admin" },
-                { text: "Puntor", value: "employee" }
-            ],
-            employee_types: [
-                { text: "I rregullt", value: "regular" },
-                { text: "Part Time", value: "part_time" }
-            ],
-            salary_types: [
-                { text: "Ore", value: "hour" },
-                { text: "Dite", value: "day" },
-                { text: "Jave", value: "week" },
-                { text: "Muaj", value: "month" },
-                { text: "E pacaktuar", value: "undefined" }
-            ],
-
-            new_employee: {
+            date_picker: false,
+            new_inventory: {
                 name: "",
-                personal_id: "",
-                address: "",
-                email: "",
-                phone: "",
-                employee_type: "",
-                position: "",
-                salary_type: "",
-                salary_amount: "",
-                role: "",
-                password: ""
+                description: "",
+                price: "",
+                supplier: "",
+                purchase_date: "",
+                type: "",
+                serial: "",
+                status: "active"
             },
-            saving_errors: [],
-            show_password_1: false,
-            show_password_2: false,
-            confirm_password: ""
+            data: {},
+            saving_errors: []
         };
     },
-    computed: {},
+    computed: {
+        readable_date() {
+            moment.locale("sq");
+            return this.new_inventory.purchase_date
+                ? moment(this.date).format("D MMMM  YYYY, dddd")
+                : "";
+        }
+    },
     methods: {
         submit_data: function() {
             let currentObj = this;
+            /* Create new object with properties from fileds, ONLY if field has a value.(remove properties with empty fileds) This to comply with vlidation rules in
+            CreateInventoryRequest, for attributes where validation "sometimes" is set.
+            
+            */
+            let data = {};
+            Object.keys(currentObj.new_inventory).forEach(function(prop) {
+                if (currentObj.new_inventory[prop] != "") {
+                    return (data[prop] = currentObj.new_inventory[prop]);
+                }
+            });
+
+            // console.log(data);
 
             axios
-                .post(`/employee`, currentObj.new_employee)
+                .post(`/inventory`, data)
                 .then(function(resp) {
                     currentObj.saving_errors = false;
                     currentObj.$store.dispatch("showSnackbar", {
                         color: "success",
                         text: "Klienti u krijua!"
                     });
-                    currentObj.$router.push(`/employee/${resp.data.new_employee_id}`);
+                    currentObj.$router.push(
+                        `/inventory/${resp.data.new_inventory_id}`
+                    );
                 })
                 .catch(function(resp) {
                     console.log(resp.data);
@@ -324,6 +228,26 @@ export default {
                 });
         }
     },
-    beforeMount: function() {}
+    beforeMount: function() {
+        let currentObj = this;
+        axios
+            .get("/inventory/create")
+            .then(function(resp) {
+                // console.log(resp.data);
+
+                currentObj.data = resp.data.data;
+
+                // currentObj.belongs_to = resp.data.belongs_to;
+                // currentObj.created_by = resp.data.created_by;
+                // currentObj.model = resp.data.model;
+            })
+            .catch(function(resp) {
+                // console.log(resp);
+                currentObj.$store.dispatch("showSnackbar", {
+                    color: "error",
+                    text: "Serveri nuk dergoi te dhenat. Rifresko faqen!"
+                });
+            });
+    }
 };
 </script>
