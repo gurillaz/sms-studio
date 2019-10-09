@@ -348,10 +348,10 @@ router.beforeEach((to, from, next) => {
         next()
     }
     else {
-        if (store.getters.user_type == 'employee' || store.getters.user_type == 'admin') {
-            next();
-        }
-        else {
+        // if (store.getters.user_type == 'employee' || store.getters.user_type == 'admin') {
+        //     next();
+        // }
+        // else {
             store.dispatch('checkAuth')
                 .then(() => {
                     next()
@@ -362,7 +362,7 @@ router.beforeEach((to, from, next) => {
 
                     })
                 })
-        }
+        // }
     }
 
     // console.log(to.path)

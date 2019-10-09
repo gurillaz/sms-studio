@@ -12,7 +12,7 @@
                     hide-details
                 ></v-text-field>
             </v-card-title>
-            <v-data-table :headers="headers" :items="clients" :search="search">
+            <v-data-table :headers="headers" :items="resources" :search="search">
                 <template v-slot:item.action="{ item }">
                     <v-btn
                         class="ma-2"
@@ -21,7 +21,6 @@
                         small
                         link
                         :to="`/client/${item.id}`"
-                        target="_blank"
                     >
                         Shiqo
                         <v-icon small right>mdi-open-in-new</v-icon>
@@ -51,7 +50,7 @@ export default {
                 // { text: "Adresa", value: "address" },
                 { text: "", value: "action", sortable: false, align: "right" }
             ],
-            clients: []
+            resources: []
         };
     },
     beforeMount() {
@@ -60,11 +59,11 @@ export default {
             .get("/client")
             .then(function(resp) {
                 // console.log(resp.data);
-                currentObj.clients = resp.data.clients;
+                currentObj.resources = resp.data.resources;
             })
             .catch(function(resp) {
                 console.log(resp);
-                alert("Could not load Clients");
+                alert("Could not load data");
             });
     }
 };

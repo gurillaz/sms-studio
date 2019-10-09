@@ -25,32 +25,6 @@ export default new Vuex.Store({
 
         },
 
-
-        // form_new_job_data: {
-        //
-        //
-        //
-        //     selected_offer_id: null,
-        //     selected_client_id: null,
-        //     current_step: 3,
-        //     select_client_tab: 0,
-        //     offers: [],
-        //     clients: [],
-        //     events: [],
-        // job: {
-        //     id:'',
-        //     name: '',
-        //     description: '',
-        //     price: '',
-        //     payment_status: '',
-        //     client_id: '',
-        //     offer_id: '',
-        // },
-        //
-        //
-        //
-        //
-        // },
         form_new_job_data: {
     
             selected_offer_id: '',

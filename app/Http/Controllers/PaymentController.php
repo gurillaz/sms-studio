@@ -67,10 +67,16 @@ class PaymentController extends Controller
             $resource_data = [];
             $resource_data['id'] = $resource->id;
             $resource_data['name'] = $resource->name;
+            if(isset($resource->client)){
             $resource_data['client'] = $resource->client->name;
+        }
             $resource_data['model'] = explode('\\', trim($resource->getMorphClass()))[1];
             return $resource_data;
         });
+
+
+
+
         $employess = Employee::all()->map(function ($resource) {
             $resource_data = [];
             $resource_data['id'] = $resource->id;

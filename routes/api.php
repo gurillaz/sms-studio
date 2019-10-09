@@ -23,8 +23,17 @@ use Illuminate\Http\Request;
 Route::post('checkAuth', 'api\AuthController@checkAuth');
 Route::post('loginAPI', 'api\AuthController@loginPost');
 
-Route::resource('client', 'ClientController');
 Route::resource('employee', 'EmployeeController');
+Route::put('employee_update_basic_info/{employee}', 'EmployeeController@update_basic_info');
+Route::put('employee_update_work_info/{employee}', 'EmployeeController@update_work_info');
+Route::put('employee_update_access_info/{employee}', 'EmployeeController@update_access_info');
+
+
+
+
+
+
+Route::resource('client', 'ClientController');
 Route::resource('offer', 'OfferController');
 Route::resource('event', 'EventController');
 Route::resource('job', 'JobController');

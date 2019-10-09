@@ -46,7 +46,7 @@ Shto klient te ri
                                         hint="Shtyp te re ose zgjedh nga lista"
                                         persistent-hint
                                         v-model="new_client.city"
-                                        :items="data.cities"
+                                        :items="data_autofill.cities"
                                         item-text="type"
                                         clearable
                                     ></v-combobox>
@@ -96,7 +96,7 @@ export default {
     data() {
         return {
             saving_errors: [],
-            data: {
+            data_autofill: {
                 cities: []
             },
             new_client: {
@@ -115,7 +115,7 @@ export default {
             .then(function(resp) {
                 // console.log(resp.data);
 
-                currentObj.data = resp.data.data;
+                currentObj.data_autofill = resp.data.data_autofill;
 
                 // currentObj.belongs_to = resp.data.belongs_to;
                 // currentObj.created_by = resp.data.created_by;

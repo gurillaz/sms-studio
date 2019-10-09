@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             $admin->phone = "0038349882677";
             $admin->address = "Sopije Suhareke";
             $admin->position = "Manager";
-            $admin->salary_type = "monthly";
+            $admin->salary_type = "month mhhb";
             $admin->salary_amount = "1342";
             $admin->status = "active";
             $admin->email = "klevissahitaj@gmail.com";

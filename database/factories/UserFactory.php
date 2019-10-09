@@ -22,22 +22,21 @@ $factory->define(User::class, function (Faker $faker) {
         'personal_id'=>$faker->uuid,
 
 
-        'phone'=>$faker->phoneNumber,
         'address'=>$faker->address,
+        'email' => $faker->safeEmail,
+        'phone'=>$faker->phoneNumber,
+        'employee_type'=>$faker->randomElement(['regular','part_time']),
         'position'=>$faker->jobTitle,
-        'salary_type'=>$faker->randomElement(['hour','day','month']),
-
+        'salary_type'=>$faker->randomElement(['hour','day','month','week']),
         'salary_amount'=>$faker->randomFloat(2,200,600),
         'status'=>$faker->randomElement(['active','pasive']),
+        'role'=>$faker->randomElement(['employee','admin']),
 
-        'email' => $faker->safeEmail,
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => Str::random(10),
 
 
-        'employee_type'=>$faker->randomElement(['employee','contractor']),
-        'role'=>$faker->randomElement(['employee','admin']),
 
         'created_by'=>1
 

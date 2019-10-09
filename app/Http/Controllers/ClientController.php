@@ -21,11 +21,10 @@ class ClientController extends Controller
     {
 
         $clients = Client::all();
-        $deleted_clients = Client::onlyTrashed()->get();
 
 
         return Response::json([
-            'clients' => $clients
+            'resources' => $clients
         ], 200);
 
     }
@@ -39,15 +38,13 @@ class ClientController extends Controller
     public function create()
     {
         $cities = Client::all()->pluck('city');
-
-        $data = [];
-
-
-        $data['cities'] = $cities;
+     
+        $data_autofill['cities'] = $cities;
+        // $data_autofill['suppliers'] = $suppliers;
 
 
         return Response::json([
-            'data' => $data,
+            'data_autofill' => $data_autofill
         ], 200);
 
     }
@@ -112,14 +109,41 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
+        
+        $cities = Client::all()->pluck('city');
+        // $suppliers = Inventory::all()->pluck('supplier');
+
+        $resource = [];
+        $resource_relations = [];
+        $data_autofill = [];
+
+
+        $resource = $client;
+        $resource['created_by'] = $client->user()->first('name');
+        $resource['class_name'] = $client->getMorphClass();
+
+                
+        $resource_relations['notes'] = $client->notes()->get();
+        $resource_relations['files'] = $client->files()->get();
+        $resource_relations['payments'] = $client->payments()->get();
+
+        $data_autofill['cities'] = $cities;
+        // $data_autofill['suppliers'] = $suppliers;
+
 
         return Response::json([
-            'client' => $client,
-            'files' => $client->files,
-            'payments' => $client->payments,
-            'notes' => $client->notes,
-            'class_name' => $client->getMorphClass()
+            'resource' => $resource,
+            'resource_relations' => $resource_relations,
+            'data_autofill' => $data_autofill
         ], 200);
+
+        // return Response::json([
+        //     'client' => $client,
+        //     'files' => $client->files,
+        //     'payments' => $client->payments,
+        //     'notes' => $client->notes,
+        //     'class_name' => $client->getMorphClass()
+        // ], 200);
     }
 
     /**
@@ -153,8 +177,21 @@ class ClientController extends Controller
 
         $client->save();
 
+
+
+        $resource = [];
+   
+
+
+        $resource = $client;
+        $resource['created_by'] = $client->user()->first('name');
+        $resource['class_name'] = $client->getMorphClass();
+
+
+
         return Response::json([
-            'client' => $client,
+            'resource' => $resource,
+
         ], 200);
     }
 
@@ -167,19 +204,13 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
 
-        if (\request()->ajax()) {
 
+        // $client->delete();
+        // $client->save();
 
-            $client->delete();
-            $client->save();
-
-            return ['status' => 'success', 'message' => 'Client deleted'];
-
-        }
-        $client->delete();
-        $client->save();
-
-        return redirect('/client')->with('success', 'Client deleted');
+        return Response::json([
+            'message' => "Client deleted!",
+        ], 200);
     }
 
 }

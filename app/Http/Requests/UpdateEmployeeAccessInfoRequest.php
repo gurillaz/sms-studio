@@ -4,8 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateEmployeeRequest extends FormRequest
+class UpdateEmployeeAccessInfoRequest extends FormRequest
 {
+    //named errors multiple forms one page
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -28,15 +29,7 @@ class UpdateEmployeeRequest extends FormRequest
 
 
 
-            'name' => 'required|string|max:100|min:3',
-            'personal_id' => 'required|unique:users|max:20|min:6',
-            'address' => 'required|max:200|min:3',
-            'email' => 'required|email|unique:users|max:40|min:6',
-            'phone' => 'required|unique:users|max:20|min:6',
-            'employee_type' => 'required',
-            'position' => 'required|max:100|min:6',
-            'salary_type' => 'required',
-            'salary_amount' => 'numeric|min:1',
+
             'role' => 'required',
             'password' => 'required|min:6',
 
@@ -60,15 +53,7 @@ class UpdateEmployeeRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'emri',
-            'personal_id' => 'nr. personal',
-            'address' => 'adresa',
-            'email' => 'emaili',
-            'phone' => 'nr. telfonit',
-            'employee_type' => 'lloji i puntorit',
-            'position' => 'pozita e puntorit',
-            'salary_type' => 'lloji i pageses',
-            'salary_amount' => 'shuma',
+
             'role' => 'qasja',
             'password' => 'fjalkalimi',
         ];
