@@ -315,7 +315,7 @@ const router = new VueRouter({
                 },
             ]
         },
-  
+
 
 
         {
@@ -342,9 +342,17 @@ const router = new VueRouter({
     },
 
 });
+router.afterEach((to,from,next) => {
+    if(to.path != '/login'){
+    localStorage.setItem('LS_ROUTE_KEY', to.path);
+    localStorage.setItem('LS_LAST_ACTIVITY_AT_KEY', Date.now());
+    }
+  });
 
 router.beforeEach((to, from, next) => {
+
     if (to.path == '/login') {
+
         next()
     }
     else {
@@ -354,9 +362,14 @@ router.beforeEach((to, from, next) => {
         // else {
             store.dispatch('checkAuth')
                 .then(() => {
+                    // console.log(store.getters.router_copy);
+                    // console.error(history.go)
+
                     next()
+         
                 })
                 .catch(() => {
+
                     next({
                         path: '/login',
 

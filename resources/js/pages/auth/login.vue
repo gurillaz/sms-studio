@@ -9,6 +9,7 @@
                                 <v-toolbar-title>Kyqu</v-toolbar-title>
                             </v-toolbar>
                             <v-card-text class="px-5">
+                                <!-- {{Number(new Date(3600000))}} -->
                                 <v-form>
                                     <v-text-field
                                         class="mt-5"
@@ -21,7 +22,6 @@
 
                                     <v-text-field
                                         class="mt-5"
-
                                         label="Fjalkalimi:"
                                         name="password"
                                         v-model="password"
@@ -52,13 +52,43 @@ export default {
             password: ""
         };
     },
+    created() {
+        const lastActivityAt = localStorage.getItem("LS_LAST_ACTIVITY_AT_KEY");
+
+        const hasBeenActiveRecently = Boolean(
+            //3600000 miliseconds 1 hour
+            lastActivityAt && Date.now() - Number(lastActivityAt) < 3600000
+        );
+        if(!hasBeenActiveRecently){
+        location.reload();
+        }
+    },
+
     methods: {
         login() {
             let email = this.email;
             let password = this.password;
+            const lastRoutePath = localStorage.getItem("LS_ROUTE_KEY");
+            const lastActivityAt = localStorage.getItem(
+                "LS_LAST_ACTIVITY_AT_KEY"
+            );
+
+            const hasBeenActiveRecently = Boolean(
+                //3600000 miliseconds 1 hour
+                lastActivityAt && Date.now() - Number(lastActivityAt) < 3600000
+            );
+
             this.$store
                 .dispatch("login", { email, password })
-                .then(() => this.$router.push("/"))
+                .then(() => {
+                    // If has been active last hour, redirect to last known path, else redirect to dashboard-home /
+                    if (hasBeenActiveRecently) {
+                        this.$router.push({ path: lastRoutePath });
+                    } else {
+                        this.$router.push({ path: "/" });
+                    }
+                })
+
                 .catch(err => console.log(err));
         }
     }
