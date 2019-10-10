@@ -184,6 +184,12 @@ class InventoryController extends Controller
      */
     public function destroy(Inventory $inventory)
     {
-        //
+
+        $inventory->delete();
+        $inventory->save();
+
+        return Response::json([
+            'message' => "Resource deleted!"
+        ], 200);
     }
 }

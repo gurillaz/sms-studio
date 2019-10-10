@@ -11,14 +11,16 @@
 |
 */
 
+use App\Client;
+
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('download/{filename}','FileController@downloadFile')
+Route::get('download/{filename}', 'FileController@downloadFile')
     ->where('filename', '[A-Za-z0-9\-\_\.]+')
     ->name('file.download');
 
 
 // Route everything else to Vue
-Route::get('/{any}',function (){
+Route::get('/{any}', function () {
     return view('app');
 })->where('any', '.*');
 
@@ -88,5 +90,3 @@ Route::middleware('auth')->group(function () {
 
 
 Auth::routes();*/
-
-

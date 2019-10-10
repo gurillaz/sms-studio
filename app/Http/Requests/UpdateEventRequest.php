@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateEventRequest extends FormRequest
+class UpdateEventRequest extends FormRequest
 {
     //named errors multiple forms one page
 //    protected $errorBag = 'createClient';
@@ -44,7 +44,6 @@ class CreateEventRequest extends FormRequest
             'date_start'=>'required|date|after:today',
             'description'=>'max:500',
             'duration_hours'=>'required|numeric|max:24|min:1',
-            'deleted_at'=>'sometimes|required',
             'job_id'=>'sometimes|required|exists:jobs,id',
 
 

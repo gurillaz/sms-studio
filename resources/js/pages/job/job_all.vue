@@ -14,9 +14,13 @@
             </v-card-title>
         <v-data-table
                 :headers="headers"
-                :items="jobs"
+                :items="resources"
                 :search="search"
+                height="69vh"
         >
+            <template v-slot:item.created_at="{ item }">
+                {{readable_date(item.created_at,item.updated_at)}}
+            </template>
             <template v-slot:item.action="{ item }">
                 <v-btn class="ma-2" tile text small link :to="`/job/${item.id}`">
                     Shiqo
@@ -32,25 +36,31 @@
 
 <script>
     import axios from '@/js/config/axios.js'
+    import moment from 'moment';
     export default {
         data () {
             return {
                 search: '',
                 headers: [
                     {
-                        text: 'Puna',
+                        text: 'Emri',
                         align: 'left',
 
                         value: 'name',
                     },
+                    { text: 'Klienti', value: 'client.name' },
+                    { text: 'Oferta', value: 'offer.name' },
                     { text: 'Cmimi', value: 'price' },
+                    { text: 'Pagesa:', value: 'payment_status' },
                     // { text: 'Email', value: 'email' },
                     // { text: 'Qyteti', value: 'city' },
                     // { text: 'Adresa', value: 'address' },
+                    { text: 'Krijuar me date:', value: 'created_at' },
+                    { text: 'Krijuar nga:', value: 'created_by.name' },
                     { text: '', value: 'action', sortable: false, align:'right' },
 
                 ],
-                jobs: [],
+                resources: [],
             }
         },
         beforeMount() {
@@ -58,13 +68,26 @@
             axios.get('/job')
                 .then(function (resp) {
                     // console.log(resp.data);
-                    currentObj.jobs= resp.data.jobs;
+                    currentObj.resources= resp.data.resources;
 
                 })
                 .catch(function (resp) {
-                    console.log(resp);
-                    alert("Could not load Jobs");
+                    // console.log(resp);
+                    alert("Could not load data");
                 });
+        },
+        methods: {
+                    readable_date(created_at, updated_at) {
+            moment.locale("sq");
+            if (created_at === updated_at) {
+                return moment(updated_at).calendar();
+            } else {
+                return (
+                    moment(updated_at).calendar() +
+                    " (E modifikuar)"
+                );
+            }
+        },
         },
     }
 </script>

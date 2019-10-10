@@ -43,16 +43,26 @@ const links = [
             {
                 icon: 'mdi-calendar-account',
                 name: 'job',
-                title: 'Punet',
+                title: 'Punet / Eventet',
                 items: [
                     {
                         to: '/job/all',
                         title: 'Te gjitha punet',
                         icon: 'mdi-calendar-multiple'
                     },
+                            {
+                                to: '/job/new',
+                                title: 'Shto pune te re',
+                                icon: 'mdi-calendar-plus'
+                            },
                     {
-                        to: '/job/new',
-                        title: 'Shto pune te re',
+                        to: '/event/all',
+                        title: 'Te gjitha eventet',
+                        icon: 'mdi-calendar-multiselect'
+                    },
+                    {
+                        to: '/event/new',
+                        title: 'Shto event',
                         icon: 'mdi-calendar-plus'
                     },
                 ],

@@ -70,6 +70,14 @@ class Event extends Model
     }
 
 
+    // public function client(){
+
+    //     // return 'asd';
+    //     return $this->job()->with('client.Model')->get();
+        
+    // }
+
+
 
     public function duration_hours()
     {

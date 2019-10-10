@@ -96,9 +96,13 @@ class NoteController extends Controller
 
         $data =  $note->only(['id', 'name', 'body', 'status', 'created_at', 'updated_at', 'noteable_type', 'noteable_id']);
         $created_by = $note->user->only(['name']);
+        // if(isset($note->noteable)){
         $belongs_to = $note->noteable->only(['id', 'name']);
         $model = explode('\\', trim($note->noteable_type))[1];
-
+        // }else{
+        //     $belongs_to = '';
+        //     $model = '';
+        // }
 
 
         return Response::json([

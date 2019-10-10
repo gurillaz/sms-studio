@@ -59,8 +59,8 @@ export default {
             //3600000 miliseconds 1 hour
             lastActivityAt && Date.now() - Number(lastActivityAt) < 3600000
         );
-        if(!hasBeenActiveRecently){
-        location.reload();
+        if(!hasBeenActiveRecently && lastActivityAt != null){
+            location.reload();
         }
     },
 

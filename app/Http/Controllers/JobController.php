@@ -25,18 +25,30 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::all();
+        $resources = Job::all();
 
-        //        $offers->map(function ($offer){
-        //            $offer->services  = $offer->services()->get(['name','id'])->makeHidden('pivot');
-        //
-        //            $offer->created_by = $offer->user->name;
-        //            return $offer;
-        //        });
+        $resorurces_map = $resources->map(function ($job) {
+
+            $data = $job->only(['id', 'name', 'created_at', 'updated_at','price','discount','payment_status']);
+            $data['created_by'] = $job->user->only(['name']);
+            if(isset($job->client))
+            $data['client'] = $job->client->only(['name']);
+            else
+            $data['client'] = '';
+            if(isset($job->offer))
+            
+            $data['offer'] = $job->offer->only(['name']);
+            else
+            $data['offer'] = '';
+
+            // $data['class_name'] = explode('\\', trim($job->getMorphClass()))[1];
+
+            return $data;
+        });
 
 
         return Response::json([
-            'jobs' => $jobs
+            'resources' => $resorurces_map
         ], 200);
     }
 

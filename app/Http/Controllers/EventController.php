@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\Http\Requests\CreateEventRequest;
-
+use App\Http\Requests\UpdateEventRequest;
+use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -19,12 +20,14 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
+        $resources = Event::with(['job.client:id,name', 'user:id,name'])->get();
+
+
+
         return Response::json([
-            'events' => $events,
+            'resources' => $resources
         ], 200);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -32,7 +35,13 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        $data['jobs'] = Job::with(['client:id,name', 'offer:id,name'])->get();
+
+
+
+        return Response::json([
+            'autofill_data' => $data,
+        ], 200);
     }
 
     /**
@@ -42,41 +51,44 @@ class EventController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function store(CreateEventRequest $request){
+    public function store(CreateEventRequest $request)
+    {
 
-            
-            $validated = $request->validated();
-         
-;
-            $event = new Event();
-            
 
-            $event->name = $validated['name'];
-            $event->address = $validated['address'];
-            $dt_date_start =Carbon::parse($validated['date_start']);
-            $dt_end_date =Carbon::parse($validated['date_start'])->addHours($validated['duration_hours']);;
+        $validated = $request->validated();;
+        $event = new Event();
 
-            $date_start = $dt_date_start ->format('Y-m-d H:i:s');
-            $end_date = $dt_end_date ->format('Y-m-d H:i:s');
 
-            $event->date_start = $date_start;
-            $event->date_end= $end_date;
-            // return $event;
-            
+        $event->name = $validated['name'];
+        $event->address = $validated['address'];
+        $dt_date_start = Carbon::parse($validated['date_start']);
+        $dt_end_date = Carbon::parse($validated['date_start'])->addHours($validated['duration_hours']);;
 
-            $event->description = $validated['description'];
-            $event->deleted_at =Carbon::parse( $request['deleted_at'])->format('Y-m-d H:m:s');
-            $event->status = $request['status'];
-            $event->created_by = Auth::id();
+        $date_start = $dt_date_start->format('Y-m-d H:i:s');
+        $end_date = $dt_end_date->format('Y-m-d H:i:s');
 
-            $event->save();
+        $event->date_start = $date_start;
+        $event->date_end = $end_date;
+        // return $event;
+
+
+        $event->description = $validated['description'];
+        if (isset($validated['job_id'])) {
+            $event->job_id = $validated['job_id'];
+        }
+        if (isset($validated['deleted_at'])) {
+            $event->deleted_at = Carbon::parse($validated['deleted_at'])->format('Y-m-d H:m:s');
+        }
+        $event->status = $request['status'];
+        $event->created_by = Auth::id();
+
+        $event->save();
 
 
         return Response::json([
             'message' => "Event created!",
             'event' => $event,
         ], 200);
-
     }
     /**
      * Validate CreeateEvent request
@@ -85,15 +97,16 @@ class EventController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function checkCreateEventValidation(CreateEventRequest $request){
+    public function checkCreateEventValidation(CreateEventRequest $request)
+    {
 
 
-            if($request->validated()){
-                return Response::json([
-                    'message' => "Validated",
+        if ($request->validated()) {
+            return Response::json([
+                'message' => "Validated",
 
-                ], 200);
-            }
+            ], 200);
+        }
     }
     /**
      * Display the specified resource.
@@ -103,8 +116,32 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-//        return $event;
-        return view('event.event',compact('event',$event));
+        //              $types = Inventory::all()->pluck('type');
+        // $suppliers = Inventory::all()->pluck('supplier');
+
+        $resource = [];
+        $resource_relations = [];
+        $data_autofill = [];
+
+
+        $resource = $event;
+        $resource['created_by'] = $event->user()->first('name');
+        $resource['class_name'] = $event->getMorphClass();
+
+        $resource_relations['job'] = $event->job;
+        $resource_relations['notes'] = $event->notes()->get();
+        $resource_relations['files'] = $event->files()->get();
+        $resource_relations['payments'] = $event->payments()->get();
+
+        // $data_autofill['types'] = $types;
+        // $data_autofill['suppliers'] = $suppliers;
+
+
+        return Response::json([
+            'resource' => $resource,
+            'resource_relations' => $resource_relations,
+            'data_autofill' => $data_autofill
+        ], 200);
     }
 
     /**
@@ -125,9 +162,42 @@ class EventController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        
+        $validated = $request->validated();;
+
+
+        $event->name = $validated['name'];
+        $event->address = $validated['address'];
+        $dt_date_start = Carbon::parse($validated['date_start']);
+        $dt_end_date = Carbon::parse($validated['date_start'])->addHours($validated['duration_hours']);;
+
+        $date_start = $dt_date_start->format('Y-m-d H:i:s');
+        $end_date = $dt_end_date->format('Y-m-d H:i:s');
+
+        $event->date_start = $date_start;
+        $event->date_end = $end_date;
+        // return $event;
+
+
+        $event->description = $validated['description'];
+        if (isset($validated['job_id'])) {
+            $event->job_id = $validated['job_id'];
+        }
+        if (isset($validated['deleted_at'])) {
+            $event->deleted_at = Carbon::parse($validated['deleted_at'])->format('Y-m-d H:m:s');
+        }
+        $event->status = $request['status'];
+        $event->created_by = Auth::id();
+
+        $event->save();
+
+
+        return Response::json([
+            'message' => "Event updated!",
+            'resource' => $event,
+        ], 200);
     }
 
     /**
@@ -138,14 +208,11 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        if(\request()->ajax()){
-            $event->delete();
-            $event->save();
+        $event->delete();
+        $event->save();
 
-
-
-            return ['status' => 'success', 'message' => 'Event deleted!'];
-
-        }
+        return Response::json([
+            'message' => "Resource deleted!"
+        ], 200);
     }
 }

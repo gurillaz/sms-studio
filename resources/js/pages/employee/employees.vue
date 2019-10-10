@@ -20,7 +20,7 @@
                 :headers="headers"
                 :items="employees"
                 :search="search"
-                height="70vh"
+                height="65vh"
         >
             <template v-slot:item.action="{ item }">
                 <v-btn class="ma-2" tile text small link :to="`/employee/${item.id}`" target="_blank">

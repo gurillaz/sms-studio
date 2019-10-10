@@ -12,7 +12,10 @@
                     hide-details
                 ></v-text-field>
             </v-card-title>
-            <v-data-table :headers="headers" :items="resources" :search="search">
+            <v-data-table :headers="headers" :items="resources" :search="search" 
+                height="65vh"
+            
+            >
                 <template v-slot:item.action="{ item }">
                     <v-btn
                         class="ma-2"

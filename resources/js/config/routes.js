@@ -22,6 +22,10 @@ import Jobs from '@/js/pages/job/job_all'
 import Job from '@/js/pages/job/job'
 import NewJob from '@/js/pages/job/job_new'
 
+import Events from '@/js/pages/event/event_all'
+import Event from '@/js/pages/event/event'
+import NewEvent from '@/js/pages/event/event_new'
+
 import Note from '@/js/pages/note/note'
 import Notes from '@/js/pages/note/notes'
 
@@ -198,6 +202,37 @@ const router = new VueRouter({
                     path: ':id',
                     name: 'job.job',
                     component: Job,
+
+                    props: true
+                },
+            ]
+        },
+        {
+            path: '/event', component: MainLayout,
+            children: [
+                {
+                    path: '/',
+                    name: 'event.base',
+
+                    beforeEnter: (to, from, next) => {
+                        next('/event/all')
+                    }
+                }, {
+                    path: 'all',
+                    name: 'event.all',
+                    component: Events,
+                    // beforeEnter: requireAuth
+                },
+                {
+                    path: 'new',
+                    name: 'event.new',
+
+                    component: NewEvent
+                },
+                {
+                    path: ':id',
+                    name: 'event.event',
+                    component: Event,
 
                     props: true
                 },
