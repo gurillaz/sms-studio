@@ -100,13 +100,23 @@ const links = [
                 title: 'Sherbimet / Detyrat',
                 items: [
                     {
-                        to: '/service',
-                        title: 'Sherbimet',
+                        to: '/service/all',
+                        title: 'Te gjitha sherbimet',
                         icon: 'mdi-account-box-outline'
                     },
                     {
-                        to: '/task',
-                        title: 'Detyrat',
+                        to: '/service/new',
+                        title: 'Shto sherbim',
+                        icon: 'mdi-account-box-outline'
+                    },
+                    {
+                        to: '/task/all',
+                        title: 'Te gjitha detyrat',
+                        icon: 'mdi-account-plus-outline'
+                    },
+                    {
+                        to: '/task/new',
+                        title: 'Shto detyre',
                         icon: 'mdi-account-plus-outline'
                     }
                 ],

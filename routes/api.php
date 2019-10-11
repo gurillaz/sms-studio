@@ -44,6 +44,10 @@ Route::resource('note', 'NoteController');
 Route::resource('file', 'FileController');
 Route::resource('payment', 'PaymentController');
 
+Route::resource('task', 'TaskController');
+Route::post('task/rating/{task}', 'TaskController@update_rating');
+Route::resource('service', 'ServiceController');
+
 Route::get('checkIfFileExists/{filename}','FileController@checkIfFileExists')
     ->where('filename', '[A-Za-z0-9\-\_\.]+')
     ->name('file.exists');

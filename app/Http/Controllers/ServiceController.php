@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class ServiceController extends Controller
 {
@@ -14,7 +15,14 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        $resources = Service::with(['tasks:id,name','offers:id,name','user:id,name'])->get();
+
+
+
+
+        return Response::json([
+            'resources' => $resources
+        ], 200);
     }
 
     /**

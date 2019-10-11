@@ -40,6 +40,14 @@ import Inventory from '@/js/pages/inventory/inventory'
 import InventoryAll from '@/js/pages/inventory/inventory_all'
 import NewInventory from '@/js/pages/inventory/inventory_new'
 
+import Service from '@/js/pages/service/service'
+import ServiceAll from '@/js/pages/service/service_all'
+import NewService from '@/js/pages/service/service_new'
+
+import Task from '@/js/pages/task/task'
+import TaskAll from '@/js/pages/task/task_all'
+import NewTask from '@/js/pages/task/task_new'
+
 import Login from '@/js/pages/auth/login'
 
 
@@ -264,37 +272,6 @@ const router = new VueRouter({
             ]
         },
         {
-            path: '/payment', component: MainLayout,
-            children: [
-                {
-                    path: '/',
-                    name: 'payment.base',
-
-                    beforeEnter: (to, from, next) => {
-                        next('/payment/all')
-                    }
-                }, {
-                    path: 'all',
-                    name: 'payment.all',
-                    component: Payments,
-                    // beforeEnter: requireAuth
-                },
-                {
-                    path: 'new',
-                    name: 'payment.new',
-
-                    component: NewPayment
-                },
-                {
-                    path: ':id',
-                    name: 'payment.payment',
-                    component: Payment,
-
-                    props: true
-                },
-            ]
-        },
-        {
             path: '/inventory', component: MainLayout,
             children: [
                 {
@@ -326,6 +303,38 @@ const router = new VueRouter({
             ]
         },
         {
+            path: '/payment', component: MainLayout,
+            children: [
+                {
+                    path: '/',
+                    name: 'payment.base',
+
+                    beforeEnter: (to, from, next) => {
+                        next('/payment/all')
+                    }
+                }, {
+                    path: 'all',
+                    name: 'payment.all',
+                    component: Payments,
+                    // beforeEnter: requireAuth
+                },
+                {
+                    path: 'new',
+                    name: 'payment.new',
+
+                    component: NewPayment
+                },
+                {
+                    path: ':id',
+                    name: 'payment.payment',
+                    component: Payment,
+
+                    props: true
+                },
+            ]
+        },
+
+        {
             path: '/file', component: MainLayout,
             children: [
                 {
@@ -345,6 +354,69 @@ const router = new VueRouter({
                     path: ':id',
                     name: 'file.file',
                     component: File,
+
+                    props: true
+                },
+            ]
+        },
+
+        {
+            path: '/service', component: MainLayout,
+            children: [
+                {
+                    path: '/',
+                    name: 'service.base',
+
+                    beforeEnter: (to, from, next) => {
+                        next('/service/all')
+                    }
+                }, {
+                    path: 'all',
+                    name: 'service.all',
+                    component: ServiceAll,
+                    // beforeEnter: requireAuth
+                },
+                {
+                    path: 'new',
+                    name: 'service.new',
+
+                    component: NewService
+                },
+                {
+                    path: ':id',
+                    name: 'service.service',
+                    component: Service,
+
+                    props: true
+                },
+            ]
+        },
+        {
+            path: '/task', component: MainLayout,
+            children: [
+                {
+                    path: '/',
+                    name: 'task.base',
+
+                    beforeEnter: (to, from, next) => {
+                        next('/task/all')
+                    }
+                }, {
+                    path: 'all',
+                    name: 'task.all',
+                    component: TaskAll,
+                    // beforeEnter: requireAuth
+                },
+                {
+                    path: 'new',
+                    name: 'task.new',
+
+                    component: NewTask
+                },
+                {
+                    path: ':id',
+                    name: 'task.task',
+                    component: Task,
 
                     props: true
                 },

@@ -17,10 +17,11 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
 
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->text('payment_sum');
 
             $table->string('status');
+            $table->tinyInteger('rating')->default(0);
 
             $table->unsignedBigInteger('event_id')->nullable();
             $table->unsignedBigInteger('employee_id')->nullable();
