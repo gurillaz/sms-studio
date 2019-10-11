@@ -42,7 +42,7 @@ const links = [
 
             {
                 icon: 'mdi-calendar-account',
-                name: 'job',
+                name: 'job|event',
                 title: 'Punet / Eventet',
                 items: [
                     {
@@ -50,11 +50,11 @@ const links = [
                         title: 'Te gjitha punet',
                         icon: 'mdi-calendar-multiple'
                     },
-                            {
-                                to: '/job/new',
-                                title: 'Shto pune te re',
-                                icon: 'mdi-calendar-plus'
-                            },
+                    {
+                        to: '/job/new',
+                        title: 'Shto pune te re',
+                        icon: 'mdi-calendar-plus'
+                    },
                     {
                         to: '/event/all',
                         title: 'Te gjitha eventet',
@@ -96,7 +96,7 @@ const links = [
             },
             {
                 icon: 'mdi-check-decagram',
-                name:'service|task',
+                name: 'service|task',
                 title: 'Sherbimet / Detyrat',
                 items: [
                     {
@@ -112,7 +112,7 @@ const links = [
                 ],
 
             },
-            
+
             {
                 icon: 'mdi-camera-outline',
                 name: 'inventory',
@@ -149,7 +149,7 @@ const links = [
                 ],
 
             },
-            
+
 
             {
                 icon: 'mdi-file-cabinet',
@@ -169,11 +169,11 @@ const links = [
                 ],
 
             },
-            
+
 
         ],
     },
-   
+
 ]
 
 

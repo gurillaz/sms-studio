@@ -2,156 +2,379 @@
     <div class="mx-3">
         <v-row>
             <v-col>
-                <div class="headline">Puna - {{job.name}}</div>
+                <div class="headline">Puna</div>
             </v-col>
 
             <v-col class="text-right">
                 <v-btn
-                    outlined
-                    color="warning"
-                    class="mr-3"
                     @click.stop="edit_dialog = true"
+                    class="mr-3"
+                    color="warning"
+                    outlined
                 >Ndrysho</v-btn>
-                <v-btn outlined color="error">Fshij</v-btn>
+                <v-btn @click="delete_resource" color="error" outlined>Fshij</v-btn>
             </v-col>
         </v-row>
 
         <v-row>
-            <v-col cols-12>
-            <v-card class="py-5 px-8" :color="job_details_section_color">
-                <!-- titulli -->
-                <v-row class="px-2 mb-1">
-                    <div>
-                        <v-icon left>mdi-calendar-plus</v-icon>
-                        <span
-                            class="text-uppercase font-weight-bold"
-                        >Detajet per punen</span>
-                    </div>
-                    <div class="flex-grow-1"></div>
-                </v-row>
-                <!-- body -->
-                <v-row class="py-0">
-                    <v-col cols="6">
-                        <v-row>
-                            <v-col cols="12" class="py-0">
-                                <v-text-field
-                                    label="Emri i punes:"
-                                    prepend-icon="mdi-account-card-details-outline"
-                                    readonly
-                                    :value="job.name"
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" class="py-0">
-                                <v-text-field
-                                    label="Cmimi i punes:"
-                                    prepend-icon="mdi-cash-multiple"
-                                    readonly
-                                    :value="job.price"
-                                ></v-text-field>
-                            </v-col>
-                            <v-col cols="12" class="py-0">
-                                <v-text-field
-                                    label="Pershkrimi:"
-                                    prepend-icon="mdi-card-text-outline"
-                                    readonly
-                                    :value="job.description"
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                    </v-col>
-                    <div class="flex-grow-1"></div>
-                    <v-col cols="5">
-                        <v-row class="py-0">
-                            <v-col class="py-0" cols="12">
-                                <v-text-field
-                                    :value="offer.name"
-                                    label="Oferta e zgjedhur:"
-                                    prepend-icon="mdi-tag"
-                                    readonly
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-row class="py-0">
-                            <v-col class="py-0" cols="12">
-                                <v-text-field
-                                    :value="client.name"
+            <v-col cols="12">
+                <v-card color>
+                    <v-card-title>
+                        <span class="headline pl-3">{{resource.name}}</span>
+                        <div class="flex-grow-1"></div>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-container>
+                            <v-row class="py-0">
+                                <v-col cols="4" class="py-0">
+                                    <v-text-field
+                                        :value="readable_date(resource.created_at, resource.updated_at)"
+                                        label="Shtuar me date:"
+                                        readonly
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="3" class="py-0">
+                                    <v-text-field
+                                        :value="resource.created_by.name"
+                                        label="Shtuar nga:"
+                                        readonly
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col cols="7" class="py-0">
+                                    <v-row>
+                                        <v-col cols="8" class="pt-0">
+                                            <v-text-field
+                                                :value="resource.name"
+                                                label="Emri:"
+                                                readonly
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="4" class="pt-0">
+                                            <v-text-field
+                                                :value="resource.price"
+                                                label="Cmimi:"
+                                                readonly
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" class="pt-0">
+                                            <v-text-field
+                                                :value="resource.description"
+                                                label="Te dhena tjera:"
+                                                readonly
+                                            ></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-col>
+
+                                <v-col cols="5" class="py-0">
+                                    <v-row>
+                                        <v-col cols="8" class="pt-0">
+                                            <v-select
                                     label="Klienti:"
-                                    prepend-icon="mdi-account-outline"
+                                    :items="data_autofill.clients"
+                                    item-text="name"
+                                    item-value="id"
+                                    v-model="resource.client_id"
                                     readonly
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-row class="py-0">
-                            <v-col class="py-0" cols="12">
-        
-                                <v-text-field
-                                    :value="events.map(ev => ev.name + ' ')"
-                                    prepend-icon="mdi-calendar"
-                                    label="Eventet:"
+                                ></v-select>
+                                        </v-col>
+                                        <v-col cols="4" class="pt-3">
+                                            <v-btn
+                                                block
+                                                text
+                                                :to="`/client/${resource.client_id}`"
+                                            >Shiko klientin</v-btn>
+                                        </v-col>
+                                        <v-col cols="8" class="pt-0">
+                                            <v-select
+                                    label="Oferta:"
+                                    :items="data_autofill.offers"
+                                    item-text="name"
+                                    item-value="id"
+                                    v-model="resource.offer_id"
                                     readonly
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                    </v-col>
-                </v-row>
-            </v-card>
+                                ></v-select>
+                                        </v-col>
+                                        <v-col cols="4" class="pt-3">
+                                            <v-btn
+                                                block
+                                                text
+                                                :to="`/offer/${resource.offer_id}`"
+                                            >Shiko oferten</v-btn>
+                                        </v-col>
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+
+                            <v-row class="py-0">
+                                <v-col cols="12" class="pt-0">
+                                    <eventsSection :events="resource_relations.events" :id="id"></eventsSection>
+                                </v-col>
+                            </v-row>
+                        </v-container>
+                    </v-card-text>
+                </v-card>
             </v-col>
         </v-row>
 
-                <notesSection :notes="notes" :id="id" :class_name="class_name"></notesSection>
-        <filesSection :files="files" :id="id" :class_name="class_name"></filesSection>
-        <paymentsSection :payments="payments" :id="id" :class_name="class_name"></paymentsSection>
+        <filesSection :files="resource_relations.files" :id="id" :class_name="resource.class_name"></filesSection>
+        <notesSection :notes="resource_relations.notes" :id="id" :class_name="resource.class_name"></notesSection>
 
+        <v-dialog v-model="edit_dialog" persistent max-width="75vw">
+            <v-card color>
+                <v-card-title>
+                    <span class="headline pl-3">Ndrysho te dhenat</span>
+                    <div class="flex-grow-1"></div>
+                </v-card-title>
+                <v-card-text>
+                <v-container>
+                            <v-row class="py-0">
+                                <v-col cols="4" class="py-0">
+                                    <v-text-field
+                                        :value="readable_date()"
+                                        label="Shtuar me date:"
+                                        disabled
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="3" class="py-0">
+                                    <v-text-field
+                                        :value="resource.created_by.name"
+                                        label="Shtuar nga:"
+                                        disabled
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
 
+                            <v-row>
+                                <v-col cols="7" class="py-0">
+                                    <v-row>
+                                        <v-col cols="8" class="pt-0">
+                                            <v-text-field
+                                                :error-messages="saving_errors.name"
+                                                v-model="edit_resource.name"
+                                                label="Emri: *"
+                                                
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="4" class="pt-0">
+                                            <v-text-field
+                                                :error-messages="saving_errors.price"
+                                                v-model="edit_resource.price"
+                                                label="Cmimi: *"
+                                            ></v-text-field>
+                                        </v-col>
+                                        <v-col cols="12" class="pt-0">
+                                            <v-text-field
+                                                :error-messages="saving_errors.description"
+                                                v-model="edit_resource.description"
+                                                label="Te dhena shtese:"
+                                            ></v-text-field>
+                                        </v-col>
+                                    </v-row>
+                                </v-col>
+
+                                <v-col cols="5" class="py-0">
+                                    <v-row>
+                                        <v-col cols="12" class="pt-0">
+                                            <v-autocomplete
+                                    :error-messages="saving_errors.client_id"
+                                    label="Klienti: *"
+                                    :items="data_autofill.clients"
+                                    item-text="name"
+                                    item-value="id"
+                                    v-model="edit_resource.client_id"
+                                ></v-autocomplete>
+                                        </v-col>
+                      
+                                        <v-col cols="12" class="pt-0">
+                                                        <v-autocomplete
+                                    :error-messages="saving_errors.offer_id"
+                                    label="Klienti: *"
+                                    :items="data_autofill.offers"
+                                    item-text="name"
+                                    item-value="id"
+                                    v-model="edit_resource.offer_id"
+                                ></v-autocomplete>
+                                        </v-col>
+                   
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+      <v-row>
+                            <v-col class="text-left" cols="2">
+                                <small>*duhet te plotesohen</small>
+                            </v-col>
+                            <div class="flex-grow-1"></div>
+                        </v-row>
+                        </v-container>
+                                 </v-card-text>
+                <v-card-actions>
+                    <div class="flex-grow-1"></div>
+                    <v-btn @click="edit_dialog = false" color="warning" text>Mbyll</v-btn>
+                    <v-btn @click="update_resource()" color="success" text>Ruaj</v-btn>
+                </v-card-actions>
+       
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
 <script>
 import axios from "@/js/config/axios.js";
-    import notesSection from '@/js/pages/note/notes_section';
-    import filesSection from '@/js/pages/file/files_section';
-    import paymentsSection from '@/js/pages/payment/payments_section';
+import moment from "moment";
+import notesSection from "@/js/pages/note/notes_section";
+import filesSection from "@/js/pages/file/files_section";
+import paymentsSection from "@/js/pages/payment/payments_section";
+import eventsSection from "@/js/pages/event/event_section";
 
-    export default {
-        components: {notesSection,filesSection,paymentsSection},
+export default {
+    components: { notesSection, filesSection, paymentsSection, eventsSection },
     data() {
         return {
-            job_details_section_color: "indigo lighten-5",
+            edit_dialog: false,
+            saving_errors: [],
 
-            id:this.$route.params.id,
-  
-                job: {},
-                client: {},
-                offer: {},
-                events: [],
-                files: [],
-                payments: [],
-                notes: [],
+            id: this.$route.params.id,
+            class_name: "",
+
+            edit_resource: {
+                id: "",
+                name: "",
+                price: "",
+                status: "",
+                description: "",
+
+                job_id: "",
+
+                created_at: "",
+                updated_at: "",
                 class_name: "",
-  
+                created_by: { name: "" }
+            },
+            resource: {
+                id: "",
+                name: "",
+                price: "",
+                status: "",
+                description: "",
 
-            edit_dialog: false
+                job_id: "",
+
+                created_at: "",
+                updated_at: "",
+                class_name: "",
+                created_by: { name: "" }
+            },
+            resource_relations: {
+                files: [],
+                notes: [],
+                payments: [],
+
+            },
+            data_autofill: {
+                                clients: [{id:'',name:''}],
+                                offers: [{id:'',name:''}],
+            }
         };
     },
+    computed: {},
+
     beforeMount() {
-        let currentObj = this;
+        var currentObj = this;
         axios
-            .get(`job/${currentObj.id}`)
+            .get(`/job/${currentObj.id}`)
             .then(function(resp) {
-                // console.log(resp.data);
-                currentObj.job = resp.data.job;
-                currentObj.client = resp.data.client;
-                currentObj.offer = resp.data.offer;
-                currentObj.events = resp.data.events;
-                currentObj.files = resp.data.files;
-                currentObj.payments = resp.data.payments;
-                currentObj.notes = resp.data.notes;
-                currentObj.class_name = resp.data.class_name;
+                currentObj.resource = resp.data.resource;
+                currentObj.resource_relations = resp.data.resource_relations;
+                currentObj.data_autofill = resp.data.data_autofill;
+
+                /* Using JSON.parse to copy object, since just asignin resp.data.note only references data
+                    note end edit_note keep changing when used as vue v-model
+                    Based on: https://scotch.io/bar-talk/copying-objects-in-javascript
+                     */
+                currentObj.edit_resource = JSON.parse(
+                    JSON.stringify(resp.data.resource)
+                );
             })
             .catch(function(resp) {
-                console.log(resp.data);
-                alert("Could not load Client");
+                console.log(resp);
+                currentObj.$store.dispatch("showSnackbar", {
+                    color: "error",
+                    text: "Serveri nuk dergoi te dhenat!"
+                });
             });
+    },
+    methods: {
+        readable_date(created_at, updated_at) {
+            moment.locale("sq");
+            if (created_at === updated_at) {
+                return moment(updated_at).format("D MMMM YYYY [ora] HH:mm");
+            } else {
+                return (
+                    moment(updated_at).format("D MMMM YYYY [ora] HH:mm") +
+                    " (E modifikuar)"
+                );
+            }
+        },
+        update_resource: function() {
+            let currentObj = this;
+
+
+
+            axios
+                .put(`/job/${currentObj.id}`, currentObj.edit_resource)
+                .then(function(resp) {
+                    currentObj.saving_errors = [];
+                    currentObj.resource = resp.data.resource;
+
+                    /* Using JSON.parse to copy object, since just asignin resp.data.note only references data
+                    note end edit_note keep changing when used as vue v-model
+                    Based on: https://scotch.io/bar-talk/copying-objects-in-javascript
+                     */
+                    currentObj.edit_resource = JSON.parse(
+                        JSON.stringify(resp.data.resource)
+                    );
+
+                    currentObj.edit_dialog = false;
+
+                    currentObj.$store.dispatch("showSnackbar", {
+                        color: "success",
+                        text: "Ndryshimet u ruajten!"
+                    });
+                })
+                .catch(function(resp) {
+                    currentObj.saving_errors = resp.response.data.errors;
+                    currentObj.$store.dispatch("showSnackbar", {
+                        color: "error",
+                        text: "Ndryshimet nuk u ruajten!"
+                    });
+                });
+        },
+        delete_resource() {
+            let currentObj = this;
+            if (confirm("Konfirmo fshirjen e eventit!") === false) {
+                return;
+            }
+            axios(`/event/${currentObj.id}`, {
+                method: "delete"
+            })
+                .then(function(resp) {
+                    currentObj.$router.replace("/event");
+                    currentObj.$store.dispatch("showSnackbar", {
+                        color: "success",
+                        text: "Eventi u fshi!"
+                    });
+                })
+                .catch(function(resp) {
+                    currentObj.$store.dispatch("showSnackbar", {
+                        color: "error",
+                        text: "Eventi nuk u fshi, rifresko faqen!"
+                    });
+                });
+        }
     }
 };
 </script>

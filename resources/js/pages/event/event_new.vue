@@ -15,14 +15,14 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12">
-                                <v-select
+                                <v-autocomplete
                                     :error-messages="saving_errors.job_id"
                                     label="I takon punes: *"
                                     :items="autofill_data.jobs"
                                     item-text="name"
                                     item-value="id"
                                     v-model="new_event.job_id"
-                                ></v-select>
+                                ></v-autocomplete>
                             </v-col>
                             <v-col cols="5">
                                 <v-text-field

@@ -8,6 +8,7 @@ use App\Http\Requests\CreateEventRequest;
 use App\Job;
 use App\Offer;
 use App\Client;
+use App\Http\Requests\UpdateJobRequest;
 use Carbon\Carbon;
 use Hamcrest\Arrays\IsArray;
 use Illuminate\Foundation\Http\FormRequest;
@@ -144,7 +145,6 @@ class JobController extends Controller
      */
     public function store(CreateJobRequest $request)
     {
-        $request->validated();
 
         $validated = $request->validated();
 
@@ -178,15 +178,34 @@ class JobController extends Controller
      */
     public function show(Job $job)
     {
+
+        $resource = [];
+        $resource_relations = [];
+        $data_autofill = [];
+
+
+        $resource = $job;
+        $resource['created_by'] = $job->user()->first('name');
+        $resource['class_name'] = $job->getMorphClass();
+
+        $resource_relations['events'] = $job->events;
+        $resource_relations['client'] = $job->client;
+        $resource_relations['offer'] = $job->offer;
+        $resource_relations['notes'] = $job->notes()->get();
+        $resource_relations['files'] = $job->files()->get();
+        $resource_relations['payments'] = $job->payments()->get();
+
+
+        $clients = Client::all(['id','name']);
+        $offers = Offer::all(['id','name']);
+        $data_autofill['clients'] = $clients;
+        $data_autofill['offers'] = $offers;
+
+
         return Response::json([
-            'job' => $job,
-            'client'=>$job->client, 
-            'offer'=>$job->offer, 
-            'events'=>$job->events, 
-            'files' => $job->files,
-            'payments' => $job->payments,
-            'notes' => $job->notes,
-            'class_name' => $job->getMorphClass()
+            'resource' => $resource,
+            'resource_relations' => $resource_relations,
+            'data_autofill' => $data_autofill
         ], 200);
     }
 
@@ -208,9 +227,27 @@ class JobController extends Controller
      * @param \App\Job $job
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job)
+    public function update(UpdateJobRequest $request, Job $job)
     {
-        //
+
+        $validated = $request->validated();
+
+
+
+        $job->name = $validated['name'];
+        $job->description = $validated['description'];
+        $job->price = $validated['price'];
+        $job->offer_id = $validated['offer_id'];
+        $job->client_id = $validated['client_id'];
+        $job->created_by = Auth::id();
+
+        $job->save();
+
+
+        return Response::json([
+            'message' => "Job updated!",
+            'resource' =>$job,
+        ], 200);
     }
 
     /**

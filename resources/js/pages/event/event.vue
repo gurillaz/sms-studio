@@ -156,7 +156,7 @@
                                 >
                                     <template v-slot:activator="{ on }">
                                         <v-text-field
-                                            :error-messages="date == '' ? saving_errors.date_start:[]"
+                                            :error-messages="saving_errors.date_start"
                                             :value="formatedDate"
                                             label="Data e eventit*"
                                             readonly
@@ -183,7 +183,7 @@
                                 >
                                     <template v-slot:activator="{ on }">
                                         <v-text-field
-                                            :error="saving_errors.date_start!=null &&time == '' "
+                                            :error="saving_errors.date_start!=null"
                                             label="Fillon ne ora*"
                                             readonly
                                             :value="time"

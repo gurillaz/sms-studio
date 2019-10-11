@@ -60,7 +60,7 @@ export default {
             lastActivityAt && Date.now() - Number(lastActivityAt) < 3600000
         );
         if(!hasBeenActiveRecently && lastActivityAt != null){
-            location.reload();
+            // location.reload();
         }
     },
 
