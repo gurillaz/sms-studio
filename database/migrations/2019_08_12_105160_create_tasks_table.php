@@ -23,6 +23,7 @@ class CreateTasksTable extends Migration
             $table->string('status');
             $table->tinyInteger('rating')->default(0);
 
+            $table->unsignedBigInteger('job_id')->nullable();
             $table->unsignedBigInteger('event_id')->nullable();
             $table->unsignedBigInteger('employee_id')->nullable();
             $table->unsignedBigInteger('created_by');
@@ -32,6 +33,7 @@ class CreateTasksTable extends Migration
             $table->timestamps();
 
 
+            $table->foreign('job_id')->references('id')->on('jobs');
             $table->foreign('event_id')->references('id')->on('events');
             $table->foreign('employee_id')->references('id')->on('users');
             $table->foreign('created_by')->references('id')->on('users');

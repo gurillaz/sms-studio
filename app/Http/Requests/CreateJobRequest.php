@@ -33,8 +33,9 @@ class CreateJobRequest extends FormRequest
             'name' => 'required|string|max:100',
             'description'=>'max:1000',
             'price'=>'required|numeric|min:0',
-            'client_id'=>'required',
-            'offer_id'=>'required',
+            'client_id'=>'required|exists:clients,id',
+            'offer_id'=>'required|exists:offers,id',
+            'events'=>'sometimes|required|array',
 
         ];
     }
@@ -59,6 +60,8 @@ class CreateJobRequest extends FormRequest
             'name' => 'Emri i punes',
             'description'=>'Pershkrimi/Detajet',
             'price'=>'Cmimi',
+            'client_id'=>'Klienti',
+            'offer_id'=>'Oferta',
 
 
         ];

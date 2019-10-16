@@ -7,6 +7,12 @@
 
             <v-col class="text-right">
                 <v-btn
+                    @click.stop="edit_tasks_dialog = true"
+                    class="mr-3"
+                    color="warning"
+                    outlined
+                >Cakto punet</v-btn>
+                <v-btn
                     @click.stop="edit_dialog = true"
                     class="mr-3"
                     color="warning"
@@ -73,13 +79,13 @@
                                     <v-row>
                                         <v-col cols="8" class="pt-0">
                                             <v-select
-                                    label="Klienti:"
-                                    :items="data_autofill.clients"
-                                    item-text="name"
-                                    item-value="id"
-                                    v-model="resource.client_id"
-                                    readonly
-                                ></v-select>
+                                                label="Klienti:"
+                                                :items="data_autofill.clients"
+                                                item-text="name"
+                                                item-value="id"
+                                                v-model="resource.client_id"
+                                                readonly
+                                            ></v-select>
                                         </v-col>
                                         <v-col cols="4" class="pt-3">
                                             <v-btn
@@ -90,13 +96,13 @@
                                         </v-col>
                                         <v-col cols="8" class="pt-0">
                                             <v-select
-                                    label="Oferta:"
-                                    :items="data_autofill.offers"
-                                    item-text="name"
-                                    item-value="id"
-                                    v-model="resource.offer_id"
-                                    readonly
-                                ></v-select>
+                                                label="Oferta:"
+                                                :items="data_autofill.offers"
+                                                item-text="name"
+                                                item-value="id"
+                                                v-model="resource.offer_id"
+                                                readonly
+                                            ></v-select>
                                         </v-col>
                                         <v-col cols="4" class="pt-3">
                                             <v-btn
@@ -120,8 +126,70 @@
             </v-col>
         </v-row>
 
+        <relatedDataTables title="Te dhenat tjera" :relations="resource_relations"></relatedDataTables>
+
         <filesSection :files="resource_relations.files" :id="id" :class_name="resource.class_name"></filesSection>
         <notesSection :notes="resource_relations.notes" :id="id" :class_name="resource.class_name"></notesSection>
+        <v-dialog
+            v-model="edit_tasks_dialog"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+        >
+            <v-card color="grey lighten-5">
+                <v-toolbar dark color="primary">
+                    <v-toolbar-title>Cakto detyrat</v-toolbar-title>
+                    <div class="flex-grow-1"></div>
+                    <v-toolbar-items>
+                        <v-btn dark text @click="edit_tasks_dialog = false">Mbyll</v-btn>
+                        <v-btn dark text @click="edit_tasks_dialog = false">Ruaj</v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+
+                <v-container fluid class="pa-1 mt-10">
+                    <v-card outlined tile class="py-5 px-8 mx-10">
+                        <v-simple-table>
+                            <template v-slot:default>
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">Emri</th>
+                                        <th class="text-left">Puntori</th>
+                                        <th class="text-left">Eventi</th>
+                                        <th class="text-left">Pagesa</th>
+                                        <th class="text-left">Pajisjet</th>
+                                        <th class="text-left">Statusi</th>
+                                        <th class="text-left">Aktiviteti</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="task in resource_relations.tasks" :key="task.id">
+                                        <td>{{ task.name }}</td>
+                                        <td> <v-autocomplete
+                                            :items="data_autofill.employees"
+                                            item-text="name"
+                                            item-value="id"
+                                            v-model="task.employee_id"
+                                        ></v-autocomplete></td>
+                                        <td>                          <v-autocomplete
+                                            :items="resource_relations.events"
+                                            item-text="name"
+                                            item-value="id"
+                                            v-model="task.event_id"
+                                        ></v-autocomplete></td>
+                                        <td><v-text-field 
+                                        v-model="task.payment_sum"
+                                        ></v-text-field></td>
+                                        <td>Pajisjet</td>
+                                        <td>{{task.status}}</td>
+                                        <td><v-btn small text color="success">Ruaj</v-btn><v-btn small text color="warning">Fshij</v-btn></td>
+                                    </tr>
+                                </tbody>
+                            </template>
+                        </v-simple-table>
+                    </v-card>
+                </v-container>
+            </v-card>
+        </v-dialog>
 
         <v-dialog v-model="edit_dialog" persistent max-width="75vw">
             <v-card color>
@@ -130,93 +198,90 @@
                     <div class="flex-grow-1"></div>
                 </v-card-title>
                 <v-card-text>
-                <v-container>
-                            <v-row class="py-0">
-                                <v-col cols="4" class="py-0">
-                                    <v-text-field
-                                        :value="readable_date()"
-                                        label="Shtuar me date:"
-                                        disabled
-                                    ></v-text-field>
-                                </v-col>
-                                <v-col cols="3" class="py-0">
-                                    <v-text-field
-                                        :value="resource.created_by.name"
-                                        label="Shtuar nga:"
-                                        disabled
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
+                    <v-container>
+                        <v-row class="py-0">
+                            <v-col cols="4" class="py-0">
+                                <v-text-field
+                                    :value="readable_date()"
+                                    label="Shtuar me date:"
+                                    disabled
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="3" class="py-0">
+                                <v-text-field
+                                    :value="resource.created_by.name"
+                                    label="Shtuar nga:"
+                                    disabled
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
 
-                            <v-row>
-                                <v-col cols="7" class="py-0">
-                                    <v-row>
-                                        <v-col cols="8" class="pt-0">
-                                            <v-text-field
-                                                :error-messages="saving_errors.name"
-                                                v-model="edit_resource.name"
-                                                label="Emri: *"
-                                                
-                                            ></v-text-field>
-                                        </v-col>
-                                        <v-col cols="4" class="pt-0">
-                                            <v-text-field
-                                                :error-messages="saving_errors.price"
-                                                v-model="edit_resource.price"
-                                                label="Cmimi: *"
-                                            ></v-text-field>
-                                        </v-col>
-                                        <v-col cols="12" class="pt-0">
-                                            <v-text-field
-                                                :error-messages="saving_errors.description"
-                                                v-model="edit_resource.description"
-                                                label="Te dhena shtese:"
-                                            ></v-text-field>
-                                        </v-col>
-                                    </v-row>
-                                </v-col>
+                        <v-row>
+                            <v-col cols="7" class="py-0">
+                                <v-row>
+                                    <v-col cols="8" class="pt-0">
+                                        <v-text-field
+                                            :error-messages="saving_errors.name"
+                                            v-model="edit_resource.name"
+                                            label="Emri: *"
+                                        ></v-text-field>
+                                    </v-col>
+                                    <v-col cols="4" class="pt-0">
+                                        <v-text-field
+                                            :error-messages="saving_errors.price"
+                                            v-model="edit_resource.price"
+                                            label="Cmimi: *"
+                                        ></v-text-field>
+                                    </v-col>
+                                    <v-col cols="12" class="pt-0">
+                                        <v-text-field
+                                            :error-messages="saving_errors.description"
+                                            v-model="edit_resource.description"
+                                            label="Te dhena shtese:"
+                                        ></v-text-field>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
 
-                                <v-col cols="5" class="py-0">
-                                    <v-row>
-                                        <v-col cols="12" class="pt-0">
-                                            <v-autocomplete
-                                    :error-messages="saving_errors.client_id"
-                                    label="Klienti: *"
-                                    :items="data_autofill.clients"
-                                    item-text="name"
-                                    item-value="id"
-                                    v-model="edit_resource.client_id"
-                                ></v-autocomplete>
-                                        </v-col>
-                      
-                                        <v-col cols="12" class="pt-0">
-                                                        <v-autocomplete
-                                    :error-messages="saving_errors.offer_id"
-                                    label="Klienti: *"
-                                    :items="data_autofill.offers"
-                                    item-text="name"
-                                    item-value="id"
-                                    v-model="edit_resource.offer_id"
-                                ></v-autocomplete>
-                                        </v-col>
-                   
-                                    </v-row>
-                                </v-col>
-                            </v-row>
-      <v-row>
+                            <v-col cols="5" class="py-0">
+                                <v-row>
+                                    <v-col cols="12" class="pt-0">
+                                        <v-autocomplete
+                                            :error-messages="saving_errors.client_id"
+                                            label="Klienti: *"
+                                            :items="data_autofill.clients"
+                                            item-text="name"
+                                            item-value="id"
+                                            v-model="edit_resource.client_id"
+                                        ></v-autocomplete>
+                                    </v-col>
+
+                                    <v-col cols="12" class="pt-0">
+                                        <v-autocomplete
+                                            :error-messages="saving_errors.offer_id"
+                                            label="Klienti: *"
+                                            :items="data_autofill.offers"
+                                            item-text="name"
+                                            item-value="id"
+                                            v-model="edit_resource.offer_id"
+                                        ></v-autocomplete>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                        </v-row>
+                        <v-row>
                             <v-col class="text-left" cols="2">
                                 <small>*duhet te plotesohen</small>
                             </v-col>
                             <div class="flex-grow-1"></div>
                         </v-row>
-                        </v-container>
-                                 </v-card-text>
+                    </v-container>
+                </v-card-text>
                 <v-card-actions>
                     <div class="flex-grow-1"></div>
                     <v-btn @click="edit_dialog = false" color="warning" text>Mbyll</v-btn>
                     <v-btn @click="update_resource()" color="success" text>Ruaj</v-btn>
                 </v-card-actions>
-       
             </v-card>
         </v-dialog>
     </div>
@@ -229,12 +294,16 @@ import notesSection from "@/js/pages/note/notes_section";
 import filesSection from "@/js/pages/file/files_section";
 import paymentsSection from "@/js/pages/payment/payments_section";
 import eventsSection from "@/js/pages/event/event_section";
+import relatedDataTables from "@/js/pages/others/related_data_tables";
+
 
 export default {
-    components: { notesSection, filesSection, paymentsSection, eventsSection },
+    components: { notesSection, filesSection, paymentsSection, eventsSection,relatedDataTables },
     data() {
         return {
+            tab:0,
             edit_dialog: false,
+            edit_tasks_dialog: false,
             saving_errors: [],
 
             id: this.$route.params.id,
@@ -269,14 +338,14 @@ export default {
                 created_by: { name: "" }
             },
             resource_relations: {
-                files: [],
+                events: [],
+                tasks: [],
                 notes: [],
-                payments: [],
-
+                payments: []
             },
             data_autofill: {
-                                clients: [{id:'',name:''}],
-                                offers: [{id:'',name:''}],
+                clients: [{ id: "", name: "" }],
+                offers: [{ id: "", name: "" }]
             }
         };
     },
@@ -321,8 +390,6 @@ export default {
         },
         update_resource: function() {
             let currentObj = this;
-
-
 
             axios
                 .put(`/job/${currentObj.id}`, currentObj.edit_resource)

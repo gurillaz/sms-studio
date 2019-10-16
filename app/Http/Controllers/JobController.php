@@ -8,7 +8,9 @@ use App\Http\Requests\CreateEventRequest;
 use App\Job;
 use App\Offer;
 use App\Client;
+use App\Employee;
 use App\Http\Requests\UpdateJobRequest;
+use App\Task;
 use Carbon\Carbon;
 use Hamcrest\Arrays\IsArray;
 use Illuminate\Foundation\Http\FormRequest;
@@ -60,82 +62,20 @@ class JobController extends Controller
      */
     public function create()
     {
-        $offers = Offer::all();
 
-        $offers->map(function ($offer) {
-            $offer->services  = $offer->services()->get(['name', 'id'])->makeHidden('pivot');
-
-            $offer->created_by = $offer->user->name;
-            return $offer;
-        });
-
-        $clients = Client::all('name', 'id', 'city');
+        $data_autofill['clients'] = Client::all('name', 'id', 'city');
+        $data_autofill['offers'] = Offer::with('services:id,name')->get();
 
 
 
         return Response::json([
-            'offers' => $offers,
-            'clients' => $clients
+            'data_autofill' => $data_autofill,
         ], 200);
     }
 
 
 
 
-    /**
-     * Store a added events create during creating new job
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function addEvents(Request $request)
-    {
-        $validator   = Validator::make($request->all(), ['event_ids' => 'required'], ['required' => 'Duhet te kete te pakten nje event. Eventet nuk u shtuan!']);
-
-        if ($validator->fails()) {
-            return Response::json([
-                'message' => "Eventet nuk u shtuan!",
-                'errors' => ['event_ids' => 'Duhet te kete te pakten nje event. Eventet nuk u shtuan!']
-            ], 400);
-        }
-        $events_ids = $request['event_ids'];
-        $job_id = $request['job_id'];
-        $job = Job::find($job_id);
-
-
-        if (isset($events_ids) && is_array($events_ids) && count($events_ids) > 0) {
-
-            $events = Event::withTrashed()->findMany($events_ids);
-
-            if ($events != null && $job != null) {
-
-                $events->each(function ($ev) use ($job) {
-                    $ev->job_id = $job->id;
-                    $ev->status = 'active';
-                    $ev->deleted_at = null;
-                    $ev->save();
-                    // return;
-
-
-                });
-            } else {
-                return Response::json([
-                    'message' => "Eventet nuk u shtuan!",
-                    'errors' => ['event_ids' => 'Gabim! Rifresko faqen!']
-                ], 400);
-            }
-        } else {
-            return Response::json([
-                'message' => "Eventet nuk u shtuan!",
-                'errors' => ['event_ids' => 'Gabim! Rifresko faqen!']
-            ], 400);
-        }
-
-        // Sucsesss
-        return Response::json([
-            'message' => "Eventet u shtuan!",
-        ], 200);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -157,16 +97,44 @@ class JobController extends Controller
         $job->offer_id = $validated['offer_id'];
         $job->client_id = $validated['client_id'];
         $job->payment_status = "none";
-        $job->status = "due";
+        $job->status = "active";
         $job->created_by = Auth::id();
 
         $job->save();
 
-
+        if(isset($validated['events'])){
+            // return $validated['events'];
+            $job_events = Event::withTrashed()->find($validated['events']);
+            // return $job_events;
+            if($job_events != null){
+                foreach($job_events as $event){
+                    $event->deleted_at = NULL;
+                    $event->job_id = $job->id;
+                    $event->status = 'active';
+                    $event->save();
+                }
+            }
+        }
+        $offer_tasks = [];
+        // $tasks = Task::where('service_id',)
+        foreach($job->offer->services as $service){
+            foreach($service->tasks as $task){
+                        array_push($offer_tasks,$task);
+            
+            }   
+        }
+        // return $offer_tasks;
+        foreach($offer_tasks as $task){
+                    $task_clone = $task->replicate();
+                    $task_clone->job_id = $job->id;
+                    $task_clone->status = 'pending';
+                    $task_clone->save();
+                    $task_clone->inventory()->sync($task->inventory);
+        }
+        // return $job->tasks;
         return Response::json([
             'message' => "Job created!",
             'job' =>$job,
-             'class_name' => $job->getMorphClass()
         ], 200);
     }
 
@@ -188,17 +156,24 @@ class JobController extends Controller
         $resource['created_by'] = $job->user()->first('name');
         $resource['class_name'] = $job->getMorphClass();
 
-        $resource_relations['events'] = $job->events;
         $resource_relations['client'] = $job->client;
         $resource_relations['offer'] = $job->offer;
-        $resource_relations['notes'] = $job->notes()->get();
-        $resource_relations['files'] = $job->files()->get();
-        $resource_relations['payments'] = $job->payments()->get();
+        
+        $resource_relations['events'] = $job->events()->with('user:id,name','job.client:id,name')->get();
+        $resource_relations['tasks'] = $job->tasks()->with('user:id,name','employee:id,name','event:id,name')->get();
+
+        $resource_relations['tasks'] = $job->tasks()->with('user:id,name','employee:id,name','event:id,name')->get();
+        $resource_relations['notes'] = $job->notes()->with('user:id,name','noteable:id,name')->get();
+        $resource_relations['files'] = $job->files()->with('user:id,name','fileable:id,name')->get();
+        $resource_relations['payments'] = $job->payments()->with('user:id,name')->get();
 
 
         $clients = Client::all(['id','name']);
+        $employees = Employee::all(['id','name']);
         $offers = Offer::all(['id','name']);
+
         $data_autofill['clients'] = $clients;
+        $data_autofill['employees'] = $employees;
         $data_autofill['offers'] = $offers;
 
 

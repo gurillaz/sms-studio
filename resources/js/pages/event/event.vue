@@ -42,8 +42,8 @@
                                 </v-col>
                                 <v-col cols="3">
                                     <v-text-field
-                                        label="I takon:"
-                                        :value="`${resource_relations.job.name} (Punes)`"
+                                        label="I takon punes:"
+                                        :value="`${resource_relations.job.name}`"
                                         readonly
                                     ></v-text-field>
                                 </v-col>
@@ -52,7 +52,7 @@
                                         block
                                         text
                                         :to="`/job/${resource_relations.job.id}`"
-                                    >Shiko burimin</v-btn>
+                                    >Shiko punen</v-btn>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -104,6 +104,7 @@
                 </v-card>
             </v-col>
         </v-row>
+        <relatedDataTables title="Te dhenat tjera" :relations="resource_relations"></relatedDataTables>
 
         <notesSection :notes="resource_relations.notes" :id="id" :class_name="resource.class_name"></notesSection>
         <filesSection :files="resource_relations.files" :id="id" :class_name="resource.class_name"></filesSection>
@@ -133,8 +134,8 @@
                             </v-col>
                             <v-col cols="3">
                                 <v-text-field
-                                    label="I takon:"
-                                    :value="`${resource_relations.job.name} (Punes)`"
+                                    label="I takon punes:"
+                                    :value="`${resource_relations.job.name}`"
                                     disabled
                                 ></v-text-field>
                             </v-col>
@@ -144,7 +145,7 @@
                                     text
                                     :to="`/job/${resource_relations.job.id}`"
                                     disabled
-                                >Shiko burimin</v-btn>
+                                >Shiko punen</v-btn>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -258,9 +259,11 @@ import moment from "moment";
 import notesSection from "@/js/pages/note/notes_section";
 import filesSection from "@/js/pages/file/files_section";
 import paymentsSection from "@/js/pages/payment/payments_section";
+import relatedDataTables from "@/js/pages/others/related_data_tables";
+
 
 export default {
-    components: { notesSection, filesSection, paymentsSection },
+    components: { notesSection, filesSection, paymentsSection, relatedDataTables},
     data() {
         return {
             edit_dialog: false,
@@ -307,10 +310,12 @@ export default {
                 created_by: { name: "" }
             },
             resource_relations: {
-                files: {},
-                notes: {},
-                payments: {},
-                job: {}
+                tasks: [],
+                inventory: [],
+                files: [],
+                notes: [],
+                payments: [],
+                job: []
             },
             data_autofill: {}
         };

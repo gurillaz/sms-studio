@@ -13,7 +13,9 @@ $factory->define(Task::class, function (Faker $faker) {
         'description'=>$faker->realText(150),
         'payment_sum'=>$faker->numberBetween(10,100),
 
-        'status'=>$faker->randomElement(['pending','finished','refused','accepted']),
+        'status'=>$faker->randomElement(['pending','finished','refused','accepted','template']),
+        'rating'=>0,
+        
 
 
 

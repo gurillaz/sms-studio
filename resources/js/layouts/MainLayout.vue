@@ -130,27 +130,32 @@
             :multi-line="snackbar.mode === 'multi-line'"
         >
             {{ snackbar.text }}
-            <v-btn dark text @click="snackbar.show = false">Close</v-btn>
+            <v-btn dark text @click="snackbar.show = false">Mbyll</v-btn>
         </v-snackbar>
     </v-app>
 </template>
 
 <script>
 import links from "@/js/config/sidebarLinks";
-import { mapState } from "vuex";
+import { mapFields } from "vuex-map-fields";
+
 export default {
     data() {
         return {
             drawer: true,
             links: links,
-            mini: false,
-            user: this.$store.getters.user
+            mini: false
+            // user: this.$store.getters.user
 
             // snackbar: this.$store.getters.snackbar
         };
     },
     computed: {
-        ...mapState(["snackbar"]),
+        ...mapFields({
+            snackbar: "snackbar",
+            user: "user"
+        }),
+
 
         token() {
             let token = document.head.querySelector('meta[name="csrf-token"]');
@@ -161,14 +166,6 @@ export default {
         logout() {
             this.$store.dispatch("logout");
             document.getElementById("logout-form").submit();
-        }
-    },
-
-    watch: {
-        snackbar(changed_snackbar, snackbar) {
-            if (changed_snackbar.show === true) {
-                snackbar = changed_snackbar;
-            }
         }
     }
 };

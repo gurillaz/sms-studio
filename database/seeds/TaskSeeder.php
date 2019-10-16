@@ -11,7 +11,7 @@ class TaskSeeder extends Seeder
      */
     public function run()
     {
-        $names = ['Inqizim','Fotografim','Iqizim/Dron','AsistimTeknik','Vozitje'];
+        $names = ['Inqizim me dron','Incizim me kamere','Montim','Printim i fotografive','Vozitje'];
 
         foreach ($names as $name){
             factory('App\Task')->create([

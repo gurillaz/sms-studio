@@ -12,6 +12,8 @@ class File extends Model
 {
     use SoftDeletes;
 
+    public $filesize = 0;
+
     public function fileable(){
 
         return $this->morphTo();

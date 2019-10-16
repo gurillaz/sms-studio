@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateEmployeeAccessInfoRequest;
 use App\Http\Requests\UpdateEmployeeBasicInfoRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeWorkInfoRequest;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
@@ -153,9 +154,22 @@ class EmployeeController extends Controller
         $resource['class_name'] = $employee->getMorphClass();
 
 
-        $resource_relations['notes'] = $employee->notes()->get();
-        $resource_relations['files'] = $employee->files()->get();
-        $resource_relations['payments'] = $employee->payments()->get();
+        $resource_relations['notes'] = $employee->notes()->with('user:id,name','noteable:id,name')->get();
+        $resource_relations['files'] = $employee->files()->with('user:id,name','fileable:id,name')->get();
+        $resource_relations['payments'] = $employee->payments()->with('user:id,name')->get();
+        $resource_relations['tasks'] = $employee->tasks()->with('user:id,name','employee:id,name','event:id,name')->get();
+        $resource_relations['inventory'] =new Collection();
+        foreach ($employee->tasks as $task) {
+            foreach ($task->inventory()->with('user:id,name')->get() as $inventory) {
+                    $resource_relations['inventory']->push($inventory);
+                }
+            }
+        $resource_relations['jobs'] =new Collection();
+        foreach ($employee->tasks as $task) {
+            foreach ($task->job()->with('user:id,name','client:id,name','offer:id,name')->get() as $job) {
+                    $resource_relations['jobs']->push($job);
+                }
+            }
 
         // $data_autofill['types'] = $types;
         // $data_autofill['suppliers'] = $suppliers;

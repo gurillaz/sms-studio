@@ -2,8 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '@/js/config/axios'
 
-Vue.use(Vuex);
-
 
 // Import the `getField` getter and the `updateField`
 // mutation function from the `vuex-map-fields` module.
@@ -11,11 +9,29 @@ Vue.use(Vuex);
 import { getField, updateField } from 'vuex-map-fields';
 
 
+
+Vue.use(Vuex);
+
 export default new Vuex.Store({
     state: {
         status: '',
         user_type: 'guest',
-        user: {},
+        auth: {},
+        data_autofill: {
+            clients: [],
+            employees: [],
+            events: [],
+            files: [],
+            inventory: [],
+            inventory: [],
+            jobs: [],
+            notes: [],
+            offers: [],
+            payments: [],
+            services: [],
+            tasks: [],
+            users: [],
+        },
         snackbar: {
             show: false,
             color: '',
@@ -26,7 +42,7 @@ export default new Vuex.Store({
         },
 
         form_new_job_data: {
-    
+
             selected_offer_id: '',
             selected_client_id: '',
             selected_offer_name: '',
@@ -36,7 +52,7 @@ export default new Vuex.Store({
             job_saved: false,
 
             created_job: {
-                id:'',
+                id: '',
                 name: '',
                 description: '',
                 price: '',
@@ -45,7 +61,7 @@ export default new Vuex.Store({
                 offer_id: '',
             },
             offers: [],
-            clients:[],
+            clients: [],
             events: [],
             payments: []
         },
@@ -69,6 +85,8 @@ export default new Vuex.Store({
             state.user = {}
             state.user_type = 'guest'
         },
+
+
         set_snackbar(state, snackbar) {
 
             state.snackbar.show = true;
@@ -78,15 +96,7 @@ export default new Vuex.Store({
             state.snackbar.text = snackbar.text || '';
 
         },
-        reset_snackbar(state) {
-            // state.snackbar.value = 'hidden';
-            state.snackbar.show = false;
-            state.snackbar.color = '';
-            state.snackbar.timeout = 4000;
-            state.snackbar.mode = 'multi-line';
-            state.snackbar.text = '';
 
-        },
     },
     actions: {
         login({ commit }, data) {
@@ -161,10 +171,12 @@ export default new Vuex.Store({
             commit('logout')
 
         },
-        async showSnackbar({ commit }, snackbar) {
 
-            await commit('reset_snackbar');
-            commit('set_snackbar', snackbar);
+        showSnackbar({ commit }, snackbar) {
+
+            // setTimeout(function () {
+                commit('set_snackbar', snackbar);
+            // }, '2000');
         }
     },
     getters: {

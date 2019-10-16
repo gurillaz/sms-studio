@@ -11,7 +11,7 @@ class Task extends Model
     use SoftDeletes;
 
 
-
+    protected $hidden = ['pivot'];
 
 
     public function inventory()
@@ -53,6 +53,11 @@ class Task extends Model
     public function user(){
 
         return $this->belongsTo('App\User','created_by');
+    }
+
+    public function job(){
+
+        return $this->belongsTo('App\Job');
     }
 
 

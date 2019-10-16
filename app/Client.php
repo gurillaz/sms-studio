@@ -41,7 +41,7 @@ class Client extends Model
 
     public function jobs(){
 
-        return $this->hasMany('App\Jobs');
+        return $this->hasMany('App\Job');
     }
 
 

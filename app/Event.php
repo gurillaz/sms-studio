@@ -39,13 +39,7 @@ class Event extends Model
 
     }
 
-    public function inventory()
-    {
 
-        return $this->belongsToMany('App\Inventory');
-
-
-    }
 
 
 
@@ -54,6 +48,13 @@ class Event extends Model
     {
 
         return $this->belongsToMany('App\Employee');
+
+
+    }
+    public function tasks()
+    {
+
+        return $this->hasMany('App\Task');
 
 
     }

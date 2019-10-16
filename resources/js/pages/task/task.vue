@@ -44,7 +44,7 @@
                             <div class="text-right">
     
                                 <v-rating
-                                    v-if="resource.status == 'finished'"
+                                    v-if="resource.status === 'finished'"
                                     v-model="resource.rating"
                                     color="yellow darken-3"
                                     background-color="grey darken-1"
@@ -52,6 +52,21 @@
                                     hover
                                     v-on:input="update_rating"
                                 ></v-rating>
+                                <v-tooltip bottom v-else-if="resource.status === 'template'">
+                                    <template v-slot:activator="{ on }">
+                                        <div v-on="on">
+                                            <v-rating
+                                                :value="0"
+                                                color="yellow darken-3"
+                                                background-color="grey darken-1"
+                                                clearable
+                                                hover
+                                                readonly
+                                            ></v-rating>
+                                        </div>
+                                    </template>
+                                    <span>Detyra eshte vetem shabllon. Nuk mund te rankohet.</span>
+                                </v-tooltip>
                                 <v-tooltip bottom v-else>
                                     <template v-slot:activator="{ on }">
                                         <div v-on="on">
@@ -93,7 +108,10 @@
  
 
                                 <v-col>
-                                    <v-chip v-if="resource.status == 'template'" label outlined>
+                                    <v-chip v-if="resource.status == 'template'" label outlined 
+                                        class="px-10 py-6"
+                                    
+                                    >
                                         <v-avatar left>
                                             <v-icon>mdi-account-circle</v-icon>
                                         </v-avatar>Shabllon
@@ -137,6 +155,7 @@
                                         outlined
                                         color="green"
                                         class="px-10 py-6"
+                                        
                                     >
                                         <v-avatar left>
                                             <v-icon>mdi-account-circle</v-icon>
@@ -246,17 +265,48 @@
         </v-row>
 
         <notesSection :notes="resource_relations.notes" :id="id" :class_name="resource.class_name"></notesSection>
-
-        <v-dialog v-model="edit_dialog" persistent max-width="75vw">
-            <v-card color>
-                <v-card-title>
-                    <span class="headline pl-3">Ndrysho te dhenat</span>
+                <v-dialog
+            v-model="edit_dialog"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+        >
+            <v-card color="grey lighten-5">
+                <v-toolbar dark color="primary">
+                    <v-toolbar-title>Ndrysho te dhenat</v-toolbar-title>
                     <div class="flex-grow-1"></div>
-                </v-card-title>
+                    <v-toolbar-items>
+                        <v-btn dark text @click="edit_dialog = false">Mbyll</v-btn>
+                        <v-btn dark text @click="update_resource()">Ruaj</v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+
+                <v-container class="pa-1 mt-10">
+                    <v-card outlined tile class="py-5 px-8">
+                        <span class="text-uppercase">Te dhenat per detyren</span>
+
+
                 <v-card-text>
+                    <v-row class="py-0">
+                                <v-col cols="3">
+                                    <v-text-field
+                                        :value="readable_date()"
+                                        label="Shtuar me date:"
+                                        disabled
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="4">
+                                    <v-text-field
+                                        :value="resource.created_by.name"
+                                        label="Shtuar nga:"
+                                        disabled
+                                    ></v-text-field>
+                                </v-col>
+                    </v-row>
                     <v-row class="py-0">
                         <v-col class="py-1" cols="6">
                             <v-select
+                                :disabled="resource.status=='template'"
                                 label="Puntori: *"
                                 :items="data_autofill.employees"
                                 item-text="name"
@@ -268,6 +318,102 @@
                         </v-col>
                         <v-col class="py-1" cols="6">
                             <v-select
+                            :disabled="resource.status=='template'"
+                                label="Eventi: *"
+                                :items="data_autofill.events"
+                                item-text="name"
+                                item-value="id"
+                                v-model="edit_resource.event_id"
+                                hint="Eventi ku duhet te kryhet detyra. Caktohet te Puna/Eventi."
+                                persistent-hint
+                            ></v-select>
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="mt-5">
+                        <v-col class="py-1" cols="6">
+                            <v-text-field
+                                :error-messages="saving_errors.name"
+                                label="Emri: *"
+                                v-model="edit_resource.name"
+                            ></v-text-field>
+                        </v-col>
+                        <v-col class="py-1" cols="6">
+                            <v-text-field
+                                :error-messages="saving_errors.payment_sum"
+                                label="Pagesa: *"
+                                v-model="edit_resource.payment_sum"
+                                hint="Shuma e pageses per te cilen paguhet puntori per kryerjen e detyres. Ne baze te detyrave qe kryne puntori, caktohet rroga."
+                                persistent-hint
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="py-5">
+                        <v-col class="py-1" cols="12">
+                            <v-autocomplete
+                                :error-messages="saving_errors.inventory"
+                                label="Pajisjet:"
+                                v-model="edit_resource.inventory"
+                                :items="data_autofill.inventory"
+                                item-text="name"
+                                item-value="id"
+                                multiple
+                                chips
+                                deletable-chips
+                                hide-selected
+                                hint="Zgjedh nga lista nje ose me shume opsione. Pajisjet qe do perdoren ne detyre. Psh. per detyren 'Fotograf', duhen pajisjet si foto-aparati, baterit rezerve, tripod etj. "
+                                persistent-hint
+                            ></v-autocomplete>
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="py-0">
+                        <v-col class="py-1" cols="12">
+                            <v-text-field
+                                :error-messages="saving_errors.description"
+                                label="Te dhena shtese:"
+                                v-model="edit_resource.description"
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
+
+                    <v-row class="py-0">
+                        <v-col class="text-left" cols="2">
+                            <small>*duhet te plotesohen</small>
+                        </v-col>
+                        <div class="flex-grow-1"></div>
+                    </v-row>
+                </v-card-text>
+     
+            </v-card>
+                </v-container>
+     
+            </v-card>
+        </v-dialog>
+        <!-- <v-dialog v-model="edit_dialog" persistent max-width="75vw">
+            <v-card color>
+                <v-card-title>
+                    <span class="headline pl-3">Ndrysho te dhenat</span>
+                    <div class="flex-grow-1"></div>
+                </v-card-title>
+                <v-card-text>
+                    <v-row class="py-0">
+                        <v-col class="py-1" cols="6">
+                            <v-select
+                                :disabled="resource.status='template'"
+                                label="Puntori: *"
+                                :items="data_autofill.employees"
+                                item-text="name"
+                                item-value="id"
+                                v-model="edit_resource.employee_id"
+                                hint="Puntori qe kryen detyren. Caktohet te Puna/Eventi."
+                                persistent-hint
+                            ></v-select>
+                        </v-col>
+                        <v-col class="py-1" cols="6">
+                            <v-select
+                            :disabled="resource.status='template'"
                                 label="Eventi: *"
                                 :items="data_autofill.events"
                                 item-text="name"
@@ -340,7 +486,7 @@
                     <v-btn @click="update_resource()" color="success" text>Ruaj</v-btn>
                 </v-card-actions>
             </v-card>
-        </v-dialog>
+        </v-dialog> -->
     </div>
 </template>
 

@@ -169,7 +169,7 @@
                 </v-card>
             </v-col>
         </v-row>
-
+        <relatedDataTables title="Te dhenat tjera" :relations="resource_relations"></relatedDataTables>
         <notesSection :notes="resource_relations.notes" :id="id" :class_name="resource.class_name"></notesSection>
         <filesSection :files="resource_relations.files" :id="id" :class_name="resource.class_name"></filesSection>
         <paymentsSection
@@ -401,9 +401,11 @@ import moment from "moment";
 import notesSection from "@/js/pages/note/notes_section";
 import filesSection from "@/js/pages/file/files_section";
 import paymentsSection from "@/js/pages/payment/payments_section";
+import relatedDataTables from "@/js/pages/others/related_data_tables";
+
 
 export default {
-    components: { notesSection, filesSection, paymentsSection },
+    components: { notesSection, filesSection, paymentsSection, relatedDataTables },
     data() {
         return {
             roles: [
@@ -469,9 +471,10 @@ export default {
                 created_by: { name: "" }
             },
             resource_relations: {
-                files: {},
-                notes: {},
-                payments: {}
+                tasks: [],
+                files: [],
+                notes: [],
+                payments: []
             },
             data_autofill: {
                 suppliers: [],

@@ -1,11 +1,11 @@
 <template>
 
-        <v-row class="mx-2">
+        <v-row >
     
             <v-col cols="3" class="pt-0 pr-5" v-if="current_step!=1">
                 <v-btn
                     :disabled="disabled_prev"
-                    @click="current_step = current_step - 1"
+                    @click="$parent.current_step = current_step - 1"
                     color="primary"
                     block
                     small
@@ -18,7 +18,7 @@
             <v-col cols="3" class="pt-0 pr-5" v-if="current_step<5">
                 <v-btn
                     :disabled="disabled_next"
-                    @click="current_step = current_step + 1"
+                    @click="$parent.current_step = current_step + 1"
                     color="primary"
                     block
                     small
@@ -32,37 +32,25 @@
 </template>
 
 <script>
-import { mapFields } from "vuex-map-fields";
 
 export default {
     name: "FormNavigationButtons",
-
+    props:['current_step','finished_step'],
 
 
     data() {
         return {
- 
+            // current_step,
+            // finished_step
         };
     },
     methods: {
   
     },
     computed: {
-        ...mapFields({
-             selected_offer_id: "form_new_job_data.selected_offer_id",
-            selected_client_id: "form_new_job_data.selected_client_id",
-  
 
-            current_step: "form_new_job_data.current_step",
-            events: "form_new_job_data.events",
-            offers: "form_new_job_data.offers",
-            payments: "form_new_job_data.payments",
-            clients: "form_new_job_data.clients",
-            created_job: "form_new_job_data.created_job",
-            job_saved: "form_new_job_data.job_saved",
-        }),
         disabled_next:function() {
-            if(this.current_step== 1 && this.selected_offer_id == ''){
+            if(this.current_step== 1 < this.finished_step){
                 return true;
             }
             else if(this.current_step== 2 && this.selected_client_id == ''){

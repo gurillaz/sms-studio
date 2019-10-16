@@ -79,11 +79,12 @@ class TaskController extends Controller
 
             $task->inventory()->sync($task_inventory);
         }
-
+        
+        $task['inventory'] = $task->inventory()->get(['id','name']);
 
 
         return Response::json([
-            'new_resource_id' => $task->id,
+            'resource' => $task,
             'message' => "Inventory Added!"
         ], 200);
     }

@@ -72,6 +72,7 @@
                 </v-card>
             </v-col>
         </v-row>
+        <relatedDataTables title="Te dhenat tjera" :relations="resource_relations"></relatedDataTables>
 
         <notesSection :notes="resource_relations.notes" :id="id" :class_name="resource.class_name"></notesSection>
         <filesSection :files="resource_relations.files" :id="id" :class_name="resource.class_name"></filesSection>
@@ -108,44 +109,44 @@
 
                         <v-row class="py-0">
                             <v-col cols="12" class="pt-0">
-                                <v-text-field 
-                                v-model="edit_resource.name"
-                                :error-messages="saving_errors.name"
-                                 label="Emri: *"
-                                  ></v-text-field>
+                                <v-text-field
+                                    v-model="edit_resource.name"
+                                    :error-messages="saving_errors.name"
+                                    label="Emri: *"
+                                ></v-text-field>
                             </v-col>
                             <v-col cols="6" class="pt-0">
                                 <v-text-field
-                                  v-model="edit_resource.phone"
-                                :error-messages="saving_errors.phone"
-                                  label="Telefoni: *"
-                                  ></v-text-field>
+                                    v-model="edit_resource.phone"
+                                    :error-messages="saving_errors.phone"
+                                    label="Telefoni: *"
+                                ></v-text-field>
                             </v-col>
                             <v-col cols="6" class="pt-0">
-                                 <v-text-field
-                                  v-model="edit_resource.email"
-                                :error-messages="saving_errors.email"
-                                  label="Email: *"
-                                  ></v-text-field>
+                                <v-text-field
+                                    v-model="edit_resource.email"
+                                    :error-messages="saving_errors.email"
+                                    label="Email: *"
+                                ></v-text-field>
                             </v-col>
                             <v-col cols="6" class="pt-0">
-                                    <v-combobox
-                                        :error-messages="saving_errors.city"
-                                        label="Qyteti/Komuna: *"
-                                        hint="Shtyp te re ose zgjedh nga lista"
-                                        persistent-hint
-                                        v-model="edit_resource.city"
-                                        :items="data_autofill.cities"
-                                        item-text="type"
-                                        clearable
-                                    ></v-combobox>
+                                <v-combobox
+                                    :error-messages="saving_errors.city"
+                                    label="Qyteti/Komuna: *"
+                                    hint="Shtyp te re ose zgjedh nga lista"
+                                    persistent-hint
+                                    v-model="edit_resource.city"
+                                    :items="data_autofill.cities"
+                                    item-text="type"
+                                    clearable
+                                ></v-combobox>
                             </v-col>
                             <v-col cols="12" class="pt-0">
-                                                  <v-text-field
-                                  v-model="edit_resource.address"
-                                :error-messages="saving_errors.address"
-                                  label="Adresa: *"
-                                  ></v-text-field>
+                                <v-text-field
+                                    v-model="edit_resource.address"
+                                    :error-messages="saving_errors.address"
+                                    label="Adresa: *"
+                                ></v-text-field>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -166,11 +167,73 @@ import moment from "moment";
 import notesSection from "@/js/pages/note/notes_section";
 import filesSection from "@/js/pages/file/files_section";
 import paymentsSection from "@/js/pages/payment/payments_section";
+import relatedDataTables from "@/js/pages/others/related_data_tables";
 
 export default {
-    components: { notesSection, filesSection, paymentsSection },
+    components: { notesSection, filesSection, paymentsSection,relatedDataTables },
     data() {
         return {
+            tab: 0,
+            table_headers: {
+                jobs: [
+                    {
+                        text: "Emri",
+                        align: "left",
+
+                        value: "name"
+                    },
+                    { text: "Klienti", value: "client.name" },
+                    { text: "Oferta", value: "offer.name" },
+                    { text: "Cmimi", value: "price" },
+                    { text: "Pagesa:", value: "payment_status" },
+                    // { text: 'Email', value: 'email' },
+                    // { text: 'Qyteti', value: 'city' },
+                    // { text: 'Adresa', value: 'address' },
+                    { text: "Krijuar me date:", value: "created_at" },
+                    { text: "Krijuar nga:", value: "user.name" },
+                    {
+                        text: "",
+                        value: "action",
+                        sortable: false,
+                        align: "right"
+                    }
+                ],
+                payments: [
+                    {
+                        text: "Emri",
+                        align: "left",
+
+                        value: "name"
+                    },
+                    { text: "Dhenesi:", value: "from" },
+                    { text: "Marresi:", value: "to" },
+                    { text: "Shuma:", value: "amount" },
+                    { text: "Kategoria:", value: "category" },
+                    { text: "Shtuar me date:", value: "created_at" },
+                    { text: "Shtuar nga:", value: "user.name" },
+
+                    {
+                        text: "",
+                        value: "action",
+                        sortable: false,
+                        align: "right"
+                    }
+                ],
+                notes: [
+                    {text: "Emri",align: "left",value: "name"},
+                    { text: "Shenimi:", value: "body" },
+
+                    { text: "Shtuar me date:", value: "created_at" },
+                    { text: "Shtuar nga:", value: "user.name" },
+
+                    {
+                        text: "",
+                        value: "action",
+                        sortable: false,
+                        align: "right"
+                    }
+                ]
+            },
             edit_dialog: false,
             saving_errors: [],
             date_picker: false,
@@ -182,39 +245,40 @@ export default {
                 { text: "Pasive", value: "pasive" }
             ],
             edit_resource: {
-    id:'',
-    name: '',
-    phone: '',
-    email: '',
-    city: '',
-    address: '',
-    created_by: {
-      name: ''
-    },
-    deleted_at: null,
-    created_at: null,
-    updated_at: null,
-    class_name: ''
+                id: "",
+                name: "",
+                phone: "",
+                email: "",
+                city: "",
+                address: "",
+                created_by: {
+                    name: ""
+                },
+                deleted_at: null,
+                created_at: null,
+                updated_at: null,
+                class_name: ""
             },
             resource: {
-    id:'',
-    name: '',
-    phone: '',
-    email: '',
-    city: '',
-    address: '',
-    created_by: {
-      name: ''
-    },
-    deleted_at: null,
-    created_at: null,
-    updated_at: null,
-    class_name: ''
+                id: "",
+                name: "",
+                phone: "",
+                email: "",
+                city: "",
+                address: "",
+                created_by: {
+                    name: ""
+                },
+                deleted_at: null,
+                created_at: null,
+                updated_at: null,
+                class_name: ""
             },
             resource_relations: {
-                files: {},
-                notes: {},
-                payments: {}
+                jobs: [],
+                files: [],
+                notes: [],
+                payments: []
             },
             data_autofill: {
                 cities: []
@@ -257,6 +321,25 @@ export default {
             });
     },
     methods: {
+        payment_type(type) {
+            if (type == "in") {
+                return "Hyrje";
+            } else if (type == "out") {
+                return "Dalje";
+            } else {
+                return type;
+            }
+        },
+        readable_date(created_at, updated_at) {
+            moment.locale("sq");
+            if (created_at === updated_at) {
+                return moment(updated_at).format("D MMMM YYYY");
+            } else {
+                return (
+                    moment(updated_at).format("D MMMM YYYY") + " (E modifikuar)"
+                );
+            }
+        },
         readable_date(created_at, updated_at) {
             moment.locale("sq");
             if (created_at === updated_at) {
@@ -303,10 +386,11 @@ export default {
             if (confirm("Konfirmo fshirjen e klientit!") === false) {
                 return;
             }
-            axios.delete(`/client/${currentObj.id}`)
+            axios
+                .delete(`/client/${currentObj.id}`)
                 .then(function(resp) {
                     // currentObj.router.go('/client');
-                    currentObj.$router.replace({name:'client.all'});
+                    currentObj.$router.replace({ name: "client.all" });
                     currentObj.$store.dispatch("showSnackbar", {
                         color: "success",
                         text: "Klienti u fshi!"

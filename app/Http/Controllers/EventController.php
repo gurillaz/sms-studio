@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateEventRequest;
 use App\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
@@ -73,12 +74,15 @@ class EventController extends Controller
 
 
         $event->description = $validated['description'];
+
+
         if (isset($validated['job_id'])) {
             $event->job_id = $validated['job_id'];
         }
         if (isset($validated['deleted_at'])) {
             $event->deleted_at = Carbon::parse($validated['deleted_at'])->format('Y-m-d H:m:s');
         }
+        
         $event->status = $request['status'];
         $event->created_by = Auth::id();
 
@@ -129,11 +133,19 @@ class EventController extends Controller
         $resource['class_name'] = $event->getMorphClass();
 
         $resource_relations['job'] = $event->job;
-        $resource_relations['notes'] = $event->notes()->get();
-        $resource_relations['files'] = $event->files()->get();
-        $resource_relations['payments'] = $event->payments()->get();
 
+        $resource_relations['tasks'] = $event->tasks()->with('user:id,name','employee:id,name','event:id,name')->get();
+
+        $resource_relations['notes'] = $event->notes()->with('user:id,name','noteable:id,name')->get();
+        $resource_relations['files'] = $event->files()->with('user:id,name','fileable:id,name')->get();
+        $resource_relations['payments'] = $event->payments()->with('user:id,name')->get();
         // $data_autofill['types'] = $types;
+        $resource_relations['inventory'] =new Collection();
+        foreach ($event->tasks as $task) {
+            foreach ($task->inventory()->with('user:id,name')->get() as $inventory) {
+                    $resource_relations['inventory']->push($inventory);
+                }
+            }
         // $data_autofill['suppliers'] = $suppliers;
 
 

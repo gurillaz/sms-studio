@@ -7,6 +7,7 @@ use App\Http\Requests\CreateClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Http\Resources\ClientCollection;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -26,7 +27,6 @@ class ClientController extends Controller
         return Response::json([
             'resources' => $clients
         ], 200);
-
     }
 
 
@@ -38,7 +38,7 @@ class ClientController extends Controller
     public function create()
     {
         $cities = Client::all()->pluck('city');
-     
+
         $data_autofill['cities'] = $cities;
         // $data_autofill['suppliers'] = $suppliers;
 
@@ -46,7 +46,6 @@ class ClientController extends Controller
         return Response::json([
             'data_autofill' => $data_autofill
         ], 200);
-
     }
 
     /**
@@ -56,13 +55,14 @@ class ClientController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
 
-    public function checkCreateClientValidation(CreateClientRequest $request){
+    public function checkCreateClientValidation(CreateClientRequest $request)
+    {
 
 
-         $request->validated();
+        $request->validated();
 
 
-         return Response::json([
+        return Response::json([
             'message' => "Validated!",
             'data' => "",
         ], 200);
@@ -80,7 +80,7 @@ class ClientController extends Controller
     {
         $validated = $request->validated();
 
-//        return $validated;
+        //        return $validated;
         $client = new Client();
 
         $client->name = $validated['name'];
@@ -95,10 +95,8 @@ class ClientController extends Controller
 
         return Response::json([
             'message' => "Client created!",
-            'client' => ['id'=>$client->id,'name'=>$client->name,'city'=>$client->city],
+            'client' => ['id' => $client->id, 'name' => $client->name, 'city' => $client->city],
         ], 200);
-
-
     }
 
     /**
@@ -109,24 +107,43 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        
-        $cities = Client::all()->pluck('city');
-        // $suppliers = Inventory::all()->pluck('supplier');
 
+        // $suppliers = Inventory::all()->pluck('supplier');
+        
         $resource = [];
         $resource_relations = [];
         $data_autofill = [];
-
-
+        
+        
         $resource = $client;
         $resource['created_by'] = $client->user()->first('name');
         $resource['class_name'] = $client->getMorphClass();
+        
 
-                
-        $resource_relations['notes'] = $client->notes()->get();
-        $resource_relations['files'] = $client->files()->get();
-        $resource_relations['payments'] = $client->payments()->get();
+        $resource_relations['jobs'] = $client->jobs()->with('offer:id,name', 'client:id,name', 'user:id,name')->get();
 
+        $resource_relations['notes'] = $client->notes()->with('user:id,name','noteable:id,name')->get();
+        $resource_relations['files'] = $client->files()->with('user:id,name','fileable:id,name')->get();
+        $resource_relations['payments'] = $client->payments()->with('user:id,name')->get();
+
+
+        // return class_basename($resource_relations['payments']);
+        //Pagesat e puneve
+        foreach ($client->jobs as $job) {
+            foreach ($job->payments()->with('user:id,name')->get() as $payment) {
+                    $resource_relations['payments']->push($payment);
+                }
+            }
+            $resource_relations['events'] =new Collection();
+            foreach ($client->jobs as $job) {
+                foreach ($job->events()->with('user:id,name','job.client:id,name')->get() as $event) {
+                        $resource_relations['events']->push($event);
+                    }
+                }
+            
+            
+            
+        $cities = Client::all()->pluck('city');
         $data_autofill['cities'] = $cities;
         // $data_autofill['suppliers'] = $suppliers;
 
@@ -166,7 +183,7 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-//        return "OK";
+        //        return "OK";
         $validated = $request->validated();
 
         $client->name = $validated['name'];
@@ -180,7 +197,7 @@ class ClientController extends Controller
 
 
         $resource = [];
-   
+
 
 
         $resource = $client;
@@ -212,5 +229,4 @@ class ClientController extends Controller
             'message' => "Client deleted!",
         ], 200);
     }
-
 }

@@ -283,7 +283,7 @@ export default {
             .get("/event")
             .then(function(resp) {
                 // console.log(resp.data);
-                let evn = resp.data.events;
+                let evn = resp.data.resources;
 
                 evn.forEach(ev => {
                     return (ev["color"] = currentObj.randomColor());

@@ -143,7 +143,7 @@ export default {
                         text: "Te dhenat u ruajten!"
                     });
                     currentObj.$router.push(
-                        `/task/${resp.data.new_resource_id}`
+                        `/task/${resp.data.resource.id}`
                     );
                 })
                 .catch(function(resp) {

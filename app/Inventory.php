@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Inventory extends Model
 {
     use SoftDeletes;
+    protected $hidden = ['pivot'];
+
     
     public function user(){
 

@@ -4,7 +4,7 @@ import VueRouter from 'vue-router';
 
 
 import Home from '@/js/pages/home_admin';
-import ErrorPage from '@/js/pages/error_page';
+import ErrorPage from '@/js/pages/others/error_page';
 
 import Clients from '@/js/pages/client/clients'
 import Client from '@/js/pages/client/client'

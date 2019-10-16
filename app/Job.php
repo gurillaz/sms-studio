@@ -68,6 +68,11 @@ class Job extends Model
 
         return $this->hasMany('App\Event','job_id');
     }
+    
+    public function tasks(){
+
+        return $this->hasMany('App\Task','job_id');
+    }
 
 
 
