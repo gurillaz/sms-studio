@@ -11,9 +11,11 @@ VueJS, Laravel, Vuetify
 ## Screenshots
 <p>
 <img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshoots/scr_1.png" width="48%" height="48%"/>
-<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshots/scr_2.png" width="48%" height="48%"/>
-<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshots/scr_3.png" width="48%" height="48%"/>
-<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshots/scr_4.png" width="48%" height="48%"/>
+<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshoots/scr_2.png" width="48%" height="48%"/>
+<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshoots/scr_3.png" width="48%" height="48%"/>
+<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshoots/scr_5.png" width="48%" height="48%"/>
+<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshoots/scr_6.png" width="48%" height="48%"/>
+<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshoots/scr_7.png" width="48%" height="48%"/>
 </p>
 
 
