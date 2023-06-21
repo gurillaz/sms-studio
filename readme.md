@@ -1,4 +1,4 @@
-# SMS Studio
+# SMS Studio 
 
 
 SMS-Studio is a user-friendly software project built with Laravel and VueJs. It helps video and photo studios efficiently manage staff, clients, jobs, offers, tasks, inventory, payments, and files. 
@@ -10,7 +10,10 @@ VueJS, Laravel, Vuetify
 
 ## Screenshots
 <p>
-
+<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshoots/scr_1.png" width="48%" height="48%"/>
+<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshots/scr_2.png" width="48%" height="48%"/>
+<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshots/scr_3.png" width="48%" height="48%"/>
+<img src="https://raw.githubusercontent.com/gurillaz/sms-studio/master/screenshots/scr_4.png" width="48%" height="48%"/>
 </p>
 
 
