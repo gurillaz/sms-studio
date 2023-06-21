@@ -1,4 +1,4 @@
-# Walkometer
+# SMS Studio
 
 
 SMS-Studio is a user-friendly software project built with Laravel and VueJs. It helps video and photo studios efficiently manage staff, clients, jobs, offers, tasks, inventory, payments, and files. 
