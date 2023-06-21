@@ -38,20 +38,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        // $tasks = Task::where('status','template')->get();
-        $tasks = Task::where('status','template')->with(['inventory:id,name'])->get();
-        $inventory = Inventory::all('id','name');
 
-        $data = [];
-
-
-        $data['tasks'] = $tasks;
-        $data['inventory'] = $inventory;
-
-
-        return Response::json([
-            'data_autofill' => $data,
-        ], 200);
     }
 
     /**
@@ -75,11 +62,6 @@ class ServiceController extends Controller
 
         $service->save();
 
-        if(isset($validated['tasks'])){
-            $service_tasks = $validated['tasks'];
-
-            $service->tasks()->sync($service_tasks);
-        }
         
         // $task['inventory'] = $task->inventory()->get(['id','name']);
 
@@ -170,34 +152,16 @@ class ServiceController extends Controller
 
         $service->save();
 
-        if(isset($validated['tasks'])){
-            $service_tasks = $validated['tasks'];
+        // $resource = $service->with('user:name,id')->get();
+ 
 
-            $service->tasks()->sync($service_tasks);
-        }
         $resource = $service;
         $resource['created_by'] = $service->user()->first('name');
         $resource['class_name'] = $service->getMorphClass();
 
-                
-        $resource_relations['notes'] = $service->notes()->get();
-        $resource_relations['offers'] = $service->offers()->get();
-        $resource_relations['tasks'] = $service->tasks()->with(['inventory:id,name'])->get();
-
-
-        $tasks =Task::where('status','template')->with(['inventory:id,name'])->get();
-        $inventory = Inventory::all('id','name');
-
-        $data_autofill['tasks'] = $tasks;
-        $data_autofill['inventory'] = $inventory;
-
-
-
         return Response::json([
             'resource' => $resource,
-            'resource_relations' => $resource_relations,
-            'data_autofill' => $data_autofill,
-            'message' => "Service Updated!"
+
         ], 200);
     }
 

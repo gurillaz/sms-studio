@@ -17,7 +17,7 @@ class CreateOffersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->float('price');
-            $table->float('discount')->nullable();
+            $table->float('description')->nullable();
             $table->string('status');
 
             $table->unsignedBigInteger('created_by');

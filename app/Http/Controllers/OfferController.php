@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateOfferRequest;
+use App\Http\Requests\UpdateOfferRequest;
 use App\Offer;
-
+use App\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 //use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Response;
 
@@ -22,18 +25,13 @@ class OfferController extends Controller
 //        $offers = Offer::all()->each(function ($offer) {
 //            return $offer->services;
 //        });
-        $offers = Offer::all();
+        $offers = Offer::with('services:id,name','user:id,name')->get();
 
-        $offers->map(function ($offer){
-            $offer->services  = $offer->services()->get(['name','id'])->makeHidden('pivot');
 
-            $offer->created_by = $offer->user->name;
-            return $offer;
-        });
 
 
         return Response::json([
-            'offers' => $offers
+            'resources' => $offers
         ], 200);
     }
 
@@ -44,7 +42,18 @@ class OfferController extends Controller
      */
     public function create()
     {
-        //
+                // $tasks = Task::where('status','template')->get();
+                $services = Service::all('id','name','price');
+        
+                $data = [];
+        
+        
+                $data['services'] = $services;
+        
+        
+                return Response::json([
+                    'data_autofill' => $data,
+                ], 200);
     }
 
     /**
@@ -53,9 +62,26 @@ class OfferController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateOfferRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $offer = new Offer();
+         $offer->name = $validated['name'];
+         $offer->description = isset($validated['description']) ? $validated['description']:NULL;
+         $offer->price = $validated['price'];
+         $offer->status = 'active';
+        $offer->created_by = Auth::id();
+        $offer->save();
+        if(isset($validated['services'])){
+            $offer_services = $validated['services'];
+            $offer->services()->sync($offer_services);
+        }
+        
+        // $task['inventory'] = $task->inventory()->get(['id','name']);
+        return Response::json([
+            'resource' => $offer,
+            'message' => "Service Added!"
+        ], 200);
     }
 
     /**
@@ -66,7 +92,34 @@ class OfferController extends Controller
      */
     public function show(Offer $offer)
     {
-        return view('offer.offer', ['offer' => $offer]);
+        $resource = [];
+        $resource_relations = [];
+        $data_autofill = [];
+
+
+        $resource = $offer;
+        $resource['created_by'] = $offer->user()->first('name');
+        $resource['class_name'] = $offer->getMorphClass();
+
+                
+
+        $resource_relations['services'] = $offer->services()->with('user:id,name')->get();
+
+        $resource_relations['notes'] = $offer->notes()->with('user:id,name','noteable:id,name')->get();
+        // $data_autofill['types'] = $types;
+
+
+        $services = Service::where('status','active')->get();
+
+        $data_autofill['services'] = $services;
+
+
+
+        return Response::json([
+            'resource' => $resource,
+            'resource_relations' => $resource_relations,
+            'data_autofill' => $data_autofill
+        ], 200);
     }
 
     /**
@@ -87,9 +140,48 @@ class OfferController extends Controller
      * @param \App\Offer $offer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Offer $offer)
+    public function update(UpdateOfferRequest $request, Offer $offer)
     {
-        //
+        $validated = $request->validated();
+         $offer->name = $validated['name'];
+         $offer->description = isset($validated['description']) ? $validated['description']:NULL;
+         $offer->price = $validated['price'];
+         $offer->status = 'active';
+        $offer->created_by = Auth::id();
+        $offer->save();
+        if(isset($validated['services'])){
+            $offer_services = $validated['services'];
+            $offer->services()->sync($offer_services);
+        }
+        $resource = [];
+        $resource_relations = [];
+        $data_autofill = [];
+
+
+        $resource = $offer;
+        $resource['created_by'] = $offer->user()->first('name');
+        $resource['class_name'] = $offer->getMorphClass();
+
+                
+
+        $resource_relations['services'] = $offer->services()->with('user:id,name')->get();
+
+        $resource_relations['notes'] = $offer->notes()->with('user:id,name','noteable:id,name')->get();
+        // $data_autofill['types'] = $types;
+
+
+        $services = Service::where('status','active')->get();
+
+        $data_autofill['services'] = $services;
+        
+        
+        // $task['inventory'] = $task->inventory()->get(['id','name']);
+        return Response::json([
+            'resource' => $resource,
+            'resource_relations' => $resource_relations,
+            'data_autofill' => $data_autofill,
+            'message' => "Service Added!"
+        ], 200);
     }
 
     /**

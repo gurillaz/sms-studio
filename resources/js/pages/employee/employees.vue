@@ -20,7 +20,99 @@
                 :headers="headers"
                 :items="employees"
                 :search="search"
-                height="65vh"
+        >
+            <template v-slot:item.action="{ item }">
+                <v-btn class="ma-2" tile text small link :to="`/employee/${item.id}`" target="_blank">
+                    Shiqo
+                    <v-icon small right>mdi-open-in-new</v-icon>
+                </v-btn>
+            </template>
+
+
+
+        </v-data-table>
+        <v-divider class="mt-5"></v-divider>
+
+        
+        <v-card-title>
+        <v-icon left>mdi-account-group</v-icon>
+            Te rregullt
+            <div class="flex-grow-1"></div>
+
+        </v-card-title>
+        <v-data-table
+                :headers="headers"
+                :items="employees.filter(emp=> emp.employee_type =='regular')"
+                :search="search"
+        >
+            <template v-slot:item.action="{ item }">
+                <v-btn class="ma-2" tile text small link :to="`/employee/${item.id}`" target="_blank">
+                    Shiqo
+                    <v-icon small right>mdi-open-in-new</v-icon>
+                </v-btn>
+            </template>
+
+
+
+        </v-data-table>
+        <v-divider class="mt-5"></v-divider>
+
+        <v-card-title>
+        <v-icon left>mdi-account-group</v-icon>
+            Part-time
+            <div class="flex-grow-1"></div>
+
+        </v-card-title>
+        <v-data-table
+                :headers="headers"
+                :items="employees.filter(emp=> emp.employee_type=='part_time')"
+                :search="search"
+        >
+            <template v-slot:item.action="{ item }">
+                <v-btn class="ma-2" tile text small link :to="`/employee/${item.id}`" target="_blank">
+                    Shiqo
+                    <v-icon small right>mdi-open-in-new</v-icon>
+                </v-btn>
+            </template>
+
+
+
+        </v-data-table>
+        <v-divider class="mt-5"></v-divider>
+
+        <v-card-title>
+        <v-icon left>mdi-account-group</v-icon>
+            Admin
+            <div class="flex-grow-1"></div>
+
+        </v-card-title>
+
+        <v-data-table
+                :headers="headers"
+                :items="employees.filter(emp=> emp.role=='admin')"
+                :search="search"
+        >
+            <template v-slot:item.action="{ item }">
+                <v-btn class="ma-2" tile text small link :to="`/employee/${item.id}`" target="_blank">
+                    Shiqo
+                    <v-icon small right>mdi-open-in-new</v-icon>
+                </v-btn>
+            </template>
+
+
+
+        </v-data-table>
+        <v-divider class="mt-5"></v-divider>
+        <v-card-title>
+        <v-icon left>mdi-account-group</v-icon>
+            Pasiv
+            <div class="flex-grow-1"></div>
+
+        </v-card-title>
+        <v-data-table
+                :headers="headers"
+                :items="employees.filter(emp=> emp.status=='pasive')"
+                :search="search"
         >
             <template v-slot:item.action="{ item }">
                 <v-btn class="ma-2" tile text small link :to="`/employee/${item.id}`" target="_blank">
@@ -54,10 +146,9 @@ import moment from 'moment';
                     { text: 'Telefon', value: 'phone' },
                     { text: 'Email', value: 'email' },
                     // { text: 'Qyteti', value: 'city' },
-                    { text: 'Adresa', value: 'address' },
+                    // { text: 'Adresa', value: 'address' },
                     { text: 'Filloi me date:', value: 'created_at' },
 
-                    { text: 'Statusi:', value: 'status' },
                     { text: '', value: 'action', sortable: false, align:'right' },
 
                 ],

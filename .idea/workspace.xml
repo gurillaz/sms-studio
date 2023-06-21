@@ -5,136 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7c1d705e-314f-40a2-aceb-165ce96ad9b6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/ThinkPad_T440.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webResources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/CreateEventRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/UpdatePaymentRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/config/axios.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/config/sidebarLinks.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/config/store.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/layouts/AuthLayout.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/layouts/MainLayout.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/auth/login.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/client/client.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/client/clients.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/client/new_client.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/employee/employee.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/employee/employees.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/employee/new_employee.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/job/form_job_event_card.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/job/form_job_offer_card.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/job/job.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/offer/new_offer.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/offer/offer.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/offer/offerCard.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/offer/offers.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/payment/new_employee.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/pages/payment/payment_new.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/SMS-StudioMS.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SMS-StudioMS.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ER Diagram" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Client.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Client.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Employee.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Event.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Event.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/File.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/File.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ClientController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SMStudio1-1.drawio" beforeDir="false" afterPath="$PROJECT_DIR$/SMStudio1-1.drawio" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EmployeeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EmployeeController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/EventController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/EventController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FileController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FileController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/InventoryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/InventoryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/NoteController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/NoteController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/JobController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/JobController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OfferController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PaymentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PaymentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CreateClientRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CreateClientRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CreateEmployeeRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CreateEmployeeRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CreateFileRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CreateFileRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CreateNoteRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CreateNoteRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateEmployeeRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateEmployeeRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Inventory.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Inventory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Offer.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Offer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Payment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/RouteServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Service.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Service.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/EmployeeFactory.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ServiceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CreateJobRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CreateJobRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/CreateServiceRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/CreateServiceRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/UpdateServiceRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/UpdateServiceRequest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/factories/InventoryFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/InventoryFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/PaymentFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/PaymentFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_075148_create_employees_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_075217_create_clients_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_075233_create_events_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_075254_create_inventories_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_075311_create_services_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_075327_create_offers_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_075348_create_payments_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_075401_create_files_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_075513_create_notes_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_083036_create_employee_event_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_083112_create_event_inventory_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_083126_create_event_offer_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_07_17_083149_create_offer_service_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/ClientSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/ClientSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/OfferFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/OfferFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_12_104218_create_offers_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_08_12_104218_create_offers_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_12_105160_create_tasks_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_08_12_105160_create_tasks_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/InventorySeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/InventorySeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/OfferSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/OfferSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/ServiceSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/ServiceSeeder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/ExampleComponent.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/_variables.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade_OLD.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/auth/verify.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/client/client.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/client/client_card.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/client/clients.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/client/clients_table.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/employee/employee.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/employee/employee_card.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/employee/employees.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/event/events_table.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/file/file.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/file/file_card.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/inventory/inventories.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/inventory/inventory.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/inventory/inventory_card.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade_OLD.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/sidebar.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/note/note.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/note/note_card.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/offer/offer.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/offer/offer_card.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/offer/offers.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/payment/payments_table.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/service/service.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/service/service_card.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/service/services.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/config/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/config/routes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/config/sidebarLinks.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/config/sidebarLinks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/layouts/MainLayout.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/layouts/MainLayout.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/auth/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/auth/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/employee/employees.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/employee/employees.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/event/event.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/event/event.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/inventory/inventory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/inventory/inventory.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/job/job_new.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/job/job_new.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/offer/new_offer.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/offer/offer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/offer/offer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/payment/payment_new.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/payment/payment_new.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/service/service.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/service/service.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/service/service_new.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/service/service_new.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -193,8 +93,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/js/pages/payment/payment.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="316" column="54" lean-forward="true" selection-start-line="316" selection-start-column="54" selection-end-line="316" selection-end-column="54" />
+            <state relative-caret-position="4482">
+              <caret line="321" column="54" selection-start-line="321" selection-start-column="54" selection-end-line="321" selection-end-column="54" />
               <folding>
                 <element signature="n#v-row#0;n#v-container#0;n#v-card-text#0;n#v-card#0;n#v-col#0;n#v-row#1;n#div#0;n#template#0;n#!!top" />
               </folding>
@@ -202,23 +102,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/js/pages/employee/new_employee.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="306">
-              <caret line="240" column="35" selection-start-line="240" selection-start-column="35" selection-end-line="240" selection-end-column="35" />
+              <caret line="217" column="35" selection-start-line="217" selection-start-column="35" selection-end-line="217" selection-end-column="35" />
               <folding>
                 <element signature="n#v-row#0;n#v-container#0;n#v-card#0;n#div#0;n#template#0;n#!!top" />
-                <element signature="n#v-row#1;n#v-container#0;n#v-card#0;n#div#0;n#template#0;n#!!top" />
-                <element signature="n#v-card#0;n#v-container#0;n#v-row#2;n#v-container#0;n#v-card#0;n#div#0;n#template#0;n#!!top" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/js/pages/payment/new_employee.vue">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -233,8 +126,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PaymentController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1963">
-              <caret line="136" selection-start-line="136" selection-end-line="136" />
+            <state relative-caret-position="3780">
+              <caret line="210" selection-start-line="210" selection-end-line="210" />
               <folding>
                 <element signature="e#40#83#0#PHP" expanded="true" />
               </folding>
@@ -245,8 +138,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/js/pages/job/job.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="109" column="7" lean-forward="true" selection-start-line="109" selection-start-column="7" selection-end-line="109" selection-end-column="7" />
+            <state relative-caret-position="5220">
+              <caret line="290" column="7" selection-start-line="290" selection-start-column="7" selection-end-line="290" selection-end-column="7" />
               <folding>
                 <element signature="e#4535#4576#0" expanded="true" />
               </folding>
@@ -257,7 +150,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/js/pages/file/file_all.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
+            <state relative-caret-position="1044">
               <caret line="59" column="70" selection-start-line="59" selection-start-column="70" selection-end-line="59" selection-end-column="70" />
             </state>
           </provider>
@@ -266,8 +159,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/js/pages/client/client.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="505">
-              <caret line="257" column="44" lean-forward="true" selection-start-line="257" selection-start-column="44" selection-end-line="257" selection-end-column="44" />
+            <state relative-caret-position="6588">
+              <caret line="371" column="41" selection-start-line="371" selection-start-column="41" selection-end-line="371" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -275,8 +168,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/js/pages/note/note.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="125" column="9" selection-start-line="125" selection-start-column="9" selection-end-line="129" selection-end-column="33" />
+            <state relative-caret-position="2250">
+              <caret line="125" column="9" selection-start-line="125" selection-start-column="9" selection-end-line="125" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -499,7 +392,6 @@
       <path value="$PROJECT_DIR$/vendor/barryvdh/laravel-ide-helper" />
       <path value="$PROJECT_DIR$/vendor/barryvdh/reflection-docblock" />
       <path value="$PROJECT_DIR$/vendor/justinrainbow/json-schema" />
-      <path value="$PROJECT_DIR$/vendor/freshbitsweb/laratables" />
       <path value="$PROJECT_DIR$/vendor/snapappointments/bootstrap-select" />
     </include_path>
   </component>
@@ -692,7 +584,7 @@
     <property name="editor.config.ad.shown" value="true" />
     <property name="full.screen.before.presentation.mode" value="false" />
     <property name="js.linters.configure.manually.selectedeslint" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/js/pages/payment" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../blog-a" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.detected.package.stylelint" value="true" />
@@ -827,11 +719,12 @@
       <workItem from="1568597877325" duration="583000" />
       <workItem from="1568598504945" duration="5832000" />
       <workItem from="1569476910468" duration="4040000" />
+      <workItem from="1575361207154" duration="53000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="692222000" />
+    <option name="totallyTimeSpent" value="692275000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -845,7 +738,7 @@
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6431479" visible="true" weight="0.17416452" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6431479" visible="true" weight="0.17609255" />
       <window_info id="Structure" order="1" sideWeight="0.50336474" side_tool="true" weight="0.16838047" />
       <window_info id="npm" order="2" sideWeight="0.10278746" side_tool="true" weight="0.2403599" />
       <window_info id="Favorites" order="3" sideWeight="0.502008" side_tool="true" weight="0.27377892" />
@@ -922,7 +815,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/resources/js/config/store.js</url>
-          <line>28</line>
+          <line>43</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
       </breakpoints>
@@ -977,16 +870,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/pages/note/noteCard.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="976">
-          <caret line="61" selection-start-line="61" selection-end-line="62" selection-end-column="63" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#v-card-text#0;n#v-card#0;n#v-col#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/note/noteCard.vue" />
     <entry file="file://$PROJECT_DIR$/server.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1077,16 +961,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/pages/job/job_card.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-377">
-          <caret line="23" column="26" selection-start-line="23" selection-start-column="26" selection-end-line="23" selection-end-column="26" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#v-card-text#0;n#div#0;n#v-card#0;n#v-col#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/job/job_card.vue" />
     <entry file="file://$PROJECT_DIR$/artisan">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1099,13 +974,7 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/.eslintrc.js" />
-    <entry file="file://$PROJECT_DIR$/.eslintrc.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/.eslintrc.json" />
     <entry file="file://$PROJECT_DIR$/resources/js/config/store.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="494">
@@ -1196,43 +1065,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/pages/job/job.vue">
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/payment/payment.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="109" column="7" lean-forward="true" selection-start-line="109" selection-start-column="7" selection-end-line="109" selection-end-column="7" />
+        <state relative-caret-position="4482">
+          <caret line="321" column="54" selection-start-line="321" selection-start-column="54" selection-end-line="321" selection-end-column="54" />
           <folding>
-            <element signature="e#4535#4576#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/pages/file/file_all.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="59" column="70" selection-start-line="59" selection-start-column="70" selection-end-line="59" selection-end-column="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/pages/client/client.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="257" column="44" lean-forward="true" selection-start-line="257" selection-start-column="44" selection-end-line="257" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/pages/note/note.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="125" column="9" selection-start-line="125" selection-start-column="9" selection-end-line="129" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PaymentController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1963">
-          <caret line="136" selection-start-line="136" selection-end-line="136" />
-          <folding>
-            <element signature="e#40#83#0#PHP" expanded="true" />
+            <element signature="n#v-row#0;n#v-container#0;n#v-card-text#0;n#v-card#0;n#v-col#0;n#v-row#1;n#div#0;n#template#0;n#!!top" />
           </folding>
         </state>
       </provider>
@@ -1244,30 +1082,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/pages/payment/payment.vue">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PaymentController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="316" column="54" lean-forward="true" selection-start-line="316" selection-start-column="54" selection-end-line="316" selection-end-column="54" />
+        <state relative-caret-position="3780">
+          <caret line="210" selection-start-line="210" selection-end-line="210" />
           <folding>
-            <element signature="n#v-row#0;n#v-container#0;n#v-card-text#0;n#v-card#0;n#v-col#0;n#v-row#1;n#div#0;n#template#0;n#!!top" />
+            <element signature="e#40#83#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/pages/employee/new_employee.vue">
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/job/job.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="240" column="35" selection-start-line="240" selection-start-column="35" selection-end-line="240" selection-end-column="35" />
+        <state relative-caret-position="5220">
+          <caret line="290" column="7" selection-start-line="290" selection-start-column="7" selection-end-line="290" selection-end-column="7" />
           <folding>
-            <element signature="n#v-row#0;n#v-container#0;n#v-card#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#v-row#1;n#v-container#0;n#v-card#0;n#div#0;n#template#0;n#!!top" />
-            <element signature="n#v-card#0;n#v-container#0;n#v-row#2;n#v-container#0;n#v-card#0;n#div#0;n#template#0;n#!!top" />
+            <element signature="e#4535#4576#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/file/file_all.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1044">
+          <caret line="59" column="70" selection-start-line="59" selection-start-column="70" selection-end-line="59" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/client/client.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6588">
+          <caret line="371" column="41" selection-start-line="371" selection-start-column="41" selection-end-line="371" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/note/note.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2250">
+          <caret line="125" column="9" selection-start-line="125" selection-start-column="9" selection-end-line="125" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/js/pages/payment/new_employee.vue">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/employee/new_employee.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="217" column="35" selection-start-line="217" selection-start-column="35" selection-end-line="217" selection-end-column="35" />
+          <folding>
+            <element signature="n#v-row#0;n#v-container#0;n#v-card#0;n#div#0;n#template#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">

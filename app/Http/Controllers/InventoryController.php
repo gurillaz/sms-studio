@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateInventoryRequest;
 use App\Http\Requests\UpdateInventoryRequest;
 use App\Inventory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -23,7 +24,6 @@ class InventoryController extends Controller
         return Response::json([
             'data' => $inventories
         ], 200);
-    
     }
 
     /**
@@ -63,14 +63,14 @@ class InventoryController extends Controller
         $inventory = new Inventory();
 
 
-         $inventory->name = $validated['name'];
-         $inventory->type = $validated['type'];
-         $inventory->purchase_date = isset($validated['purchase_date']) ? $validated['purchase_date']:NULL;
-         $inventory->supplier = isset($validated['supplier']) ? $validated['supplier']:NULL;
-         $inventory->price = isset($validated['price']) ? $validated['price']:NULL;
-         $inventory->serial = isset($validated['serial']) ? $validated['serial']:NULL;
-         $inventory->description = isset($validated['description']) ? $validated['description']:NULL;
-         $inventory->status = $validated['status'];
+        $inventory->name = $validated['name'];
+        $inventory->type = $validated['type'];
+        $inventory->purchase_date = isset($validated['purchase_date']) ? $validated['purchase_date'] : NULL;
+        $inventory->supplier = isset($validated['supplier']) ? $validated['supplier'] : NULL;
+        $inventory->price = isset($validated['price']) ? $validated['price'] : NULL;
+        $inventory->serial = isset($validated['serial']) ? $validated['serial'] : NULL;
+        $inventory->description = isset($validated['description']) ? $validated['description'] : NULL;
+        $inventory->status = $validated['status'];
 
 
         $inventory->created_by = Auth::id();
@@ -92,7 +92,7 @@ class InventoryController extends Controller
      */
     public function show(Inventory $inventory)
     {
-        
+
 
 
         $types = Inventory::all()->pluck('type');
@@ -107,10 +107,22 @@ class InventoryController extends Controller
         $resource['created_by'] = $inventory->user()->first('name');
         $resource['class_name'] = $inventory->getMorphClass();
 
-                
-        $resource_relations['notes'] = $inventory->notes()->get();
-        $resource_relations['files'] = $inventory->files()->get();
-        $resource_relations['payments'] = $inventory->payments()->get();
+
+
+        $resource_relations['notes'] = $inventory->notes()->with('user:id,name', 'noteable:id,name')->get();
+        $resource_relations['files'] = $inventory->files()->with('user:id,name', 'fileable:id,name')->get();
+        $resource_relations['payments'] = $inventory->payments()->with('user:id,name')->get();
+        // $resource_relations['tasks'] = $inventory->tasks()->with('user:id,name', 'employee:id,name', 'event:id,name')->get();
+        $resource_relations['tasks'] = $inventory->tasks()->with('user:id,name', 'employee:id,name', 'event:id,name')->get();
+        
+        // $resource_relations['events'] = new Collection();
+        // foreach($resource_relations['tasks'] as $task){
+        //     $resource_relations['events']->push($task->event()->with('job.client:id,name','user:id,name')->get());
+        // }
+
+
+
+
 
         $data_autofill['types'] = $types;
         $data_autofill['suppliers'] = $suppliers;
@@ -146,14 +158,14 @@ class InventoryController extends Controller
         $validated = $request->validated();
 
 
-         $inventory->name = $validated['name'];
-         $inventory->type = $validated['type'];
-         $inventory->purchase_date = isset($validated['purchase_date']) ? $validated['purchase_date']:NULL;
-         $inventory->supplier = isset($validated['supplier']) ? $validated['supplier']:NULL;
-         $inventory->price = isset($validated['price']) ? $validated['price']:NULL;
-         $inventory->serial = isset($validated['serial']) ? $validated['serial']:NULL;
-         $inventory->description = isset($validated['description']) ? $validated['description']:NULL;
-         $inventory->status = $validated['status'];
+        $inventory->name = $validated['name'];
+        $inventory->type = $validated['type'];
+        $inventory->purchase_date = isset($validated['purchase_date']) ? $validated['purchase_date'] : NULL;
+        $inventory->supplier = isset($validated['supplier']) ? $validated['supplier'] : NULL;
+        $inventory->price = isset($validated['price']) ? $validated['price'] : NULL;
+        $inventory->serial = isset($validated['serial']) ? $validated['serial'] : NULL;
+        $inventory->description = isset($validated['description']) ? $validated['description'] : NULL;
+        $inventory->status = $validated['status'];
 
 
         $inventory->created_by = Auth::id();

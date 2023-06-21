@@ -14,9 +14,9 @@ import Employees from '@/js/pages/employee/employees'
 import Employee from '@/js/pages/employee/employee'
 import NewEmployee from '@/js/pages/employee/new_employee'
 
-import Offers from '@/js/pages/offer/offers'
+import Offers from '@/js/pages/offer/offer_all'
 import Offer from '@/js/pages/offer/offer'
-import NewOffer from '@/js/pages/offer/new_offer'
+import NewOffer from '@/js/pages/offer/offer_new'
 
 import Jobs from '@/js/pages/job/job_all'
 import Job from '@/js/pages/job/job'

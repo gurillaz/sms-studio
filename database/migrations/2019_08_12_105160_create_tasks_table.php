@@ -15,10 +15,10 @@ class CreateTasksTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('name')->nullable();
 
             $table->text('description')->nullable();
-            $table->text('payment_sum');
+            $table->text('payment_sum')->nullable();
 
             $table->string('status');
             $table->tinyInteger('rating')->default(0);

@@ -407,6 +407,7 @@ export default {
                 .post(`/payment`, currentObj.new_in_payment)
                 .then(function(resp) {
                     currentObj.saving_errors_in = {};
+                    currentObj.data.categories.push(currentObj.new_in_payment.category);
                     currentObj.new_in_payment = {
                         id: "",
                         name: "",
@@ -445,6 +446,8 @@ export default {
                 .post(`/payment`, currentObj.new_out_payment)
                 .then(function(resp) {
                     currentObj.saving_errors_out = {};
+                    currentObj.data.categories.push(currentObj.new_out_payment.category);
+
                     currentObj.new_out_payment = {
                         id: "",
                         name: "",

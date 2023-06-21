@@ -41,11 +41,8 @@ class CreateServiceRequest extends FormRequest
 
 
             'name' => 'required|string|max:100',
-            'price'=>'required|min:1',
+            'price'=>'required|numeric|min:1',
             'description'=>'max:1000',
-            'tasks'=>'required|array',
-
-
 
         ];
     }
@@ -57,7 +54,8 @@ class CreateServiceRequest extends FormRequest
           'required'=> ':attribute duhet te plotesohet.',
           'max'=> ':attribute duhet te kete te pakten :max karaktere.',
           'min'=> ':attribute duhet ti caktohet cmimi.Minimumi 1.',
-          'tasks.array'=> ':attribute duhet te jete 1 ose me shume detyra',
+          'numeric'=> ':attribute te jete numer.Minimumi 1.',
+
         
         ];
     }

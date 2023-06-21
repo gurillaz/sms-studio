@@ -7,6 +7,16 @@
 
             <v-col class="text-right">
                 <v-btn
+                    class="mr-3"
+                    color="success"
+                >Printo instruksionet</v-btn>
+                <v-btn
+                    @click.stop="edit_tasks_dialog = true"
+                    class="mr-3"
+                    color="primary"
+                    outlined
+                >Cakto punet</v-btn>
+                <v-btn
                     @click.stop="edit_dialog = true"
                     class="mr-3"
                     color="warning"
@@ -14,6 +24,7 @@
                 >Ndrysho</v-btn>
                 <v-btn @click="delete_resource" color="error" outlined>Fshij</v-btn>
             </v-col>
+
         </v-row>
 
         <v-row>
@@ -79,7 +90,10 @@
                                 </v-col>
                             </v-row>
                             <v-row>
-                                <v-col cols="12">
+                                     <v-col cols="4" class="pt-0">
+                                    <v-text-field :value="resource.name" label="Emri:" readonly></v-text-field>
+                                </v-col>
+                                <v-col cols="8" class="pt-0">
                                     <v-text-field
                                         :value="resource.address"
                                         label="Adresa:"
@@ -87,10 +101,53 @@
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
-                            <v-row>
-                                <v-col cols="12" class="pt-0">
-                                    <v-text-field :value="resource.name" label="Emri:" readonly></v-text-field>
+                                                  <v-row class="py-3">
+                                <v-col cols="4">
+                                    <p
+                                        class="small"
+                                    >Puntoret ({{resource_relations.tasks.map(task=>task.inventory).length}} puntore):</p>
+
+                                    <v-chip
+                                        pill
+                                        v-for="(task,index) in resource_relations.tasks"
+                                        v-bind:key="index"
+                                        class="mr-2 mb-2 text-capitalize"
+                                        :to="`/employee/${task.employee.id}`"
+                                        target="_blank"
+                                    >
+                                        <v-avatar
+                                            left
+                                            color="green"
+                                            class="text-uppercase font-weight-bold white--text"
+                                        >{{task.employee.name.substring(0,1)}}</v-avatar>
+                                        {{task.employee.name}}
+                                    </v-chip>
                                 </v-col>
+                                <v-col cols="8">
+                                    <p
+                                        class="small"
+                                    >Pajisjet:</p>
+                                    <span v-for="(task,index) in resource_relations.tasks"
+                                        v-bind:key="index">
+                                                         <v-chip
+                                        label
+                                        small
+                                        v-for="(inventory,index) in task.inventory"
+                                        v-bind:key="index"
+                                        class="mr-2 mb-2 text-capitalize"
+                                        :to="`/inventory/${inventory.id}`"
+                                        target="_blank"
+                                    >
+                  
+                                        {{inventory.name}}
+                                    </v-chip>
+                                        
+                                    </span>
+                   
+                                </v-col>
+                            </v-row>
+                            <v-row>
+                           
                                 <v-col cols="12">
                                     <v-text-field
                                         :value="resource.description"
@@ -108,7 +165,104 @@
 
         <notesSection :notes="resource_relations.notes" :id="id" :class_name="resource.class_name"></notesSection>
         <filesSection :files="resource_relations.files" :id="id" :class_name="resource.class_name"></filesSection>
+        <v-dialog
+            v-model="edit_tasks_dialog"
+            fullscreen
+            hide-overlay
+            transition="dialog-bottom-transition"
+        >
+            <v-card color="grey lighten-5">
+                <v-toolbar dark color="primary">
+                    <v-toolbar-title>Cakto punet</v-toolbar-title>
+                    <div class="flex-grow-1"></div>
+                    <v-toolbar-items>
+                        <v-btn dark text @click="edit_tasks_dialog = false">Mbyll</v-btn>
+                        <v-btn dark text @click="edit_tasks_dialog = false">Ruaj</v-btn>
+                    </v-toolbar-items>
+                </v-toolbar>
+                <!-- {{data_autofill.inventory}}
+                {{data_autofill.employees}} -->
 
+                <v-container fluid class="mt-10">
+                    <v-row class="px-10">
+                        <v-col cols="10"></v-col>
+                        <v-col class cols="2">
+                            <v-btn
+                                @click.stop="add_task"
+                                color="green"
+                                outlined
+                                block
+                                small
+                            >Shto pune</v-btn>
+                        </v-col>
+                    </v-row>
+
+                    <v-card outlined tile class="py-5 px-8 mx-10" style="min-height: 75vh">
+                        <v-row>
+                            <v-col cols="2" class="py-0 caption font-weight-bold">Puntori</v-col>
+                            <v-col cols="6" class="py-0 caption font-weight-bold">Pajisjet</v-col>
+                            <v-col cols="1" class="py-0 caption font-weight-bold">Detyra</v-col>
+                            <v-col cols="1" class="py-0 caption font-weight-bold">Pagesa</v-col>
+                            <v-col cols="1" class="py-0 caption font-weight-bold">Statusi</v-col>
+                            <v-col
+                                cols="1"
+                                class="py-0 caption font-weight-bold text-center"
+                            >Veprimi</v-col>
+                            <v-col cols="12" class>
+                                <v-divider></v-divider>
+                            </v-col>
+                        </v-row>
+                        <v-row v-if="resource_relations.tasks.length == 0">
+                            <v-col cols=12 class="text-center mt-5">
+                            <p class="title ">Nuk ka pune te ruajtura per eventin.</p> 
+                            <p>Kliko ne butonin "Shto pune" per te shtuar pune te re.</p>
+
+                            </v-col>
+                            </v-row>
+                        <v-row v-else v-for="(task,index) in resource_relations.tasks" :key="index">
+                            <v-col cols="2" class="py-0 mt-auto">
+                                <v-autocomplete
+                                    :items="data_autofill.employees"
+                                    item-text="name"
+                                    item-value="id"
+                                    v-model="task.employee_id"
+                                ></v-autocomplete>
+                            </v-col>
+  
+                            <v-col cols="6" class="py-0 mt-auto">
+                                <v-autocomplete
+                                    :items="data_autofill.inventory"
+                                    item-text="name"
+                                    item-value="id"
+                                    v-model="task.inventory"
+                                    chips
+                                    small-chips
+                                    hide-selected
+                                    deletable-chips
+                                    multiple
+                                ></v-autocomplete>
+                            </v-col>
+                                                      <v-col cols="1" class="py-0 mt-auto">
+                                <v-text-field v-model="task.name"></v-text-field>
+                            </v-col>
+                            <v-col cols="1" class="py-0 mt-auto">
+                                <v-text-field v-model="task.payment_sum"></v-text-field>
+                            </v-col>
+                            <v-col cols="1" class="py-0 mt-auto">
+                                <v-text-field v-model="task.status"></v-text-field>
+                            </v-col>
+                            <v-col cols="1" class="py-0 ">
+                                <v-btn small text block color="success">Ruaj</v-btn>
+                                <v-btn small text block color="warning" @click="delete_task">Fshij</v-btn>
+                            </v-col>
+                            <v-col cols="12" class="pt-0 ">
+                                <v-divider></v-divider>
+                            </v-col>
+                        </v-row>
+                    </v-card>
+                </v-container>
+            </v-card>
+        </v-dialog>
         <v-dialog v-model="edit_dialog" persistent max-width="75vw">
             <v-card color>
                 <v-card-title>
@@ -208,36 +362,32 @@
                                     label="Kohezgjatja e eventit*"
                                     persistent-hint
                                     required
-                                
                                     v-model="edit_resource.duration_hours"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12">
-                                <v-text-field 
-                                v-model="edit_resource.address" 
+                                <v-text-field
+                                    v-model="edit_resource.address"
                                     :error-messages="saving_errors.address"
-                                
-                                label="Adresa: *" 
+                                    label="Adresa: *"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12" class="pt-0">
-                                           <v-text-field 
-                                v-model="edit_resource.name" 
+                                <v-text-field
+                                    v-model="edit_resource.name"
                                     :error-messages="saving_errors.name"
-                                
-                                label="Name: *" 
+                                    label="Name: *"
                                 ></v-text-field>
                             </v-col>
                             <v-col cols="12">
-                                   <v-text-field 
-                                v-model="edit_resource.description" 
+                                <v-text-field
+                                    v-model="edit_resource.description"
                                     :error-messages="saving_errors.description"
-                                
-                                label="Detaje shtese: *" 
+                                    label="Detaje shtese: *"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -261,12 +411,17 @@ import filesSection from "@/js/pages/file/files_section";
 import paymentsSection from "@/js/pages/payment/payments_section";
 import relatedDataTables from "@/js/pages/others/related_data_tables";
 
-
 export default {
-    components: { notesSection, filesSection, paymentsSection, relatedDataTables},
+    components: {
+        notesSection,
+        filesSection,
+        paymentsSection,
+        relatedDataTables
+    },
     data() {
         return {
             edit_dialog: false,
+            edit_tasks_dialog: false,
             saving_errors: [],
 
             id: this.$route.params.id,
@@ -276,6 +431,7 @@ export default {
             time_picker: false,
             date: "",
             time: "",
+            tasks: [],
 
             edit_resource: {
                 id: "",
@@ -321,12 +477,12 @@ export default {
         };
     },
     computed: {
-       formatedDate() {
+        formatedDate() {
             moment.locale("sq");
             return this.date
                 ? moment(this.date).format("D MMMM  YYYY, dddd")
                 : "";
-        } 
+        }
     },
 
     beforeMount() {
@@ -337,7 +493,6 @@ export default {
                 currentObj.resource = resp.data.resource;
                 currentObj.resource_relations = resp.data.resource_relations;
                 currentObj.data_autofill = resp.data.data_autofill;
-     
 
                 /* Using JSON.parse to copy object, since just asignin resp.data.note only references data
                     note end edit_note keep changing when used as vue v-model
@@ -346,11 +501,21 @@ export default {
                 currentObj.edit_resource = JSON.parse(
                     JSON.stringify(resp.data.resource)
                 );
-                currentObj.date = moment(currentObj.resource.date_start).format("YYYY-MM-DD");
-                currentObj.time = moment(currentObj.resource.date_start).format("HH:mm");
-                currentObj.edit_resource.duration_hours = 
-                        Math.abs(moment.duration(moment(currentObj.resource.date_start).diff(moment(currentObj.resource.date_end))).get('hours'));
-                
+                currentObj.date = moment(currentObj.resource.date_start).format(
+                    "YYYY-MM-DD"
+                );
+                currentObj.time = moment(currentObj.resource.date_start).format(
+                    "HH:mm"
+                );
+                currentObj.edit_resource.duration_hours = Math.abs(
+                    moment
+                        .duration(
+                            moment(currentObj.resource.date_start).diff(
+                                moment(currentObj.resource.date_end)
+                            )
+                        )
+                        .get("hours")
+                );
             })
             .catch(function(resp) {
                 console.log(resp);
@@ -361,6 +526,20 @@ export default {
             });
     },
     methods: {
+        delete_task(task) {
+            this.resource_relations.tasks.pop(task);
+        },
+        add_task() {
+            this.resource_relations.tasks.unshift({
+                id: "",
+                name: "",
+                employee_id: "",
+                inventory: "",
+                saved: false,
+                status:'unsaved',
+                saving_errors: []
+            });
+        },
 
         readable_event_date(date) {
             moment.locale("sq");
@@ -372,12 +551,10 @@ export default {
             moment.locale("sq");
 
             // return moment(start_date).format('DD/MM/YY HH:mm')+' '+moment(end_date).format('[deri] DD/MM/YY HH:mm')
-            return (
-                Math.abs(
-                    moment
-                        .duration(moment(start_date).diff(moment(end_date)))
-                        .get("hours")
-                )
+            return Math.abs(
+                moment
+                    .duration(moment(start_date).diff(moment(end_date)))
+                    .get("hours")
             );
         },
         readable_date(created_at, updated_at) {
@@ -394,8 +571,6 @@ export default {
         update_resource: function() {
             let currentObj = this;
 
-
-
             let dt_date_start = "";
             //nese nuk jane dhene edhe data edhe koha
             if (currentObj.time != "" && currentObj.date != "") {
@@ -405,7 +580,6 @@ export default {
             }
             currentObj.edit_resource.date_start = dt_date_start;
             currentObj.edit_resource.status = "active";
-
 
             /* Create new object with properties from fileds, ONLY if field has a value.(remove properties with empty fileds) This to comply with vlidation rules in
             CreateInventoryRequest, for attributes where validation "sometimes" is set.
@@ -435,12 +609,21 @@ export default {
                         JSON.stringify(resp.data.resource)
                     );
 
-                                    currentObj.date = moment(currentObj.resource.date_start).format("YYYY-MM-DD");
-                currentObj.time = moment(currentObj.resource.date_start).format("HH:mm");
-                currentObj.edit_resource.duration_hours = 
-                        Math.abs(moment.duration(moment(currentObj.resource.date_start).diff(moment(currentObj.resource.date_end))).get('hours'));
-                
-
+                    currentObj.date = moment(
+                        currentObj.resource.date_start
+                    ).format("YYYY-MM-DD");
+                    currentObj.time = moment(
+                        currentObj.resource.date_start
+                    ).format("HH:mm");
+                    currentObj.edit_resource.duration_hours = Math.abs(
+                        moment
+                            .duration(
+                                moment(currentObj.resource.date_start).diff(
+                                    moment(currentObj.resource.date_end)
+                                )
+                            )
+                            .get("hours")
+                    );
 
                     currentObj.edit_dialog = false;
 

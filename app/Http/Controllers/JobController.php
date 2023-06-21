@@ -10,6 +10,7 @@ use App\Offer;
 use App\Client;
 use App\Employee;
 use App\Http\Requests\UpdateJobRequest;
+use App\Payment;
 use App\Task;
 use Carbon\Carbon;
 use Hamcrest\Arrays\IsArray;
@@ -102,6 +103,66 @@ class JobController extends Controller
 
         $job->save();
 
+            $payment_upfront = $validated['payment_upfront'];
+            // return $validated['events'];
+            if($payment_upfront !=0 ){
+                if($payment_upfront < $job->price){
+                    $payment = new Payment();
+                    $payment->name  = $job->name;
+                    $payment->type  = 'in';
+                    $payment->from  = $job->client->name;
+                    $payment->to  = 'Studio';
+                    $payment->amount  = $payment_upfront;
+                    $payment->category  = 'Pagese';
+                    $payment->description     = 'Pagese per rezervimin '.$job->name;
+                    $payment->status     = 'paid';
+                    $payment->paymentable_type = Client::class ;
+                    $payment->paymentable_id = $job->client->id ;
+                    $payment->created_by = Auth::id() ;
+                    $payment->save();
+                    // return $payment;
+                    
+                    $job->payment_status = 'partial';
+                    $job->save();
+
+                    $pending_payment = new Payment();
+                    $pending_payment->name  = $job->name;
+                    $pending_payment->type  = 'in';
+                    $pending_payment->from  = $job->client->name;
+                    $pending_payment->to  = 'Studio';
+                    $pending_payment->amount  = $job->price - $payment_upfront;
+                    $pending_payment->category  = 'Pagese';
+                    $pending_payment->description     = 'Pagesa e mbetur per rezervimin '.$job->name;
+                    $pending_payment->status     = 'pending';
+                    
+                    $pending_payment->paymentable_type = Client::class ;
+                    $pending_payment->paymentable_id = $job->client->id ;
+                    $pending_payment->created_by = Auth::id() ;
+                    $pending_payment->save();
+                    
+
+                }
+                else{
+                    $payment = new Payment();
+                    $payment->name  = $job->name;
+                    $payment->type  = 'in';
+                    $payment->from  = $job->client->name;
+                    $payment->to  = 'Studio';
+                    $payment->amount  = $payment_upfront;
+                    $payment->category  = 'Pagese';
+                    $payment->description     = 'Pagese per rezervimin '.$job->name;
+                    $payment->status     = 'pending';
+                    $payment->paymentable_type = Client::class ;
+                    $payment->paymentable_id = $job->client->id ;
+                    $payment->created_by = Auth::id() ;
+                    $payment->save();
+                    
+                    $job->payment_status = 'paid';
+                    $job->save();
+                }
+
+
+            }
         if(isset($validated['events'])){
             // return $validated['events'];
             $job_events = Event::withTrashed()->find($validated['events']);
@@ -115,22 +176,7 @@ class JobController extends Controller
                 }
             }
         }
-        $offer_tasks = [];
-        // $tasks = Task::where('service_id',)
-        foreach($job->offer->services as $service){
-            foreach($service->tasks as $task){
-                        array_push($offer_tasks,$task);
-            
-            }   
-        }
-        // return $offer_tasks;
-        foreach($offer_tasks as $task){
-                    $task_clone = $task->replicate();
-                    $task_clone->job_id = $job->id;
-                    $task_clone->status = 'pending';
-                    $task_clone->save();
-                    $task_clone->inventory()->sync($task->inventory);
-        }
+
         // return $job->tasks;
         return Response::json([
             'message' => "Job created!",
@@ -159,13 +205,13 @@ class JobController extends Controller
         $resource_relations['client'] = $job->client;
         $resource_relations['offer'] = $job->offer;
         
-        $resource_relations['events'] = $job->events()->with('user:id,name','job.client:id,name')->get();
-        $resource_relations['tasks'] = $job->tasks()->with('user:id,name','employee:id,name','event:id,name')->get();
+            $resource_relations['events'] = $job->events()->with('user:id,name','job.client:id,name')->get();
+            $resource_relations['tasks'] = $job->tasks()->with('user:id,name','employee:id,name','event:id,name')->get();
 
-        $resource_relations['tasks'] = $job->tasks()->with('user:id,name','employee:id,name','event:id,name')->get();
-        $resource_relations['notes'] = $job->notes()->with('user:id,name','noteable:id,name')->get();
-        $resource_relations['files'] = $job->files()->with('user:id,name','fileable:id,name')->get();
-        $resource_relations['payments'] = $job->payments()->with('user:id,name')->get();
+            $resource_relations['tasks'] = $job->tasks()->with('user:id,name','employee:id,name','event:id,name')->get();
+            $resource_relations['notes'] = $job->notes()->with('user:id,name','noteable:id,name')->get();
+            $resource_relations['files'] = $job->files()->with('user:id,name','fileable:id,name')->get();
+            $resource_relations['payments'] = $job->payments()->with('user:id,name')->get();
 
 
         $clients = Client::all(['id','name']);

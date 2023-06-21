@@ -6,15 +6,15 @@
                     <v-col cols="5">
                         <v-card class="elevation-12">
                             <v-toolbar color="indigo" dark flat>
-                                <v-toolbar-title>Kyqu</v-toolbar-title>
+                                <v-toolbar-title>Log In</v-toolbar-title>
                             </v-toolbar>
+            
                             <v-card-text class="px-5">
                                 <!-- {{Number(new Date(3600000))}} -->
                                 <v-form>
                                     <v-text-field
                                         class="mt-5"
                                         label="Email:"
-                                        name="email"
                                         v-model="email"
                                         prepend-inner-icon="mdi-email"
                                         type="text"
@@ -23,7 +23,6 @@
                                     <v-text-field
                                         class="mt-5"
                                         label="Fjalkalimi:"
-                                        name="password"
                                         v-model="password"
                                         prepend-inner-icon="mdi-lock"
                                         type="password"

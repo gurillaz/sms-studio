@@ -36,6 +36,7 @@ class CreateJobRequest extends FormRequest
             'client_id'=>'required|exists:clients,id',
             'offer_id'=>'required|exists:offers,id',
             'events'=>'sometimes|required|array',
+            'payment_upfront'=>'required|numeric|min:0',
 
         ];
     }
@@ -60,6 +61,7 @@ class CreateJobRequest extends FormRequest
             'name' => 'Emri i punes',
             'description'=>'Pershkrimi/Detajet',
             'price'=>'Cmimi',
+            'payment_upfront'=>'Parapagimi(Kapari)',
             'client_id'=>'Klienti',
             'offer_id'=>'Oferta',
 

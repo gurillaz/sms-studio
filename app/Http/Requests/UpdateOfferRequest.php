@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateServiceRequest extends FormRequest
+class UpdateOfferRequest extends FormRequest
 {
     //named errors multiple forms one page
 //    protected $errorBag = 'createClient';
@@ -43,6 +43,9 @@ class UpdateServiceRequest extends FormRequest
             'name' => 'required|string|max:100',
             'price'=>'required|numeric|min:1',
             'description'=>'max:1000',
+            'services'=>'required|array'
+
+
 
 
 
@@ -58,6 +61,8 @@ class UpdateServiceRequest extends FormRequest
           'min'=> ':attribute duhet ti caktohet cmimi.Minimumi 1.',
           'numeric'=> ':attribute te jete numer.Minimumi 1.',
           'tasks.array'=> ':attribute duhet te jete 1 ose me shume detyra',
+          'services.required'=> 'Duhet te zgjidhni te pakten nje sherbim',
+
         
         ];
     }

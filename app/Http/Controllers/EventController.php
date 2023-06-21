@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
 use App\Event;
 use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Inventory;
 use App\Job;
+use App\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -82,7 +85,7 @@ class EventController extends Controller
         if (isset($validated['deleted_at'])) {
             $event->deleted_at = Carbon::parse($validated['deleted_at'])->format('Y-m-d H:m:s');
         }
-        
+
         $event->status = $request['status'];
         $event->created_by = Auth::id();
 
@@ -134,19 +137,38 @@ class EventController extends Controller
 
         $resource_relations['job'] = $event->job;
 
-        $resource_relations['tasks'] = $event->tasks()->with('user:id,name','employee:id,name','event:id,name')->get();
+        $resource_relations['tasks'] = $event->tasks()->with('user:id,name', 'employee:id,name', 'event:id,name', 'inventory:id,name')->get();
 
-        $resource_relations['notes'] = $event->notes()->with('user:id,name','noteable:id,name')->get();
-        $resource_relations['files'] = $event->files()->with('user:id,name','fileable:id,name')->get();
+        $resource_relations['notes'] = $event->notes()->with('user:id,name', 'noteable:id,name')->get();
+        $resource_relations['files'] = $event->files()->with('user:id,name', 'fileable:id,name')->get();
         $resource_relations['payments'] = $event->payments()->with('user:id,name')->get();
-        // $data_autofill['types'] = $types;
-        $resource_relations['inventory'] =new Collection();
-        foreach ($event->tasks as $task) {
-            foreach ($task->inventory()->with('user:id,name')->get() as $inventory) {
-                    $resource_relations['inventory']->push($inventory);
-                }
-            }
-        // $data_autofill['suppliers'] = $suppliers;
+
+        //Te gjitha Eventet qe jane mbrenda periudhes kohere te eventit qe shikohet momentalisht-> i marrim id e  puntoreve dhe pajisjeve te puneve mbrenda ktyre eventeve dhe i ruajme ne array te vecanta, ne baze te puntoreve dhe pajisjve, me poshte me whereNotIn i marrim puntoret dhe pajisjet qe nuk kane kto id.
+        //Iterimi behet kshtu EVENTET => TASK=>employee_id; TASK=>Inventory=>inventory_id
+        $asigned_employees = new Collection();
+        $asigned_inventory = new Collection();
+        //Te gjitha datat e eventeve qe fillojne ose mbarojne mbrenda periudhes se eventit qe po tregohet
+         Event::where('status', 'active')->where('date_end', '>', $resource->date_start)->where('date_start', '<', $resource->date_end)->get()->each(function ($ev) use ($asigned_employees, $asigned_inventory) {
+            $ev->tasks->each(function ($tsk) use ($asigned_employees, $asigned_inventory) {
+                $asigned_employees->push($tsk->employee_id);
+                $tsk->inventory->each(function ($inv) use ($asigned_inventory) {
+                    $asigned_inventory->push($inv->id);
+                });
+            });
+        });
+
+        //Puntoret e lire dhe evetet e lira
+        $unasigned_employees = Employee::whereNotIn('id', $asigned_employees->toArray())->get(['id', 'name']);
+
+        $unasigned_inventory = Inventory::whereNotIn('id', $asigned_inventory->toArray())->get(['id', 'name']);
+
+
+
+
+
+        // $employees = Employee::where('status','active')->get();
+        $data_autofill['employees'] = $unasigned_employees;
+        $data_autofill['inventory'] = $unasigned_inventory;
 
 
         return Response::json([
@@ -176,7 +198,7 @@ class EventController extends Controller
      */
     public function update(UpdateEventRequest $request, Event $event)
     {
-        
+
         $validated = $request->validated();;
 
 

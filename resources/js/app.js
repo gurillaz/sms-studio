@@ -18,7 +18,7 @@ import vuetify from '@/js/config/vuetify';
 
 Vue.config.productionTip = false;
 
-
+;
 
 const app = new Vue({
     store,

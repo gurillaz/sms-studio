@@ -170,6 +170,14 @@ class EmployeeController extends Controller
                     $resource_relations['jobs']->push($job);
                 }
             }
+        $resource_relations['events'] =new Collection();
+        foreach ($resource_relations['jobs'] as $job) {
+            $resource_relations['jobs']->push($job);
+                foreach ($job->events()->with('user:id,name','job.client:id,name')->get() as $event) {
+                    $resource_relations['events']->push($event);
+
+                }
+            }
 
         // $data_autofill['types'] = $types;
         // $data_autofill['suppliers'] = $suppliers;

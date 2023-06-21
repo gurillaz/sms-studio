@@ -74,7 +74,7 @@
                     <v-icon left>mdi-account-plus-outline</v-icon>Klient i ri
                 </v-btn>
                 <v-btn text class="mx-3" to="/job/new">
-                    <v-icon left>mdi-calendar-plus</v-icon>Pune e re
+                    <v-icon left>mdi-calendar-plus</v-icon>Rezervim i ri
                 </v-btn>
 
                 <v-menu transition="slide-y-transition" offset-y>

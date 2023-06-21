@@ -43,16 +43,16 @@ const links = [
             {
                 icon: 'mdi-calendar-account',
                 name: 'job|event',
-                title: 'Punet / Eventet',
+                title: 'Rezervimet / Eventet',
                 items: [
                     {
                         to: '/job/all',
-                        title: 'Te gjitha punet',
+                        title: 'Te gjitha rezervimet',
                         icon: 'mdi-calendar-multiple'
                     },
                     {
                         to: '/job/new',
-                        title: 'Shto pune te re',
+                        title: 'Shto rezervim',
                         icon: 'mdi-calendar-plus'
                     },
                     {
@@ -68,6 +68,7 @@ const links = [
                 ],
 
             },
+
         ],
     },
     {
@@ -78,8 +79,8 @@ const links = [
 
             {
                 icon: 'mdi-tag',
-                name: 'offer',
-                title: 'Ofertat',
+                name: 'offer|service',
+                title: 'Ofertat / Sherbimet',
                 items: [
                     {
                         to: '/offer/all',
@@ -91,14 +92,6 @@ const links = [
                         title: 'Shto oferte te re',
                         icon: 'mdi-tag-plus'
                     },
-                ],
-
-            },
-            {
-                icon: 'mdi-check-decagram',
-                name: 'service|task',
-                title: 'Sherbimet / Detyrat',
-                items: [
                     {
                         to: '/service/all',
                         title: 'Te gjitha sherbimet',
@@ -109,14 +102,23 @@ const links = [
                         title: 'Shto sherbim',
                         icon: 'mdi-account-box-outline'
                     },
+                ],
+
+            },
+            {
+                icon: 'mdi-check-decagram',
+                name: 'task',
+                title: 'Punet',
+                items: [
+
                     {
                         to: '/task/all',
-                        title: 'Te gjitha detyrat',
+                        title: 'Te gjitha punet',
                         icon: 'mdi-account-plus-outline'
                     },
                     {
                         to: '/task/new',
-                        title: 'Shto detyre',
+                        title: 'Shto pune',
                         icon: 'mdi-account-plus-outline'
                     }
                 ],
